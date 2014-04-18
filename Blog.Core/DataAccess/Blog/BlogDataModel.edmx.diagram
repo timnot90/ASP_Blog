@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="42fc3d9fc790462d91834cb6cc3266dc" Name="Diagram1">
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Blogentry" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Category" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Comment" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Oppinion" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.UserProfile" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries" ManuallyRouted="false" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.CategoriesToEntries" ManuallyRouted="false" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Blogentries_UserProfiles" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
