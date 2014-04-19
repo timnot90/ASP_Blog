@@ -18,9 +18,9 @@ namespace Blog.Core.DataAccess.Blog
         public System.DateTime CreationDate { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
-        public int BlogentryID { get; set; }
         public string Author { get; set; }
-        public int UserID { get; set; }
+        public int BlogentryID { get; set; }
+        public int CreatorID { get; set; }
     
         public virtual Blogentry Blogentry { get; set; }
         public virtual UserProfile UserProfile { get; set; }

@@ -10,7 +10,6 @@ namespace Blog.Web.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public List<Blogentry> Blogentries { get; private set; }
 
         public CategoryListItemModel(Category source)
         {
@@ -21,7 +20,11 @@ namespace Blog.Web.Models
         {
             this.ID = source.ID;
             this.Name = source.Name;
-            this.Blogentries = source.Blogentries.OrderBy(b => b.CreationDate).ToList();
+        }
+
+        public void UpdateSource(Category source)
+        {
+            source.Name = this.Name;
         }
     }
 }

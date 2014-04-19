@@ -17,6 +17,7 @@ namespace Blog.Core.DataAccess.Blog
         public UserProfile()
         {
             this.Blogentries = new HashSet<Blogentry>();
+            this.Categories = new HashSet<Category>();
             this.Comments = new HashSet<Comment>();
         }
     
@@ -35,6 +36,7 @@ namespace Blog.Core.DataAccess.Blog
         public string Country { get; set; }
     
         public virtual ICollection<Blogentry> Blogentries { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

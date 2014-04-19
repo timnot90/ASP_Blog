@@ -24,10 +24,10 @@ namespace Blog.Core.DataAccess.Blog
         public System.DateTime CreationDate { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
-        public int UserID { get; set; }
+        public int CreatorID { get; set; }
     
+        public virtual UserProfile UserProfile { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
-        public virtual UserProfile UserProfile { get; set; }
     }
 }
