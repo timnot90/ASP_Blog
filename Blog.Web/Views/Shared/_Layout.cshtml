@@ -46,17 +46,20 @@
                         @*<a href='@Url.Action(actionName: "EditProfile", controllerName: "Account")' class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
                         *@<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li>
-                                @Html.ActionLink("Edit my Profile", "EditProfile", "Account")
-                            </li>
                             @if (WebSecurity.IsAuthenticated)
                             {
+                                <li>
+                                    @Html.ActionLink("Edit my Profile", "EditProfile", "Account")
+                                </li>
                                 <li>
                                     @Html.ActionLink("Logout", "Logout", "Account")
                                 </li>
                             }
                             else
                             {
+                                <li>
+                                    @Html.ActionLink("Register", "Register", "Account")
+                                </li>
                                 <li>
                                     @Html.ActionLink("Login", "Login", "Account")
                                 </li>

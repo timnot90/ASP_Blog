@@ -816,13 +816,13 @@ body .ui-tooltip {
 	color: #222222/*{fcContent}*/;
 }
 .ui-widget-header {
-	border: 1px solid #aaaaaa/*{borderColorHeader}*/;
-	background: #cccccc/*{bgColorHeader}*/ url(images/ui-bg_highlight-soft_75_cccccc_1x100.png)/*{bgImgUrlHeader}*/ 50%/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/;
-	color: #222222/*{fcHeader}*/;
+	border: 1px solid #aaaaaa/*{borderColorLead}*/;
+	background: #cccccc/*{bgColorLead}*/ url(images/ui-bg_highlight-soft_75_cccccc_1x100.png)/*{bgImgUrlLead}*/ 50%/*{bgLeadXPos}*/ 50%/*{bgLeadYPos}*/ repeat-x/*{bgLeadRepeat}*/;
+	color: #222222/*{fcLead}*/;
 	font-weight: bold;
 }
 .ui-widget-header a {
-	color: #222222/*{fcHeader}*/;
+	color: #222222/*{fcLead}*/;
 }
 
 /* Interaction states
@@ -945,7 +945,7 @@ body .ui-tooltip {
 	background-image: url(images/ui-icons_222222_256x240.png)/*{iconsContent}*/;
 }
 .ui-widget-header .ui-icon {
-	background-image: url(images/ui-icons_222222_256x240.png)/*{iconsHeader}*/;
+	background-image: url(images/ui-icons_222222_256x240.png)/*{iconsLead}*/;
 }
 .ui-state-default .ui-icon {
 	background-image: url(images/ui-icons_888888_256x240.png)/*{iconsDefault}*/;

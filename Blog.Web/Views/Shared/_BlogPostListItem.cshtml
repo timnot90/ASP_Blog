@@ -1,24 +1,27 @@
-﻿@model Blog.Web.Models.Blog.BlogEntryListItemModel
+﻿@using System.Web.Razor.Parser.SyntaxTree
+@using Blog.Core.DataAccess.Blog
+@model Blog.Web.Models.Blog.BlogEntryListItemModel
 
 @{
     Layout = null;
 }
-<div class="row">
-    <h1>
-        <a href="blog-post.html">A Blog Home Template for Bootstrap 3</a>
-    </h1>
-    <p class="lead">
-        by <a href="#">Start Bootstrap</a>
-    </p>
-    <hr>
-    <p><i class="fa fa-clock-o"></i> Posted on August 28, 2013 at 10:00 PM</p>
-    <hr>
-    <a href="blog-post.html">
-        <img src="http://placehold.it/900x300" class="img-responsive">
-    </a>
-    <hr>
-    <p>This is a very basic starter template for a blog homepage. It makes use of Font Awesome icons that are built into the 'Modern Business' template, and it makes use of the Bootstrap 3 pager at the bottom of the page.</p>
-    <a class="btn btn-primary" href="blog-post.html">Read More <i class="fa fa-angle-right"></i></a>
-
-    <hr>
-</div>>
+<h1>
+    @Html.ActionLink(Model.Header, "ShowBlogentry", "Blog", new { blogentryId = Model.ID }, null)
+</h1>
+<p class="lead">
+    by <a href="#">@Model.Creator.UserName</a>
+</p>
+<hr>
+<p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString</p>
+@*<hr>
+        <a href="blog-post.html">
+            <img src="http://placehold.it/900x300" class="img-responsive">
+    </a>*@
+<hr>
+<p>@Html.BlogEntryListItemBodyShort(Model.Body)</p>
+<a class="btn btn-primary" href="@Url.Action("ShowBlogentry", "Blog", new { blogentryId = Model.ID })">Read More <i class="fa fa-angle-right"></i></a>
+@foreach (Category category in @Model.Categories)
+{
+    <span>@category.Name</span>
+}
+<hr>

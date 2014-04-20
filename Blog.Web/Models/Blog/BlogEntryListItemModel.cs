@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Blog.Core.DataAccess.Blog;
+using Blog.Web.Models.AccountModel;
 
 namespace Blog.Web.Models.Blog
 {
@@ -19,6 +20,7 @@ namespace Blog.Web.Models.Blog
                 return string.Format("{0:D}, um {0:t} Uhr", CreationDate.Date);
             }
         }
+        public UserProfileModel Creator { get; set; }
 
         public BlogEntryListItemModel()
         {

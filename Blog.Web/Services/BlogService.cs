@@ -20,18 +20,32 @@ namespace Blog.Web.Services
             bool isNewEntry = entryModel.ID == 0;
             Blogentry entry = isNewEntry ? new Blogentry() : _repository.GetBlogentry(entryModel.ID);
             entryModel.UpdateSource(entry);
+            entry.CreationDate = DateTime.Now;
+            entry.CreatorID = WebSecurity.CurrentUserId;
             _repository.SaveBlogentry(entry, isNewEntry);
         }
 
         public List<BlogEntryListItemModel> GetAllBlogentries()
         {
-            return _repository.GetAllBlogentries().OrderBy(b => b.CreationDate).Select(b => new BlogEntryListItemModel(b)).ToList();
+            return _repository.GetAllBlogentries().OrderBy(b => b.CreationDate).Select(
+                b =>
+                {
+                    BlogEntryListItemModel entryModel = new BlogEntryListItemModel(b);
+                    entryModel.Creator = new UserProfileModel(_repository.GetUserProfile(b.CreatorID));
+
+                    return entryModel;
+                }).ToList();
         }
 
         public BlogEntryListItemModel GetBlogentry(int id)
         {
             Blogentry entry = _repository.GetBlogentry(id);
-            return entry == null ? null : new BlogEntryListItemModel(entry);
+            BlogEntryListItemModel entryModel = entry == null ? null : new BlogEntryListItemModel(entry);
+            if (entryModel != null)
+            {
+                entryModel.Creator = new UserProfileModel(_repository.GetUserProfile(entry.CreatorID));
+            }
+            return entryModel;
         }
         #endregion
 

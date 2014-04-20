@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Blog.Core.DataAccess.Blog.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Blog.Core.DataAccess.Blog.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Blogentries">
           <Key>
             <PropertyRef Name="ID" />
@@ -12,6 +12,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Header" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Lead" Type="nvarchar(max)" />
           <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreatorID" Type="int" Nullable="false" />
         </EntityType>
@@ -236,8 +237,7 @@
             <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Blog.Core.DataAccess.Blog" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -253,6 +253,7 @@
           <NavigationProperty Name="UserProfile" Relationship="Self.FK_Blogentries_UserProfiles" FromRole="Blogentries" ToRole="UserProfiles" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Blogentries" FromRole="Blogentries" ToRole="Comments" />
           <NavigationProperty Name="Categories" Relationship="Self.CategoriesToEntries" FromRole="Blogentries" ToRole="Categories" />
+          <Property Name="Lead" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -460,6 +461,7 @@
           <EntitySetMapping Name="Blogentries">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Blogentry">
               <MappingFragment StoreEntitySet="Blogentries">
+                <ScalarProperty Name="Lead" ColumnName="Lead" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Header" ColumnName="Header" />

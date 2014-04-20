@@ -36,6 +36,11 @@ namespace Blog.Core.Extensions
             return new MvcHtmlString(outerTag.ToString());
         }
 
+        public static string BlogEntryListItemBodyShort(this HtmlHelper helper, string text)
+        {
+            return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
+        } 
+
         private static MvcHtmlString CreateLabel<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {
             return helper.LabelFor(expression, new { @class = "col-lg-2 control-label required" });

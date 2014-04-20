@@ -26,7 +26,6 @@
             @using (Html.BeginForm("AddEntry", "Blog", FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 @Html.ValidationSummary()
-                @Html.HiddenFor(m => m.ID)
                 @Html.LabelFor(m => m.Header)
                 @Html.TextBoxFor(m => m.Header)
                 @Html.LabelFor(m => m.Body)

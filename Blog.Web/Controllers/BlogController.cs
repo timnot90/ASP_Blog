@@ -32,5 +32,10 @@ namespace Blog.Web.Controllers
             }
             return View(blogentry);
         }
+
+        public ActionResult ShowBlogentry(int blogentryId)
+        {
+            return View(_service.GetBlogentry(blogentryId));
+        }
     }
 }
