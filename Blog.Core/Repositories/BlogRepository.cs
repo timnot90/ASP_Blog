@@ -51,5 +51,26 @@ namespace Blog.Core.Repositories
             return BlogDataContext.Current.Categories.FirstOrDefault(c => c.ID == id);
         }
         #endregion
+
+        #region UserProfile
+        public void SaveUserProfile(UserProfile userProfile, bool isNewProfile = false)
+        {
+            if (isNewProfile)
+            {
+                BlogDataContext.Current.UserProfiles.Add(userProfile);
+            }
+            BlogDataContext.Current.SaveChanges();
+        }
+
+        public List<UserProfile> GetAllUserProfiles()
+        {
+            return BlogDataContext.Current.UserProfiles.OrderBy(u => u.UserName).ToList();
+        }
+
+        public UserProfile GetUserProfile(int id)
+        {
+            return BlogDataContext.Current.UserProfiles.FirstOrDefault(u => u.ID == id);
+        }
+        #endregion
     }
 }

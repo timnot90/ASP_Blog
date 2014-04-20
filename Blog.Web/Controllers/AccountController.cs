@@ -5,13 +5,17 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Blog.Web.Models;
+using Blog.Web.Models.Account;
 using Blog.Web.Models.AccountModel;
 using WebMatrix.WebData;
+using Blog.Web.Services;
 
 namespace Blog.Web.Controllers
 {
     public class AccountController : Controller
     {
+        IBlogService _service = new BlogService();
+
         //
         // GET: /Account/
         [HttpGet]
@@ -100,13 +104,16 @@ namespace Blog.Web.Controllers
         [HttpGet]
         public ActionResult EditProfile()
         {
-            return View();
+            return View(_service.GetUserProfile(WebSecurity.CurrentUserId));
         }
 
         [HttpPost]
-        public ActionResult EditProfile(UserProfileModel model)
+        public ActionResult EditProfile(UserProfileModel userProfile)
         {
-            //model.UpdateSource();
+            if (ModelState.IsValid)
+            {
+                _service.StoreUserProfile(userProfile);
+            }
             return View();
         }
 
@@ -136,7 +143,7 @@ namespace Blog.Web.Controllers
                 ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 return View(model);
             }
-            
+
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿@model Blog.Web.Models.Blog.AddBlogentryModel
+
+@{
+    ViewBag.Title = "title";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Add new Blogentry
+                <small>Blog Homepage</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Home", "Index", "Home")
+                </li>
+                <li>
+                    @Html.ActionLink("Blog", "Index", "Blog")
+                </li>
+                <li class="active">New Entry</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @using (Html.BeginForm("AddEntry", "Blog", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary()
+                @Html.HiddenFor(m => m.ID)
+                @Html.LabelFor(m => m.Header)
+                @Html.TextBoxFor(m => m.Header)
+                @Html.LabelFor(m => m.Body)
+                @Html.TextAreaFor(m => m.Body)
+
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button class="btn btn-default">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

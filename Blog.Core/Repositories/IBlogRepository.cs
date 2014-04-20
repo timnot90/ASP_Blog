@@ -7,7 +7,7 @@ using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Core.Repositories
 {
-    interface IBlogRepository
+    public interface IBlogRepository
     {
         #region Blogentry
         void SaveBlogentry(Blogentry entry, bool isNewEntry = false);
@@ -23,6 +23,14 @@ namespace Blog.Core.Repositories
         List<Category> GetAllCategories();
 
         Category GetCategory(int id);
+        #endregion
+
+        #region UserProfile
+        void SaveUserProfile(UserProfile userProfile, bool isNewProfile = false);
+
+        List<UserProfile> GetAllUserProfiles();
+
+        UserProfile GetUserProfile(int id);
         #endregion
     }
 }

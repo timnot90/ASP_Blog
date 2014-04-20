@@ -30,5 +30,9 @@ namespace Blog.Core.DataAccess.Blog
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Oppinion> Oppinions { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }
+        public virtual DbSet<webpages_OAuthMembership> webpages_OAuthMembership { get; set; }
+        public virtual DbSet<webpages_Roles> webpages_Roles { get; set; }
+        public virtual DbSet<webpages_UsersInRoles> webpages_UsersInRoles { get; set; }
     }
 }
