@@ -1,0 +1,20 @@
+﻿@model Blog.Web.Models.AccountModel.LoginModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    
+    @Html.LabelFor(m => m.UserName)
+    @Html.TextBoxFor(m => m.UserName)
+    <br/>
+    @Html.LabelFor(m => m.Password)
+    @Html.TextBoxFor(m => m.Password)
+    
+    <button>Submit</button>
+}
