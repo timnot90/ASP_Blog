@@ -35,12 +35,15 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                @Html.ActionLink("View Posts", "Index", "Blog")
+                                @Html.ActionLink("View Posts", "Index", "Blog", new { categoryId = 0, monthAndYear =""}, null)
                             </li>
                             <li>
-                                @Html.ActionLink("New Entry", "AddEntry", "Blog")
+                                @Html.ActionLink("New Entry", "AddBlogentry", "Blog")
                             </li>
                         </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Categories", "Categories", "Blog")
                     </li>
                     <li class="dropdown">
                         @*<a href='@Url.Action(actionName: "EditProfile", controllerName: "Account")' class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
@@ -86,44 +89,23 @@
         <!-- /.container -->
     </nav>
 
-
-
-    @*<nav role="navigation" class="navbar navbar-default">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a href="#" class="navbar-brand">Blog</a>
-            </div>
-            <!-- Collection of nav links and other content for toggling -->
-            <div id="navbarCollapse" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Blogentries</a></li>
-                    @if (WebSecurity.IsAuthenticated)
-                    {
-                        <li>@Html.ActionLink("My Profile", "EditProfile", "Account")</li>
-                    }
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if (WebSecurity.IsAuthenticated)
-                    {
-                        <li>Hello, @WebSecurity.CurrentUserName | @Html.ActionLink("Logout", "Logout", "Account")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Register", "Register", "Account")</li>
-                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                    }
-                </ul>
-            </div>
-        </nav>*@
+    <br />
+    <br />
     @RenderBody()
 
+    <div class="container panel-footer">
+
+        <hr>
+
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Company 2013</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
     @RenderSection("scripts", required: false)
 </body>
 </html>

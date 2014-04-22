@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using Blog.Core.DataAccess.Blog;
@@ -7,13 +8,11 @@ using Blog.Web.Models.AccountModel;
 
 namespace Blog.Web.Models.Blog
 {
-    public class BlogentryDetailModel
+    public class CategoryModel
     {
         public int ID { get; set; }
-        public string Header { get; set; }
-        public string Body { get; set; }
-        public List<CategoryModel> Categories { get; set; }
-        public List<CommentModel> Comments { get; set; }
+        public string Name { get; set; }
+        public int NumberOfPosts { get; set; }
         public UserProfileModel Creator { get; set; }
         public DateTime CreationDate { get; private set; }
         public string CreationDateString
@@ -23,29 +22,29 @@ namespace Blog.Web.Models.Blog
                 return string.Format("{0:D}, um {0:t} Uhr", CreationDate);
             }
         }
+        public bool IsSelected { get; set; }
 
-        public BlogentryDetailModel()
+
+        public CategoryModel()
         {
         }
 
-        public BlogentryDetailModel(Blogentry blogentry)
+        public CategoryModel(Category source)
         {
-            this.UpdateModel(blogentry);
+            this.UpdateModel(source);
         }
 
-        public void UpdateModel(Blogentry source)
+        public void UpdateModel(Category source)
         {
             this.ID = source.ID;
-            this.Header = source.Header;
-            this.Body = source.Body;
+            this.Name = source.Name;
+            this.NumberOfPosts = source.Blogentries.Count;
             this.CreationDate = source.CreationDate;
         }
 
-        public void UpdateSource(Blogentry source)
+        public void UpdateSource(Category source)
         {
-            source.Header = this.Header;
-            source.Body = this.Body;
-            source.CreationDate = this.CreationDate;
+            source.Name = this.Name;
         }
     }
 }

@@ -142,8 +142,12 @@
     <Compile Include="Models\Blog\AddBlogentryModel.cs" />
     <Compile Include="Models\Blog\BlogentryDetailModel.cs" />
     <Compile Include="Models\Blog\BlogEntryListItemModel.cs" />
+    <Compile Include="Models\Blog\BlogSidebarModel.cs" />
     <Compile Include="Models\Blog\CategoryListItemModel.cs" />
     <Compile Include="Models\Account\UserProfileModel.cs" />
+    <Compile Include="Models\Blog\CategoryListModel.cs" />
+    <Compile Include="Models\Blog\CategoryModel.cs" />
+    <Compile Include="Models\Blog\CommentModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BlogService.cs" />
     <Compile Include="Services\IBlogService.cs" />
@@ -152,6 +156,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-glyphicons.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -293,8 +298,12 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Shared\_BlogPostListItem.cshtml" />
     <Content Include="Views\Blog\Index.cshtml" />
-    <Content Include="Views\Blog\AddEntry.cshtml" />
+    <Content Include="Views\Blog\AddBlogentry.cshtml" />
     <Content Include="Views\Blog\ShowBlogentry.cshtml" />
+    <Content Include="Views\Shared\BlogSidebar.cshtml" />
+    <Content Include="Views\Blog\Categories.cshtml" />
+    <Content Include="Views\Shared\AddCategory.cshtml" />
+    <Content Include="Views\Shared\_AddBlogentryAvailableCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

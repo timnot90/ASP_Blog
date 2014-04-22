@@ -9,8 +9,14 @@ namespace Blog.Web.Services
         void StoreBlogentry(AddBlogentryModel entry);
         List<BlogEntryListItemModel> GetAllBlogentries();
         BlogEntryListItemModel GetBlogentry(int id);
+
+        void StoreCategory(CategoryModel categoryModel);
+        List<CategoryModel> GetAllCategories();
+        CategoryModel GetCategory(int id);
+
         void StoreUserProfile(UserProfileModel userProfileModel);
         List<UserProfileModel> GetAllUserProfiles();
         UserProfileModel GetUserProfile(int id);
+        void DeleteCategory(int categoryid);
     }
 }

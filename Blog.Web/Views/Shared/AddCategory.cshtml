@@ -1,0 +1,7 @@
+﻿@model Blog.Web.Models.Blog.CategoryModel
+@using (Html.BeginForm("AddCategory", "Blog", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.LabelFor(c => c.Name)
+    @Html.TextBoxFor(c => c.Name, new { @autofocus = true })
+    <button>Create</button>
+}

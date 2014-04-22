@@ -22,6 +22,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="CreatorID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CategoriesToEntries">
@@ -264,6 +265,7 @@
           <Property Name="CreatorID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserProfile" Relationship="Self.FK_Categories_UserProfiles" FromRole="Categories" ToRole="UserProfiles" />
           <NavigationProperty Name="Blogentries" Relationship="Self.CategoriesToEntries" FromRole="Categories" ToRole="Blogentries" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -473,6 +475,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Category">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />

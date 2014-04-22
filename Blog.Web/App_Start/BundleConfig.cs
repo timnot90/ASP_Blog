@@ -29,7 +29,8 @@ namespace Blog.Web
                 "~/Content/bootstrap.css",
                 "~/Content/bootstrap.min.css",
                 "~/font-awesome/css/font-awesome.css",
-                "~/font-awesome/css/font-awesome.min.css"));
+                "~/font-awesome/css/font-awesome.min.css",
+                "~/Content/bootstrap/bootstrap-glyphicons.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

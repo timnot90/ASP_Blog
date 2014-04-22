@@ -127,16 +127,17 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+            LoginModel loginModel = new LoginModel();
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(LoginModel model)
+        public ActionResult Login(LoginModel model, string returnUrl)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Blog", new { categoryId = 0, monthAndYear = "" });
             }
             else
             {

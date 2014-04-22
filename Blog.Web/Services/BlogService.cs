@@ -20,19 +20,24 @@ namespace Blog.Web.Services
             bool isNewEntry = entryModel.ID == 0;
             Blogentry entry = isNewEntry ? new Blogentry() : _repository.GetBlogentry(entryModel.ID);
             entryModel.UpdateSource(entry);
-            entry.CreationDate = DateTime.Now;
             entry.CreatorID = WebSecurity.CurrentUserId;
+            foreach (CategoryModel categoryModel in entryModel.AvailableCategories)
+            {
+                if (categoryModel.IsSelected)
+                {
+                    entry.Categories.Add(_repository.GetCategory(categoryModel.ID));
+                }
+            }
             _repository.SaveBlogentry(entry, isNewEntry);
         }
 
         public List<BlogEntryListItemModel> GetAllBlogentries()
         {
-            return _repository.GetAllBlogentries().OrderBy(b => b.CreationDate).Select(
+            return _repository.GetAllBlogentries().OrderByDescending(b => b.CreationDate).Select(
                 b =>
                 {
                     BlogEntryListItemModel entryModel = new BlogEntryListItemModel(b);
                     entryModel.Creator = new UserProfileModel(_repository.GetUserProfile(b.CreatorID));
-
                     return entryModel;
                 }).ToList();
         }
@@ -49,13 +54,44 @@ namespace Blog.Web.Services
         }
         #endregion
 
-        /*#region Category
-        public void SaveCategory(Category category, bool isNewEntry = false);
+        #region Category
+        public void StoreCategory(CategoryModel categoryModel)
+        {
+            bool isNewEntry = categoryModel.ID == 0;
+            Category category = isNewEntry ? new Category() : _repository.GetCategory(categoryModel.ID);
+            categoryModel.UpdateSource(category);
+            category.CreationDate = DateTime.Now;
+            category.CreatorID = WebSecurity.CurrentUserId;
+            _repository.SaveCategory(category, isNewEntry);
+        }
 
-        public List<Category> GetAllCategories();
+        public void DeleteCategory(int categoryid)
+        {
+            _repository.DeleteCategory(categoryid);
+        }
 
-        public Category GetCategory(int id);
-        #endregion*/
+        public List<CategoryModel> GetAllCategories()
+        {
+            return _repository.GetAllCategories().OrderBy(c => c.Name).Select(
+                c =>
+                {
+                    CategoryModel categoryModel = new CategoryModel(c);
+                    categoryModel.Creator = new UserProfileModel(_repository.GetUserProfile(c.CreatorID));
+                    return categoryModel;
+                }).ToList();
+        }
+
+        public CategoryModel GetCategory(int id)
+        {
+            Category category = _repository.GetCategory(id);
+            CategoryModel categoryModel = category == null ? null : new CategoryModel(category);
+            if (categoryModel != null)
+            {
+                categoryModel.Creator = new UserProfileModel(_repository.GetUserProfile(category.CreatorID));
+            }
+            return categoryModel;
+        }
+        #endregion
 
         #region UserProfile
         public void StoreUserProfile(UserProfileModel userProfileModel)

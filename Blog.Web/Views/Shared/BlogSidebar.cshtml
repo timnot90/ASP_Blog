@@ -1,0 +1,10 @@
+﻿@using Blog.Web.Models.Blog
+
+@model BlogSidebarModel
+
+@foreach (CategoryModel category in Model.Categories)
+{
+    Html.ActionLink(category.Name, "Index", "Blog", new { categoryId = category.ID }, null);
+}
+@*DatePicker*@
+@Html.ActionLink("Go", "Index", "Blog", new { month="", year="" }, null);

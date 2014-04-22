@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Core.Repositories
@@ -22,7 +23,7 @@ namespace Blog.Core.Repositories
 
         public List<Blogentry> GetAllBlogentries()
         {
-            return BlogDataContext.Current.Blogentries.OrderBy(e=>e.CreationDate).ToList();
+            return BlogDataContext.Current.Blogentries.OrderBy(e => e.CreationDate).ToList();
         }
 
         public Blogentry GetBlogentry(int id)
@@ -36,8 +37,16 @@ namespace Blog.Core.Repositories
         {
             if (isNewEntry)
             {
+                category.CreationDate = DateTime.Now;
                 BlogDataContext.Current.Categories.Add(category);
             }
+            BlogDataContext.Current.SaveChanges();
+        }
+
+        public void DeleteCategory(int categoryid)
+        {
+            Category category = BlogDataContext.Current.Categories.Remove(
+                BlogDataContext.Current.Categories.FirstOrDefault(c => c.ID == categoryid));
             BlogDataContext.Current.SaveChanges();
         }
 

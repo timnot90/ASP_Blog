@@ -32,5 +32,7 @@ namespace Blog.Core.Repositories
 
         UserProfile GetUserProfile(int id);
         #endregion
+
+        void DeleteCategory(int categoryid);
     }
 }

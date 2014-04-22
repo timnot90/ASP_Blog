@@ -39,7 +39,7 @@ namespace Blog.Core.Extensions
         public static string BlogEntryListItemBodyShort(this HtmlHelper helper, string text)
         {
             return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
-        } 
+        }
 
         private static MvcHtmlString CreateLabel<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {

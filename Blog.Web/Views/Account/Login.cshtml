@@ -1,20 +1,41 @@
 ﻿@model Blog.Web.Models.Account.LoginModel
 
 @{
-    ViewBag.Title = "title";
+    ViewBag.Title = "Login";
 }
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Login
+                <small>Blog Homepage</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Home", "Index", "Home")
+                </li>
+                <li class="active">Login</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-signin", @role = "form" }))
+        {
+            <h2 class="form-signin-heading">Please sign in</h2>
+            @Html.ValidationSummary()
 
-<h2>Login</h2>
+            <div class="">
+@*                @Html.LabelFor(m => m.UserName)*@
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @required = "true", @autofocus = "true", @placeholder = @Html.DisplayNameFor(m => m.UserName) })
+            </div>
 
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary()
-    
-    @Html.LabelFor(m => m.UserName, new {@class=""})
-    @Html.TextBoxFor(m => m.UserName)
-    <br/>
-    @Html.LabelFor(m => m.Password)
-    @Html.PasswordFor(m => m.Password)
-    
-    <button>Submit</button>
-}
+            <div class="">
+@*                @Html.LabelFor(m => m.Password)*@
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "true", @autofocus = "true", @placeholder = @Html.DisplayNameFor(m => m.Password) })
+            </div>
+            <div class="text-right">Forgot your Password? @Html.ActionLink("Click here to reset", "Register", "Account")</div>
+            <div class="text-right">New User? @Html.ActionLink("Click here to register", "Register", "Account")</div>
+            <button class="btn btn-lg btn-primary btn-block">Login</button>
+        }
+    </div>
+</div>
