@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Account;
 
@@ -11,7 +7,7 @@ namespace Blog.Web.Models.Blog
 {
     public class CategoryModel
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         public int NumberOfPosts { get; set; }
@@ -33,20 +29,20 @@ namespace Blog.Web.Models.Blog
 
         public CategoryModel(Category source)
         {
-            this.UpdateModel(source);
+            UpdateModel(source);
         }
 
         public void UpdateModel(Category source)
         {
-            this.ID = source.ID;
-            this.Name = source.Name;
-            this.NumberOfPosts = source.Blogentries.Count;
-            this.CreationDate = source.CreationDate;
+            Id = source.ID;
+            Name = source.Name;
+            NumberOfPosts = source.Blogentries.Count;
+            CreationDate = source.CreationDate;
         }
 
         public void UpdateSource(Category source)
         {
-            source.Name = this.Name;
+            source.Name = Name;
         }
     }
 }

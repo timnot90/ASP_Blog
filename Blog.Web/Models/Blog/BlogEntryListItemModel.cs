@@ -8,7 +8,7 @@ namespace Blog.Web.Models.Blog
 {
     public class BlogEntryListItemModel
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
         public List<CategoryModel> Categories { get; private set; } 
@@ -28,23 +28,23 @@ namespace Blog.Web.Models.Blog
 
         public BlogEntryListItemModel(Blogentry blogentry)
         {
-            this.UpdateModel(blogentry);
+            UpdateModel(blogentry);
         }
 
         public void UpdateModel(Blogentry source)
         {
-            this.ID = source.ID;
-            this.Header = source.Header;
-            this.Body = source.Body;
-            this.CreationDate = source.CreationDate;
-            this.Categories = source.Categories.Select(c => new CategoryModel(c)).ToList();
+            Id = source.ID;
+            Header = source.Header;
+            Body = source.Body;
+            CreationDate = source.CreationDate;
+            Categories = source.Categories.Select(c => new CategoryModel(c)).ToList();
         }
 
         public void UpdateSource(Blogentry source)
         {
-            source.Header = this.Header;
-            source.Body = this.Body;
-            source.CreationDate = this.CreationDate;
+            source.Header = Header;
+            source.Body = Body;
+            source.CreationDate = CreationDate;
         }
     }
 }

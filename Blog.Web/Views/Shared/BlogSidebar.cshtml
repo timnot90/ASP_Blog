@@ -4,7 +4,7 @@
 
 @foreach (CategoryModel category in Model.Categories)
 {
-    Html.ActionLink(category.Name, "Index", "Blog", new { categoryId = category.ID }, null);
+    Html.ActionLink(category.Name, "Index", "Blog", new { categoryId = category.Id }, null);
 }
 @*DatePicker*@
 @Html.ActionLink("Go", "Index", "Blog", new { month="", year="" }, null);

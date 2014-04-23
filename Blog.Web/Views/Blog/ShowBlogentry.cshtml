@@ -1,5 +1,4 @@
-﻿@using Blog.Web
-@model Blog.Web.Models.Blog.BlogentryDetailModel
+﻿@model Blog.Web.Models.Blog.BlogentryDetailModel
 
 @{
     ViewBag.Title = Model.Header;
@@ -11,7 +10,7 @@
             <h1 class="page-header">
                 @Model.Header
                 <small>Blog Homepage</small>
-                @if (WebSecurity.CurrentUserId == Model.Creator.ID)
+                @if (WebSecurity.CurrentUserId == Model.Creator.Id)
                 {
                     <button class="btn btn-primary pull-right">Edit</button>
                 }

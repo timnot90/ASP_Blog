@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using System.Web.UI.WebControls.WebParts;
-using Blog.Core.Attributes;
 using Blog.Web.Models.Blog;
 using Blog.Web.Services;
-using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {
-    [Authorize()]
+    [Authorize]
     public class BlogController : Controller
     {
         IBlogService _service = new BlogService();
@@ -29,7 +23,7 @@ namespace Blog.Web.Controllers
         {
             List<BlogEntryListItemModel> blogentries = _service.GetAllBlogentries().FindAll(b =>
             {
-                return categoryId == 0 || b.Categories.Any(c => c.ID == categoryId);
+                return categoryId == 0 || b.Categories.Any(c => c.Id == categoryId);
             });
             return View(blogentries);
         }
@@ -48,7 +42,7 @@ namespace Blog.Web.Controllers
             if (ModelState.IsValid)
             {
                 int id = _service.StoreBlogentry(blogentry);
-                return RedirectToAction("ShowBlogentry", new { id = id });
+                return RedirectToAction("ShowBlogentry", new {id });
             }
             return View(blogentry);
         }

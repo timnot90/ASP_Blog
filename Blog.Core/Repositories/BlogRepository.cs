@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Core.Repositories
@@ -13,11 +10,10 @@ namespace Blog.Core.Repositories
         #region Blogentry
         public int SaveBlogentry(Blogentry entry, bool isNewEntry = false)
         {
-            int id = 0;
             if (isNewEntry)
             {
                 entry.CreationDate = DateTime.Now;
-                id = BlogDataContext.Current.Blogentries.Add(entry).ID;
+                BlogDataContext.Current.Blogentries.Add(entry);
             }
             BlogDataContext.Current.SaveChanges();
             return entry.ID;
@@ -37,19 +33,18 @@ namespace Blog.Core.Repositories
         #region Category
         public int SaveCategory(Category category, bool isNewEntry = false)
         {
-            int id = 0;
             if (isNewEntry)
             {
                 category.CreationDate = DateTime.Now;
-                id = BlogDataContext.Current.Categories.Add(category).ID;
+                BlogDataContext.Current.Categories.Add(category);
             }
             BlogDataContext.Current.SaveChanges();
-            return id;
+            return category.ID;
         }
 
         public void DeleteCategory(int categoryid)
         {
-            Category category = BlogDataContext.Current.Categories.Remove(
+            BlogDataContext.Current.Categories.Remove(
                 BlogDataContext.Current.Categories.FirstOrDefault(c => c.ID == categoryid));
             BlogDataContext.Current.SaveChanges();
         }
@@ -68,13 +63,12 @@ namespace Blog.Core.Repositories
         #region UserProfile
         public int SaveUserProfile(UserProfile userProfile, bool isNewProfile = false)
         {
-            int id = 0;
             if (isNewProfile)
             {
-                id = BlogDataContext.Current.UserProfiles.Add(userProfile).ID;
+                BlogDataContext.Current.UserProfiles.Add(userProfile);
             }
             BlogDataContext.Current.SaveChanges();
-            return id;
+            return userProfile.ID;
         }
 
         public List<UserProfile> GetAllUserProfiles()

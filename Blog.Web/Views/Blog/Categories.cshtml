@@ -35,7 +35,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(category.Name + " (" + category.NumberOfPosts + ")", "Index", "Blog", new {categoryId = category.ID}, null)
+                        @Html.ActionLink(category.Name + " (" + category.NumberOfPosts + ")", "Index", "Blog", new {categoryId = category.Id}, null)
                     </td>
                     @if (Roles.IsUserInRole(CustomRoles.Administrator))
                     {
@@ -55,7 +55,7 @@
                             }
                         </td>
                         <td>
-                            <a href="@Url.Action("DeleteCategory", new {categoryId = category.ID})" class="btn btn-danger">
+                            <a href="@Url.Action("DeleteCategory", new {categoryId = category.Id})" class="btn btn-danger">
                                 <i class="glyphicon glyphicon-trash"></i>
                                 Delete
                             </a>

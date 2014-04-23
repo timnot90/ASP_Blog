@@ -25,7 +25,7 @@
                 @Html.ValidationSummary()
                 <fieldset>
                     <div class="form-group">
-                        @Html.HiddenFor(m => m.ID)
+                        @Html.HiddenFor(m => m.Id)
                         @Html.UserProfileTextBoxFor(m => m.UserName, true)
                         @Html.ActionLink("Change Password", "ChangePassword", "Account", null, new { @class = "col-lg-offset-2" })
                         @Html.UserProfileTextBoxFor(m => m.Email, true)

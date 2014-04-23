@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Blog.Web.Models.Account
 {
@@ -20,9 +16,5 @@ namespace Blog.Web.Models.Account
         [DisplayName("Confirm Password")]
         [Required]
         public string NewPasswordConfirmed { get; set; }
-
-        public ChangePasswordModel()
-        {
-        }
     }
 }

@@ -6,7 +6,7 @@ namespace Blog.Web.Models.Account
 {
     public class UserProfileModel
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [DisplayName("Username")]
         [Required(ErrorMessage = "The username must be declared.")]
@@ -47,34 +47,34 @@ namespace Blog.Web.Models.Account
 
         public UserProfileModel(UserProfile userProfile)
         {
-            this.UpdateModel(userProfile);
+            UpdateModel(userProfile);
         }
 
         public void UpdateSource(UserProfile source)
         {
-            source.UserName = this.UserName;
-            source.Email = this.Email;
-            source.Street = this.Street;
-            source.HouseNumber = this.HouseNumber;
-            source.Town = this.Town;
-            source.ZIP = this.Zip;
-            source.Country = this.Country;
-            source.Forename = this.Forename;
-            source.LastName = this.LastName;
+            source.UserName = UserName;
+            source.Email = Email;
+            source.Street = Street;
+            source.HouseNumber = HouseNumber;
+            source.Town = Town;
+            source.ZIP = Zip;
+            source.Country = Country;
+            source.Forename = Forename;
+            source.LastName = LastName;
         }
 
         public void UpdateModel(UserProfile source)
         {
-            this.ID = source.ID;
-            this.UserName = source.UserName;
-            this.Email = source.Email;
-            this.Street = source.Street;
-            this.HouseNumber = source.HouseNumber;
-            this.Town = source.Town;
-            this.Zip = source.ZIP;
-            this.Country = source.Country;
-            this.Forename = source.Forename;
-            this.LastName = source.LastName;
+            Id = source.ID;
+            UserName = source.UserName;
+            Email = source.Email;
+            Street = source.Street;
+            HouseNumber = source.HouseNumber;
+            Town = source.Town;
+            Zip = source.ZIP;
+            Country = source.Country;
+            Forename = source.Forename;
+            LastName = source.LastName;
         }
 
     }

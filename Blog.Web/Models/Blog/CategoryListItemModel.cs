@@ -4,7 +4,7 @@ namespace Blog.Web.Models.Blog
 {
     public class CategoryListItemModel
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public CategoryListItemModel(Category source)
@@ -14,13 +14,13 @@ namespace Blog.Web.Models.Blog
 
         public void UpdateModel(Category source)
         {
-            this.ID = source.ID;
-            this.Name = source.Name;
+            Id = source.ID;
+            Name = source.Name;
         }
 
         public void UpdateSource(Category source)
         {
-            source.Name = this.Name;
+            source.Name = Name;
         }
     }
 }

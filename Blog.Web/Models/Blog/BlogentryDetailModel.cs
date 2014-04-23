@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Account;
 
@@ -9,7 +7,7 @@ namespace Blog.Web.Models.Blog
 {
     public class BlogentryDetailModel
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
         public List<CategoryModel> Categories { get; set; }
@@ -30,22 +28,22 @@ namespace Blog.Web.Models.Blog
 
         public BlogentryDetailModel(Blogentry blogentry)
         {
-            this.UpdateModel(blogentry);
+            UpdateModel(blogentry);
         }
 
         public void UpdateModel(Blogentry source)
         {
-            this.ID = source.ID;
-            this.Header = source.Header;
-            this.Body = source.Body;
-            this.CreationDate = source.CreationDate;
+            Id = source.ID;
+            Header = source.Header;
+            Body = source.Body;
+            CreationDate = source.CreationDate;
         }
 
         public void UpdateSource(Blogentry source)
         {
-            source.Header = this.Header;
-            source.Body = this.Body;
-            source.CreationDate = this.CreationDate;
+            source.Header = Header;
+            source.Body = Body;
+            source.CreationDate = CreationDate;
         }
     }
 }

@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Blog.Web.Models;
 using Blog.Web.Models.Account;
 using WebMatrix.WebData;
 using Blog.Web.Services;
 
 namespace Blog.Web.Controllers
 {
-    [Authorize()]
+    [Authorize]
     public class AccountController : Controller
     {
         IBlogService _service = new BlogService();
@@ -39,7 +35,7 @@ namespace Blog.Web.Controllers
                         new
                         {
                             UserNameLowercase = model.UserName.ToLower(),
-                            Email = model.Email,
+                            model.Email,
                             EmailLowercase = model.Email.ToLower(),
                         });
                     return View("Created", model);
@@ -79,7 +75,6 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            LoginModel loginModel = new LoginModel();
             return View();
         }
 
@@ -90,14 +85,9 @@ namespace Blog.Web.Controllers
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password))
             {
                 return RedirectToLocal(returnUrl);
-                //return RedirectToAction("Index", "Blog", new { categoryId = 0, monthAndYear = "" });
             }
-            else
-            {
-                ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                return View(model);
-            }
-
+            ModelState.AddModelError("", "The user name or password provided is incorrect.");
+            return View(model);
         }
 
         [HttpGet]
@@ -139,10 +129,7 @@ namespace Blog.Web.Controllers
             {
                 return Redirect(returnUrl);
             }
-            else
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            return RedirectToAction("Index", "Home");
         }
 
         private static string GetErrorString(MembershipCreateStatus createStatus)

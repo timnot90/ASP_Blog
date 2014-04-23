@@ -20,7 +20,7 @@ namespace Blog.Web.Models.Account
 
         public void UpdateModel(UserProfileModel userProfile)
         {
-            this.UserName = userProfile.UserName;
+            UserName = userProfile.UserName;
         }
     }
 }

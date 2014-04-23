@@ -9,7 +9,7 @@ namespace Blog.Web.Models.Blog
 {
     public class AddBlogentryModel
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Header { get; set; }
         [Required]
@@ -27,15 +27,15 @@ namespace Blog.Web.Models.Blog
 
         private void UpdateModel(Blogentry source)
         {
-            this.ID = source.ID;
-            this.Header = source.Header;
-            this.Body = source.Body;
+            Id = source.ID;
+            Header = source.Header;
+            Body = source.Body;
         }
 
         public void UpdateSource(Blogentry source)
         {
-            source.Header = this.Header;
-            source.Body = this.Body;
+            source.Header = Header;
+            source.Body = Body;
         }
     }
 }

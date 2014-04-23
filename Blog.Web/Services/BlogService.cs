@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Blog.Core.Repositories;
 using Blog.Web.Models.Account;
 using Blog.Web.Models.Blog;
@@ -17,15 +16,15 @@ namespace Blog.Web.Services
 
         public int StoreBlogentry(AddBlogentryModel entryModel)
         {
-            bool isNewEntry = entryModel.ID == 0;
-            Blogentry entry = isNewEntry ? new Blogentry() : _repository.GetBlogentry(entryModel.ID);
+            bool isNewEntry = entryModel.Id == 0;
+            Blogentry entry = isNewEntry ? new Blogentry() : _repository.GetBlogentry(entryModel.Id);
             entryModel.UpdateSource(entry);
             entry.CreatorID = WebSecurity.CurrentUserId;
             foreach (CategoryModel categoryModel in entryModel.Categories)
             {
                 if (categoryModel.IsSelected)
                 {
-                    entry.Categories.Add(_repository.GetCategory(categoryModel.ID));
+                    entry.Categories.Add(_repository.GetCategory(categoryModel.Id));
                 }
             }
             return _repository.SaveBlogentry(entry, isNewEntry);
@@ -57,8 +56,8 @@ namespace Blog.Web.Services
         #region Category
         public int StoreCategory(CategoryModel categoryModel)
         {
-            bool isNewEntry = categoryModel.ID == 0;
-            Category category = isNewEntry ? new Category() : _repository.GetCategory(categoryModel.ID);
+            bool isNewEntry = categoryModel.Id == 0;
+            Category category = isNewEntry ? new Category() : _repository.GetCategory(categoryModel.Id);
             categoryModel.UpdateSource(category);
             category.CreationDate = DateTime.Now;
             category.CreatorID = WebSecurity.CurrentUserId;
@@ -96,8 +95,8 @@ namespace Blog.Web.Services
         #region UserProfile
         public int StoreUserProfile(UserProfileModel userProfileModel)
         {
-            bool isNewProfile = userProfileModel.ID == 0;
-            UserProfile newProfile = isNewProfile ? new UserProfile() : _repository.GetUserProfile(userProfileModel.ID);
+            bool isNewProfile = userProfileModel.Id == 0;
+            UserProfile newProfile = isNewProfile ? new UserProfile() : _repository.GetUserProfile(userProfileModel.Id);
             userProfileModel.UpdateSource(newProfile);
             return _repository.SaveUserProfile(newProfile, isNewProfile: isNewProfile);
         }
