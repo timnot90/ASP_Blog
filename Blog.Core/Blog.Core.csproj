@@ -127,7 +127,9 @@
     <Compile Include="Repositories\BlogRepository.cs" />
     <Compile Include="Repositories\IBlogRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="Content\bootstrap-theme.css.map" />

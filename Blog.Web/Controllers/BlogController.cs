@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls.WebParts;
 using Blog.Web.Models.Blog;
 using Blog.Web.Services;
+using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {

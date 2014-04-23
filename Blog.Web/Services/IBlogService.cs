@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Blog.Web.Models.AccountModel;
+using Blog.Web.Models.Account;
 using Blog.Web.Models.Blog;
 
 namespace Blog.Web.Services

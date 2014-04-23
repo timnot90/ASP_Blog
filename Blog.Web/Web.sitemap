@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+  <siteMapNode url="Home.aspx" title="Home"  description="This is my home page.">
+    <siteMapNode url="Knowledge.aspx" title="Knowledge"  description="This is my Knowledge page.">
+      <siteMapNode url="Tips.aspx" title="Tips"  description="Tips section" >
+        <siteMapNode url="Aspnet.aspx" title="ASP.Net"  description="ASP.Net  section" >
+          <siteMapNode url="Breadcrumbs.aspx" title="Creating Bread Crumbs with ASP.Net"  description="Creating Bread Crumbs with ASP.Net" />
+        </siteMapNode>
+        <siteMapNode url="js.aspx" title="Java Script"  description="Java Script Section" />
+      </siteMapNode>
+      <siteMapNode url="Articles.aspx" title="Articles"  description="Articles Section" />
+    </siteMapNode>
+    <siteMapNode url="Goal.aspx" title="Goal"  description="Goal section" />
+    <siteMapNode url="People.aspx" title="People"  description="People Section" />
+  </siteMapNode>
+</siteMap>

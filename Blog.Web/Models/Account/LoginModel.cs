@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using Blog.Web.Models.AccountModel;
 
 namespace Blog.Web.Models.Account
 {
@@ -7,7 +6,7 @@ namespace Blog.Web.Models.Account
     {
         [DisplayName("Username")]
         public string UserName { get; set; }
-        [DisplayName("Password")]
+        [DisplayName("NewPassword")]
         public string Password { get; set; }
 
         public LoginModel()
@@ -22,7 +21,6 @@ namespace Blog.Web.Models.Account
         public void UpdateModel(UserProfileModel userProfile)
         {
             this.UserName = userProfile.UserName;
-            this.Password = userProfile.Password;
         }
     }
 }

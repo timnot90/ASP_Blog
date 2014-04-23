@@ -1,10 +1,10 @@
 ﻿using Blog.Core.DataAccess.Blog;
-using Blog.Web.Models.AccountModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Blog.Core.Repositories;
+using Blog.Web.Models.Account;
 using Blog.Web.Models.Blog;
 using WebMatrix.WebData;
 

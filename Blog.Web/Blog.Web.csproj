@@ -138,6 +138,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Blog\AddBlogentryModel.cs" />
     <Compile Include="Models\Blog\BlogentryDetailModel.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Models\Blog\CategoryListModel.cs" />
     <Compile Include="Models\Blog\CategoryModel.cs" />
     <Compile Include="Models\Blog\CommentModel.cs" />
+    <Compile Include="Models\Account\RegisterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BlogService.cs" />
     <Compile Include="Services\IBlogService.cs" />
@@ -304,6 +306,8 @@
     <Content Include="Views\Blog\Categories.cshtml" />
     <Content Include="Views\Shared\AddCategory.cshtml" />
     <Content Include="Views\Shared\_AddBlogentryAvailableCategories.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Web.sitemap" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -32,61 +32,79 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Blog <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Blog <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                @Html.ActionLink("View Posts", "Index", "Blog", new { categoryId = 0, monthAndYear =""}, null)
+                                <a href="@Url.Action("Index", "Blog", new { categoryId = 0, monthAndYear = "" })">
+                                    <i class="glyphicon glyphicon-list"></i> View Posts
+                                </a>
                             </li>
                             <li>
-                                @Html.ActionLink("New Entry", "AddBlogentry", "Blog")
+                                <a href="@Url.Action("Categories", "Blog", new { categoryId = 0, monthAndYear = "" })">
+                                    <i class="glyphicon glyphicon-inbox"></i> Categories
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("AddBlogentry", "Blog", new { categoryId = 0, monthAndYear = "" })">
+                                    <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
+                                </a>
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        @Html.ActionLink("Categories", "Categories", "Blog")
-                    </li>
                     <li class="dropdown">
                         @*<a href='@Url.Action(actionName: "EditProfile", controllerName: "Account")' class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
-                        *@<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
+                        *@<a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i class="glyphicon glyphicon-user"></i> My Account <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             @if (WebSecurity.IsAuthenticated)
                             {
                                 <li>
-                                    @Html.ActionLink("Edit my Profile", "EditProfile", "Account")
+                                    <a href="@Url.Action("EditProfile", "Account", new { categoryId = 0, monthAndYear = "" })">
+                                        <i class="glyphicon glyphicon-cog"></i> Edit Profile
+                                    </a>
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Logout", "Logout", "Account")
+                                    <a href="@Url.Action("Logout", "Account", new { categoryId = 0, monthAndYear = "" })">
+                                        <i class="glyphicon glyphicon-log-out"></i> Logout
+                                    </a>
                                 </li>
                             }
                             else
                             {
                                 <li>
-                                    @Html.ActionLink("Register", "Register", "Account")
+                                    <a href="@Url.Action("Register", "Account", new { categoryId = 0, monthAndYear = "" })">
+                                        <i class="glyphicon glyphicon-edit"></i> Register
+                                    </a>
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Login", "Login", "Account")
+                                    <a href="@Url.Action("Login", "Account", new { categoryId = 0, monthAndYear = "" })">
+                                        <i class="glyphicon glyphicon-log-in"></i> Login
+                                    </a>
                                 </li>
                             }
                         </ul>
                     </li>
                     <li>
-                        @Html.ActionLink("About", "", "")
+                        <a href="@Url.Action("Index", "Home")">
+                            <i class="glyphicon glyphicon-info-sign"></i> About
+                        </a>
                     </li>
                     <li>
                         @if (WebSecurity.IsAuthenticated)
                         {
-                            @Html.ActionLink("Logout", "Logout", "Account")
+                            <a href="@Url.Action("Logout", "Account")">
+                                <i class="glyphicon glyphicon-log-out"></i> Logout
+                            </a>
                         }
                         else
                         {
-                            @Html.ActionLink("Login", "Login", "Account")
+                            <a href="@Url.Action("Login", "Account")">
+                                <i class="glyphicon glyphicon-log-in"></i> Login
+                            </a>
                         }
                     </li>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </div>
-        <!-- /.container -->
     </nav>
 
     <br />

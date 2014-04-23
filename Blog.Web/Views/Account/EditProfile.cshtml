@@ -1,4 +1,4 @@
-﻿@model Blog.Web.Models.AccountModel.UserProfileModel
+﻿@model Blog.Web.Models.Account.UserProfileModel
 @{
     ViewBag.Title = "Profile";
 }
@@ -27,7 +27,7 @@
                     <div class="form-group">
                         @Html.HiddenFor(m => m.ID)
                         @Html.UserProfileTextBoxFor(m => m.UserName, true)
-                        @Html.UserProfileTextBoxFor(m => m.Password, true, true)
+                        @Html.ActionLink("Change Password", "ChangePassword", "Account", null, new { @class = "col-lg-offset-2" })
                         @Html.UserProfileTextBoxFor(m => m.Email, true)
                         @Html.UserProfileTextBoxFor(m => m.Street)
                         @Html.UserProfileTextBoxFor(m => m.HouseNumber)
@@ -37,9 +37,9 @@
                         @Html.UserProfileTextBoxFor(m => m.LastName)
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-10">
+                        <div class="col-lg-offset-2">
                             <button class="btn btn-default">Cancel</button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </div>
                 </fieldset>

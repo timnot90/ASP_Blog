@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Models.AccountModel
+namespace Blog.Web.Models.Account
 {
     public class UserProfileModel
     {
@@ -11,10 +11,6 @@ namespace Blog.Web.Models.AccountModel
         [DisplayName("Username")]
         [Required(ErrorMessage = "The username must be declared.")]
         public string UserName { get; set; }
-
-        [DisplayName("Password")]
-        [Required(ErrorMessage = "A password must be declared.")]
-        public string Password { get; set; }
 
         [DisplayName("E-Mail")]
         [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$", ErrorMessage = "The E-Mail Adress is not valid.")]

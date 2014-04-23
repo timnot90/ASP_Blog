@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Blog.Web.Models;
 using Blog.Web.Models.Account;
-using Blog.Web.Models.AccountModel;
 using WebMatrix.WebData;
 using Blog.Web.Services;
 
@@ -16,8 +15,6 @@ namespace Blog.Web.Controllers
     {
         IBlogService _service = new BlogService();
 
-        //
-        // GET: /Account/
         [HttpGet]
         public ActionResult Register()
         {
@@ -25,8 +22,12 @@ namespace Blog.Web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(UserProfileModel model)
+        public ActionResult Register(RegisterModel model)
         {
+            if (model.Password != model.PasswordConfirmed)
+            {
+                ModelState.AddModelError("DISSENTING_PASSWORD", "The given passwords do not correspond.");
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -37,14 +38,6 @@ namespace Blog.Web.Controllers
                             UserNameLowercase = model.UserName.ToLower(),
                             Email = model.Email,
                             EmailLowercase = model.Email.ToLower(),
-                            Street = model.Street,
-                            HouseNumber = model.HouseNumber,
-                            Town = model.Town,
-                            ZIP = model.Zip,
-                            LastName = model.LastName,
-                            Forename = model.Forename,
-                            Gender = model.Gender,
-                            Country = model.Country
                         });
                     return View("Created", model);
                 }
@@ -53,10 +46,6 @@ namespace Blog.Web.Controllers
                     ModelState.AddModelError("", GetErrorString(ex.StatusCode));
                 }
             }
-            //else
-            //{
-            //    ModelState.AddModelError("", "The username or password provided is incorrect.");
-            //}
             return View(model);
         }
 
@@ -145,6 +134,38 @@ namespace Blog.Web.Controllers
                 return View(model);
             }
 
+        }
+
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            if (model.NewPassword != model.NewPasswordConfirmed)
+            {
+                ModelState.AddModelError("DISSENTING_PASSWORD", "The given passwords do not correspond.");
+            }
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (WebSecurity.ChangePassword(WebSecurity.CurrentUserName, model.CurrentPassword, model.NewPassword))
+                    {
+                        return RedirectToAction("EditProfile");
+                    }
+                    ModelState.AddModelError("WrongPassword", "The current password was wrong.");
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+            }
+
+            return View(model);
         }
     }
 }

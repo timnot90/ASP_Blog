@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using Blog.Core.DataAccess.Blog;
-using Blog.Web.Models.AccountModel;
+using Blog.Web.Models.Account;
 
 namespace Blog.Web.Models.Blog
 {
