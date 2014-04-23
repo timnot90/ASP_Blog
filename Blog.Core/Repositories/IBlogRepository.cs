@@ -10,7 +10,7 @@ namespace Blog.Core.Repositories
     public interface IBlogRepository
     {
         #region Blogentry
-        void SaveBlogentry(Blogentry entry, bool isNewEntry = false);
+        int SaveBlogentry(Blogentry entry, bool isNewEntry = false);
 
         List<Blogentry> GetAllBlogentries();
 
@@ -18,7 +18,7 @@ namespace Blog.Core.Repositories
         #endregion
 
         #region Category
-        void SaveCategory(Category category, bool isNewEntry = false);
+        int SaveCategory(Category category, bool isNewEntry = false);
 
         List<Category> GetAllCategories();
 
@@ -26,7 +26,7 @@ namespace Blog.Core.Repositories
         #endregion
 
         #region UserProfile
-        void SaveUserProfile(UserProfile userProfile, bool isNewProfile = false);
+        int SaveUserProfile(UserProfile userProfile, bool isNewProfile = false);
 
         List<UserProfile> GetAllUserProfiles();
 

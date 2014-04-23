@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Blog.Core.DataAccess.Blog;
@@ -11,6 +12,7 @@ namespace Blog.Web.Models.Blog
     public class CategoryModel
     {
         public int ID { get; set; }
+        [Required]
         public string Name { get; set; }
         public int NumberOfPosts { get; set; }
         public UserProfileModel Creator { get; set; }

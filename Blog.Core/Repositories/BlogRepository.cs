@@ -11,14 +11,16 @@ namespace Blog.Core.Repositories
     public class BlogRepository : IBlogRepository
     {
         #region Blogentry
-        public void SaveBlogentry(Blogentry entry, bool isNewEntry = false)
+        public int SaveBlogentry(Blogentry entry, bool isNewEntry = false)
         {
+            int id = 0;
             if (isNewEntry)
             {
                 entry.CreationDate = DateTime.Now;
-                BlogDataContext.Current.Blogentries.Add(entry);
+                id = BlogDataContext.Current.Blogentries.Add(entry).ID;
             }
             BlogDataContext.Current.SaveChanges();
+            return entry.ID;
         }
 
         public List<Blogentry> GetAllBlogentries()
@@ -33,14 +35,16 @@ namespace Blog.Core.Repositories
         #endregion
 
         #region Category
-        public void SaveCategory(Category category, bool isNewEntry = false)
+        public int SaveCategory(Category category, bool isNewEntry = false)
         {
+            int id = 0;
             if (isNewEntry)
             {
                 category.CreationDate = DateTime.Now;
-                BlogDataContext.Current.Categories.Add(category);
+                id = BlogDataContext.Current.Categories.Add(category).ID;
             }
             BlogDataContext.Current.SaveChanges();
+            return id;
         }
 
         public void DeleteCategory(int categoryid)
@@ -62,13 +66,15 @@ namespace Blog.Core.Repositories
         #endregion
 
         #region UserProfile
-        public void SaveUserProfile(UserProfile userProfile, bool isNewProfile = false)
+        public int SaveUserProfile(UserProfile userProfile, bool isNewProfile = false)
         {
+            int id = 0;
             if (isNewProfile)
             {
-                BlogDataContext.Current.UserProfiles.Add(userProfile);
+                id = BlogDataContext.Current.UserProfiles.Add(userProfile).ID;
             }
             BlogDataContext.Current.SaveChanges();
+            return id;
         }
 
         public List<UserProfile> GetAllUserProfiles()

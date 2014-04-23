@@ -6,15 +6,15 @@ namespace Blog.Web.Services
 {
     public interface IBlogService
     {
-        void StoreBlogentry(AddBlogentryModel entry);
+        int StoreBlogentry(AddBlogentryModel entry);
         List<BlogEntryListItemModel> GetAllBlogentries();
-        BlogEntryListItemModel GetBlogentry(int id);
+        BlogentryDetailModel GetBlogentry(int id);
 
-        void StoreCategory(CategoryModel categoryModel);
+        int StoreCategory(CategoryModel categoryModel);
         List<CategoryModel> GetAllCategories();
         CategoryModel GetCategory(int id);
 
-        void StoreUserProfile(UserProfileModel userProfileModel);
+        int StoreUserProfile(UserProfileModel userProfileModel);
         List<UserProfileModel> GetAllUserProfiles();
         UserProfileModel GetUserProfile(int id);
         void DeleteCategory(int categoryid);

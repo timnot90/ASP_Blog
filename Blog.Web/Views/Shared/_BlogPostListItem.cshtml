@@ -7,7 +7,7 @@
     Layout = null;
 }
 <h1>
-    @Html.ActionLink(Model.Header, "ShowBlogentry", "Blog",  new { id = Model.ID }, null)
+    @Html.ActionLink(Model.Header, "ShowBlogentry", "Blog", new { id = Model.ID}, htmlAttributes: null)
 </h1>
 <p class="lead">
     by <a href="#">@Model.Creator.UserName</a>

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.UI.WebControls.WebParts;
+using Blog.Core.Attributes;
 using Blog.Web.Models.Blog;
 using Blog.Web.Services;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {
+    [Authorize()]
     public class BlogController : Controller
     {
         IBlogService _service = new BlogService();
@@ -20,11 +23,13 @@ namespace Blog.Web.Controllers
         /// <param name="categoryId">the id of the category to show blogentries for</param>
         /// <param name="monthAndYear">a string containing numbers for month and year (mmyyyy)</param>
         /// <returns></returns>
-        public ActionResult Index(int categoryId, string monthAndYear)
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Index(int categoryId, string monthAndYear = "")
         {
             List<BlogEntryListItemModel> blogentries = _service.GetAllBlogentries().FindAll(b =>
             {
-                return categoryId == 0 ||  b.Categories.FindAll(c => c.ID == categoryId).Count > 0;
+                return categoryId == 0 || b.Categories.Any(c => c.ID == categoryId);
             });
             return View(blogentries);
         }
@@ -33,7 +38,7 @@ namespace Blog.Web.Controllers
         public ActionResult AddBlogentry()
         {
             AddBlogentryModel model = new AddBlogentryModel();
-            model.AvailableCategories = _service.GetAllCategories();
+            model.Categories = _service.GetAllCategories();
             return View(model);
         }
 
@@ -42,16 +47,27 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.StoreBlogentry(blogentry);
+                int id = _service.StoreBlogentry(blogentry);
+                return RedirectToAction("ShowBlogentry", new { id = id });
             }
             return View(blogentry);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult ShowBlogentry(int id)
         {
-            return View(_service.GetBlogentry(id));
+            BlogentryDetailModel model = _service.GetBlogentry(id);
+            if (model != null)
+            {
+                return View(model);
+            }
+            return View("BlogentryNotFound", id);
+
         }
 
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult Categories()
         {
             CategoryListModel categoryListModel = new CategoryListModel();
@@ -59,6 +75,7 @@ namespace Blog.Web.Controllers
             return View(categoryListModel);
         }
 
+        [HttpGet]
         public PartialViewResult AddCategory()
         {
             return PartialView(new CategoryModel());
@@ -67,10 +84,16 @@ namespace Blog.Web.Controllers
         [HttpPost]
         public ActionResult AddCategory(CategoryModel model)
         {
-            _service.StoreCategory(model);
-            return RedirectToAction("Categories");
+            if (ModelState.IsValid)
+            {
+                _service.StoreCategory(model);
+                return RedirectToAction("Categories");
+            }
+            //TODO: add and show error when model state is not valid
+            return RedirectToAction("Categories", model);
         }
 
+        [HttpPost]
         public ActionResult DeleteCategory(int categoryid)
         {
             _service.DeleteCategory(categoryid);
@@ -78,7 +101,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult _AddBlogentryAvailableCategories()
+        public PartialViewResult _AddBlogentryAvailableCategories()
         {
             return PartialView(_service.GetAllCategories());
         }

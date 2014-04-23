@@ -25,12 +25,12 @@
             @Html.ValidationSummary()
 
             <div class="">
-@*                @Html.LabelFor(m => m.UserName)*@
+                @Html.LabelFor(m => m.UserName, new{@class="sr-only"})
                 @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @required = "true", @autofocus = "true", @placeholder = @Html.DisplayNameFor(m => m.UserName) })
             </div>
 
             <div class="">
-@*                @Html.LabelFor(m => m.NewPassword)*@
+                @Html.LabelFor(m => m.Password, new { @class = "sr-only" })
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control", @required = "true", @autofocus = "true", @placeholder = @Html.DisplayNameFor(m => m.Password) })
             </div>
             <div class="text-right">Forgot your NewPassword? @Html.ActionLink("Click here to reset", "Register", "Account")</div>

@@ -1,7 +1,14 @@
 ﻿@model Blog.Web.Models.Blog.CategoryModel
-@using (Html.BeginForm("AddCategory", "Blog", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("AddCategory", "Blog", FormMethod.Post, new { @class = "form-inline" }))
 {
-    @Html.LabelFor(c => c.Name)
-    @Html.TextBoxFor(c => c.Name, new { @autofocus = true })
-    <button>Create</button>
+    @Html.ValidationSummary("", new { @class = "validation-summary-errors" })
+    <div class="container">
+        <div class="row">
+            <div class="form-group">
+                @Html.LabelFor(c => c.Name, new { @class = "" })
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control", @autofocus = true })
+            </div>
+            <button class="btn btn-primary">Create</button>
+        </div>
+    </div>
 }

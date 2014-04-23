@@ -15,20 +15,20 @@ namespace Blog.Web.Services
         private readonly IBlogRepository _repository = new BlogRepository();
         #region Blogentry
 
-        public void StoreBlogentry(AddBlogentryModel entryModel)
+        public int StoreBlogentry(AddBlogentryModel entryModel)
         {
             bool isNewEntry = entryModel.ID == 0;
             Blogentry entry = isNewEntry ? new Blogentry() : _repository.GetBlogentry(entryModel.ID);
             entryModel.UpdateSource(entry);
             entry.CreatorID = WebSecurity.CurrentUserId;
-            foreach (CategoryModel categoryModel in entryModel.AvailableCategories)
+            foreach (CategoryModel categoryModel in entryModel.Categories)
             {
                 if (categoryModel.IsSelected)
                 {
                     entry.Categories.Add(_repository.GetCategory(categoryModel.ID));
                 }
             }
-            _repository.SaveBlogentry(entry, isNewEntry);
+            return _repository.SaveBlogentry(entry, isNewEntry);
         }
 
         public List<BlogEntryListItemModel> GetAllBlogentries()
@@ -42,10 +42,10 @@ namespace Blog.Web.Services
                 }).ToList();
         }
 
-        public BlogEntryListItemModel GetBlogentry(int id)
+        public BlogentryDetailModel GetBlogentry(int id)
         {
             Blogentry entry = _repository.GetBlogentry(id);
-            BlogEntryListItemModel entryModel = entry == null ? null : new BlogEntryListItemModel(entry);
+            BlogentryDetailModel entryModel = entry == null ? null : new BlogentryDetailModel(entry);
             if (entryModel != null)
             {
                 entryModel.Creator = new UserProfileModel(_repository.GetUserProfile(entry.CreatorID));
@@ -55,14 +55,14 @@ namespace Blog.Web.Services
         #endregion
 
         #region Category
-        public void StoreCategory(CategoryModel categoryModel)
+        public int StoreCategory(CategoryModel categoryModel)
         {
             bool isNewEntry = categoryModel.ID == 0;
             Category category = isNewEntry ? new Category() : _repository.GetCategory(categoryModel.ID);
             categoryModel.UpdateSource(category);
             category.CreationDate = DateTime.Now;
             category.CreatorID = WebSecurity.CurrentUserId;
-            _repository.SaveCategory(category, isNewEntry);
+            return _repository.SaveCategory(category, isNewEntry: isNewEntry);
         }
 
         public void DeleteCategory(int categoryid)
@@ -94,12 +94,12 @@ namespace Blog.Web.Services
         #endregion
 
         #region UserProfile
-        public void StoreUserProfile(UserProfileModel userProfileModel)
+        public int StoreUserProfile(UserProfileModel userProfileModel)
         {
             bool isNewProfile = userProfileModel.ID == 0;
             UserProfile newProfile = isNewProfile ? new UserProfile() : _repository.GetUserProfile(userProfileModel.ID);
             userProfileModel.UpdateSource(newProfile);
-            _repository.SaveUserProfile(newProfile, isNewProfile);
+            return _repository.SaveUserProfile(newProfile, isNewProfile: isNewProfile);
         }
 
         public List<UserProfileModel> GetAllUserProfiles()

@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\CustomAuthorize.cs" />
     <Compile Include="DataAccess\Blog\BlogDataContext.Custom.cs" />
     <Compile Include="DataAccess\Blog\BlogDataModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -127,9 +128,7 @@
     <Compile Include="Repositories\BlogRepository.cs" />
     <Compile Include="Repositories\IBlogRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.Config" />
     <None Include="Content\bootstrap-theme.css.map" />

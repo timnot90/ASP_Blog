@@ -10,9 +10,11 @@ namespace Blog.Web.Models.Blog
     public class AddBlogentryModel
     {
         public int ID { get; set; }
+        [Required]
         public string Header { get; set; }
+        [Required]
         public string Body { get; set; }
-        public List<CategoryModel> AvailableCategories { get; set; }
+        public List<CategoryModel> Categories { get; set; }
 
         public AddBlogentryModel()
         {
