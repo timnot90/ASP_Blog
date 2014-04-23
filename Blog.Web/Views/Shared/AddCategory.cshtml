@@ -6,7 +6,7 @@
         <div class="row">
             <div class="form-group">
                 @Html.LabelFor(c => c.Name, new { @class = "" })
-                @Html.TextBoxFor(c => c.Name, new { @class = "form-control", @autofocus = true })
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control", @autofocus = true, @required="true" })
             </div>
             <button class="btn btn-primary">Create</button>
         </div>
