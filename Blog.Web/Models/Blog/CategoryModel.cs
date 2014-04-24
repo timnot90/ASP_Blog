@@ -38,6 +38,7 @@ namespace Blog.Web.Models.Blog
             Name = source.Name;
             NumberOfPosts = source.Blogentries.Count;
             CreationDate = source.CreationDate;
+            Creator = new UserProfileModel(source.UserProfile);
         }
 
         public void UpdateSource(Category source)

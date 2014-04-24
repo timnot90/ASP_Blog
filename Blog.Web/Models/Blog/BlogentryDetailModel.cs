@@ -37,6 +37,7 @@ namespace Blog.Web.Models.Blog
             Header = source.Header;
             Body = source.Body;
             CreationDate = source.CreationDate;
+            Creator = new UserProfileModel(source.UserProfile);
         }
 
         public void UpdateSource(Blogentry source)

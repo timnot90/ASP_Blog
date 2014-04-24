@@ -36,7 +36,6 @@ namespace Blog.Web.Services
                 b =>
                 {
                     BlogEntryListItemModel entryModel = new BlogEntryListItemModel(b);
-                    entryModel.Creator = new UserProfileModel(_repository.GetUserProfile(b.CreatorID));
                     return entryModel;
                 }).ToList();
         }
@@ -45,10 +44,6 @@ namespace Blog.Web.Services
         {
             Blogentry entry = _repository.GetBlogentry(id);
             BlogentryDetailModel entryModel = entry == null ? null : new BlogentryDetailModel(entry);
-            if (entryModel != null)
-            {
-                entryModel.Creator = new UserProfileModel(_repository.GetUserProfile(entry.CreatorID));
-            }
             return entryModel;
         }
         #endregion
@@ -75,7 +70,6 @@ namespace Blog.Web.Services
                 c =>
                 {
                     CategoryModel categoryModel = new CategoryModel(c);
-                    categoryModel.Creator = new UserProfileModel(_repository.GetUserProfile(c.CreatorID));
                     return categoryModel;
                 }).ToList();
         }
@@ -84,10 +78,6 @@ namespace Blog.Web.Services
         {
             Category category = _repository.GetCategory(id);
             CategoryModel categoryModel = category == null ? null : new CategoryModel(category);
-            if (categoryModel != null)
-            {
-                categoryModel.Creator = new UserProfileModel(_repository.GetUserProfile(category.CreatorID));
-            }
             return categoryModel;
         }
         #endregion

@@ -38,6 +38,7 @@ namespace Blog.Web.Models.Blog
             Body = source.Body;
             CreationDate = source.CreationDate;
             Categories = source.Categories.Select(c => new CategoryModel(c)).ToList();
+            this.Creator = new UserProfileModel(source.UserProfile);
         }
 
         public void UpdateSource(Blogentry source)
