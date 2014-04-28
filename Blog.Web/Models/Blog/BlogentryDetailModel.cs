@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Account;
 
@@ -38,6 +39,7 @@ namespace Blog.Web.Models.Blog
             Body = source.Body;
             CreationDate = source.CreationDate;
             Creator = new UserProfileModel(source.UserProfile);
+            Comments = source.Comments.Select(m => new CommentModel(m)).ToList();
         }
 
         public void UpdateSource(Blogentry source)

@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Web.Mvc;
 using Blog.Web.Models.Blog;
 using Blog.Web.Services;
+using Recaptcha;
 
 namespace Blog.Web.Controllers
 {
@@ -98,6 +100,25 @@ namespace Blog.Web.Controllers
         public PartialViewResult _AddBlogentryAvailableCategories()
         {
             return PartialView(_service.GetAllCategories());
+        }
+
+        [HttpPost]
+        [RecaptchaControlMvc.CaptchaValidatorAttribute]
+        public ActionResult _LeaveComment(LeaveCommentModel comment, bool captchaValid, string captchaErrorMessage)
+        {
+            if (!captchaValid)
+            {
+                ModelState.AddModelError("captcha", captchaErrorMessage);
+            }
+            if (ModelState.IsValid)
+            {
+                _service.StoreComment(comment);
+                return RedirectToAction("ShowBlogentry", new {id = comment.BlogentryId});
+            }
+            else
+            {
+                return View();
+            }
         }
     }
 }

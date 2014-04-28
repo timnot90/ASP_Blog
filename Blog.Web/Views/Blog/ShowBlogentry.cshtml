@@ -1,4 +1,5 @@
-﻿@model Blog.Web.Models.Blog.BlogentryDetailModel
+﻿@using Blog.Web.Models.Blog
+@model BlogentryDetailModel
 
 @{
     ViewBag.Title = Model.Header;
@@ -20,7 +21,7 @@
                     @Html.ActionLink("Home", "Index", "Home")
                 </li>
                 <li>
-                    @Html.ActionLink("Blog", "Index", "Blog", new { categoryId = 0}, null)
+                    @Html.ActionLink("Blog", "Index", "Blog", new { categoryId = 0 }, null)
                 </li>
                 <li class="active">@Model.Header</li>
             </ol>
@@ -37,37 +38,39 @@
             </p>
             <hr>
             @*<img src="http://placehold.it/900x300" class="img-responsive img-rounded">*@
-            <hr>
+@*            <hr>*@
             @*<p class="lead">Science cuts two ways, of course; its products can be used for both good and evil. But there's no turning back from science. The early warnings about technological dangers also come from science.</p>*@
             <p class="">@Model.Body</p>
 
             <hr>
 
-            <!-- the comment box -->
-            <div class="well">
-                <h4>Leave a Comment:</h4>
-                <form role="form">
-                    <div class="form-group">
-                        <textarea class="form-control" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
+            @{
+                LeaveCommentModel leaveCommentModel = new LeaveCommentModel();
+                leaveCommentModel.BlogentryId = Model.Id;
+            }
+            @Html.Partial("_LeaveComment", leaveCommentModel)
+
 
             <hr>
-
-            <!-- the comments -->
-            <h3>
-                Start Bootstrap
-                <small>9:41 PM on August 24, 2013</small>
-            </h3>
-            <p>This has to be the worst blog post I have ever read. It simply makes no sense. You start off by talking about space or something, then you randomly start babbling about cupcakes, and you end off with random fish names.</p>
-
-            <h3>
-                Start Bootstrap
-                <small>9:47 PM on August 24, 2013</small>
-            </h3>
-            <p>Don't listen to this guy, any blog with the categories 'dinosaurs, spaceships, fried foods, wild animals, alien abductions, business casual, robots, and fireworks' has true potential.</p>
+            <h2>Comments</h2>
+            @foreach (CommentModel comment in Model.Comments)
+            {
+                <div class="">
+                    @Html.Partial("_Comment", comment)
+                </div>
+            }
+            @*            <!-- the comments -->*@
+            @*            <h3>*@
+            @*                Start Bootstrap*@
+            @*                <small>9:41 PM on August 24, 2013</small>*@
+            @*            </h3>*@
+            @*            <p>This has to be the worst blog post I have ever read. It simply makes no sense. You start off by talking about space or something, then you randomly start babbling about cupcakes, and you end off with random fish names.</p>*@
+            @**@
+            @*            <h3>*@
+            @*                Start Bootstrap*@
+            @*                <small>9:47 PM on August 24, 2013</small>*@
+            @*            </h3>*@
+            @*            <p>Don't listen to this guy, any blog with the categories 'dinosaurs, spaceships, fried foods, wild animals, alien abductions, business casual, robots, and fireworks' has true potential.</p>*@
 
         </div>
     </div>

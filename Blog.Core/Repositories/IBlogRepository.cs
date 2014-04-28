@@ -19,6 +19,8 @@ namespace Blog.Core.Repositories
         List<Category> GetAllCategories();
 
         Category GetCategory(int id);
+
+        void DeleteCategory(int categoryid);
         #endregion
 
         #region UserProfile
@@ -29,6 +31,12 @@ namespace Blog.Core.Repositories
         UserProfile GetUserProfile(int id);
         #endregion
 
-        void DeleteCategory(int categoryid);
+        #region Comment
+        int SaveComment(Comment comment, bool isNewComment = false);
+
+        List<Comment> GetAllComments();
+
+        Comment GetComment(int id);
+        #endregion
     }
 }

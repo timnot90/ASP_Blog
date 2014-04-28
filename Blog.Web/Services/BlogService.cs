@@ -106,5 +106,21 @@ namespace Blog.Web.Services
         }
         #endregion
 
+        public int StoreComment(LeaveCommentModel commentModel)
+        {
+            bool isNewComment = commentModel.Id == 0;
+            Comment comment = isNewComment ? new Comment() : _repository.GetComment(commentModel.Id);
+            commentModel.UpdateSource(comment);
+            comment.CreatorID = WebSecurity.CurrentUserId;
+            comment.CreationDate = DateTime.Now;
+            return _repository.SaveComment(comment, isNewComment);
+        }
+
+        public CommentModel GetComment(int id)
+        {
+            Comment comment = _repository.GetComment(id);
+            CommentModel commentModel = comment == null ? null : new CommentModel(comment);
+            return commentModel;
+        }
     }
 }

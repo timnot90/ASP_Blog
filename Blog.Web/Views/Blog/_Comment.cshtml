@@ -1,0 +1,8 @@
+﻿@model Blog.Web.Models.Blog.CommentModel
+
+<h4>
+    @Model.Header
+    <small>@Model.CreationDateString, by <span class="section-colored">@Model.Creator.UserName</span></small>
+</h4>
+<p>@Model.Body</p>
+

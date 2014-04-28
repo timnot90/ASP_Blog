@@ -34,6 +34,7 @@ namespace Blog.Core.DataAccess.Blog
         public string Forename { get; set; }
         public string Gender { get; set; }
         public string Country { get; set; }
+        public string DisplayName { get; set; }
     
         public virtual ICollection<Blogentry> Blogentries { get; set; }
         public virtual ICollection<Category> Categories { get; set; }

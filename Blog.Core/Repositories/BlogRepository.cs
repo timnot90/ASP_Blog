@@ -81,5 +81,28 @@ namespace Blog.Core.Repositories
             return BlogDataContext.Current.UserProfiles.FirstOrDefault(u => u.ID == id);
         }
         #endregion
+
+        #region UserProfile
+        public int SaveComment(Comment comment, bool isNewComment = false)
+        {
+            if (isNewComment)
+            {
+                BlogDataContext.Current.Comments.Add(comment);
+            }
+            BlogDataContext.Current.SaveChanges();
+            return comment.ID;
+        }
+
+        public List<Comment> GetAllComments()
+        {
+            return BlogDataContext.Current.Comments.OrderBy(c => c.CreationDate).ToList();
+        }
+
+        public Comment GetComment(int id)
+        {
+            return BlogDataContext.Current.Comments.FirstOrDefault(c => c.ID == id);
+        }
+        #endregion
+
     }
 }

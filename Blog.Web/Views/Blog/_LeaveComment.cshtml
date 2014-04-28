@@ -1,0 +1,23 @@
+﻿@using Recaptcha
+@model Blog.Web.Models.Blog.LeaveCommentModel
+
+<div class="well">
+    <h4>Leave a Comment:</h4>
+    @using (Html.BeginForm("_LeaveComment", "Blog", FormMethod.Post, new { @class = "" }))
+    {
+        <div class="form-group">
+            @Html.ValidationSummary()
+            @*            @Html.HiddenFor(m => m.Id)*@
+            @Html.HiddenFor(m => m.BlogentryId)
+            @Html.TextBoxFor(m => m.Header, new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Header) })
+            @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "3", @placeholder = Html.DisplayNameFor(m => m.Body) })
+        </div>
+        if (!WebSecurity.IsAuthenticated)
+        {
+            <div>
+                @Html.Raw(Html.GenerateCaptcha("captcha", "white"))
+            </div>
+        }
+        <button type="submit" class="btn btn-primary">Submit</button>
+    }
+</div>

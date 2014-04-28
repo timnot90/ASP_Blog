@@ -41,7 +41,6 @@
           <Property Name="CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Header" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Author" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="BlogentryID" Type="int" Nullable="false" />
           <Property Name="CreatorID" Type="int" Nullable="false" />
         </EntityType>
@@ -63,6 +62,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserNameLowercase" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmailLowercase" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Street" Type="nvarchar" MaxLength="100" />
@@ -151,7 +151,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CategoriesToEntries_Categories">
-          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CategoriesToEntries" Type="Self.CategoriesToEntries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Categories">
@@ -275,7 +277,6 @@
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Header" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Author" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="BlogentryID" Type="Int32" Nullable="false" />
           <Property Name="CreatorID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Blogentry" Relationship="Self.FK_Comments_Blogentries" FromRole="Comments" ToRole="Blogentries" />
@@ -312,6 +313,7 @@
           <NavigationProperty Name="Blogentries" Relationship="Self.FK_Blogentries_UserProfiles" FromRole="UserProfiles" ToRole="Blogentries" />
           <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_UserProfiles" FromRole="UserProfiles" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_UserProfiles" FromRole="UserProfiles" ToRole="Comments" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -489,7 +491,6 @@
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="Header" ColumnName="Header" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="Author" ColumnName="Author" />
                 <ScalarProperty Name="BlogentryID" ColumnName="BlogentryID" />
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
               </MappingFragment>
@@ -510,6 +511,7 @@
           <EntitySetMapping Name="UserProfiles">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.UserProfile">
               <MappingFragment StoreEntitySet="UserProfiles">
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="UserNameLowercase" ColumnName="UserNameLowercase" />
