@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Models.Blog
+namespace Blog.Web.Models.Home
 {
     public class AddBlogentryModel
     {

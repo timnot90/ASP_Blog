@@ -2,7 +2,7 @@
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Account;
 
-namespace Blog.Web.Models.Blog
+namespace Blog.Web.Models.Home
 {
     public class CommentModel
     {

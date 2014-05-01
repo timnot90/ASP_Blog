@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Blog.Web.Models.Blog
+namespace Blog.Web.Models.Home
 {
     public class CategoryListModel
     {

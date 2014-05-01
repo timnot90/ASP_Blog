@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Blog.Web.Models.Account;
-using Blog.Web.Models.Blog;
+using Blog.Web.Models.Home;
 
 namespace Blog.Web.Services
 {

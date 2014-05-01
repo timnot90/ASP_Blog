@@ -39,7 +39,7 @@ namespace Blog.Core.Extensions
 
         private static MvcHtmlString CreateLabel<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {
-            return helper.LabelFor(expression, new { @class = "col-lg-2 control-label required" });
+            return helper.LabelFor(expression, new { @class = "required" });
         }
 
         private static TagBuilder CreateOuterTag()
@@ -52,7 +52,7 @@ namespace Blog.Core.Extensions
         private static TagBuilder CreateInputEnvelope()
         {
             TagBuilder inputEnvelope = new TagBuilder("div");
-            inputEnvelope.MergeAttribute("class", "col-lg-10");
+//            inputEnvelope.MergeAttribute("class", "col-lg-10");
             return inputEnvelope;
         }
     }

@@ -1,6 +1,6 @@
 ﻿@using Blog.Web
-@using Blog.Web.Models.Blog
-@model CategoryListModel
+@using Blog.Web.Models.Home
+@model Blog.Web.Models.Home.CategoryListModel
 @{
     ViewBag.Title = "Categories";
 }
@@ -35,7 +35,7 @@
             {
                 <tr>
                     <td>
-                        @Html.ActionLink(category.Name + " (" + category.NumberOfPosts + ")", "Index", "Blog", new {categoryId = category.Id}, null)
+                        @Html.ActionLink(category.Name + " (" + category.NumberOfPosts + ")", "Index", "Home", new {categoryId = category.Id}, null)
                     </td>
                     @if (Roles.IsUserInRole(CustomRoles.Administrator))
                     {
@@ -64,6 +64,6 @@
                 </tr>
             }
         </table>
-        @Html.Action("AddCategory", "Blog")
+        @Html.Action("AddCategory", "Home")
     </div>
 </div>

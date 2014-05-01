@@ -1,11 +1,11 @@
-﻿@using Blog.Web.Models.Blog
-@model BlogEntryListItemModel
+﻿@using Blog.Web.Models.Home
+@model Blog.Web.Models.Home.BlogEntryListItemModel
 
 @{
     Layout = null;
 }
 <h1>
-    @Html.ActionLink(Model.Header, "ShowBlogentry", "Blog", new { id = Model.Id}, htmlAttributes: null)
+    @Html.ActionLink(Model.Header, "ShowBlogentry", "Home", new { id = Model.Id }, htmlAttributes: null)
 </h1>
 <p class="lead">
     by <a href="#">@Model.Creator.UserName</a>
@@ -16,7 +16,7 @@
     @foreach (CategoryModel category in Model.Categories)
 {
 @*    @Html.ActionLink(, )*@
-        <a class="btn btn-success" href="@Url.Action("Index", "Blog", new { categoryId = category.Id, monthAndYear=""})">@category.Name</a>
+        <a class="btn btn-success" href="@Url.Action("Index", "Home", new { categoryId = category.Id, monthAndYear = "" })">@category.Name</a>
 }
 </p>
 <hr/>
@@ -27,4 +27,4 @@
     </a>*@
 <hr>
 <p>@Html.BlogEntryListItemBodyShort(Model.Body)</p>
-<a class="btn btn-primary" href="@Url.Action("ShowBlogentry", "Blog", new { id = Model.Id })">Read More <i class="fa fa-angle-right"></i></a>
+<a class="btn btn-primary" href="@Url.Action("ShowBlogentry", "Home", new { id = Model.Id })">Read More <i class="fa fa-angle-right"></i></a>

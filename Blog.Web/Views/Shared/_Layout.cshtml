@@ -29,17 +29,17 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Blog <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="@Url.Action("Index", "Blog", new { categoryId = 0, monthAndYear = "" })">
+                                <a href="@Url.Action("Index", "Home", new { area="" })">
                                     <i class="glyphicon glyphicon-list"></i> View Posts
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Categories", "Blog")">
+                                <a href="@Url.Action("Categories", "Home", new { area = "" })">
                                     <i class="glyphicon glyphicon-inbox"></i> Categories
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("AddBlogentry", "Blog")">
+                                <a href="@Url.Action("AddBlogentry", "Home", new { area = "" })">
                                     <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
                                 </a>
                             </li>
@@ -63,12 +63,12 @@
                             @if (WebSecurity.IsAuthenticated)
                             {
                                 <li>
-                                    <a href="@Url.Action("EditProfile", "Account")">
+                                    <a href="@Url.Action("EditProfile", "Account", new { area = "" })">
                                         <i class="glyphicon glyphicon-cog"></i> Edit Profile
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Logout", "Account")">
+                                    <a href="@Url.Action("Logout", "Account", new { area = "" })">
                                         <i class="glyphicon glyphicon-log-out"></i> Logout
                                     </a>
                                 </li>
@@ -76,12 +76,12 @@
                             else
                             {
                                 <li>
-                                    <a href="@Url.Action("Register", "Account")">
+                                    <a href="@Url.Action("Register", "Account", new { area = "" })">
                                         <i class="glyphicon glyphicon-edit"></i> Register
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Login", "Account")">
+                                    <a href="@Url.Action("Login", "Account", new { area = "" })">
                                         <i class="glyphicon glyphicon-log-in"></i> Login
                                     </a>
                                 </li>
@@ -89,20 +89,20 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="@Url.Action("Index", "Home")">
+                        <a href="@Url.Action("Index", "About", new { area = "" })">
                             <i class="glyphicon glyphicon-info-sign"></i> About
                         </a>
                     </li>
                     <li>
                         @if (WebSecurity.IsAuthenticated)
                         {
-                            <a href="@Url.Action("Logout", "Account")">
+                            <a href="@Url.Action("Logout", "Account", new { area = "" })">
                                 <i class="glyphicon glyphicon-log-out"></i> Logout
                             </a>
                         }
                         else
                         {
-                            <a href="@Url.Action("Login", "Account")">
+                            <a href="@Url.Action("Login", "Account", new { area = "" })">
                                 <i class="glyphicon glyphicon-log-in"></i> Login
                             </a>
                         }

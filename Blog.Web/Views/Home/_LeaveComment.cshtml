@@ -1,9 +1,9 @@
 ﻿@using Recaptcha
-@model Blog.Web.Models.Blog.LeaveCommentModel
+@model Blog.Web.Models.Home.LeaveCommentModel
 
 <div class="well">
     <h4>Leave a Comment:</h4>
-    @using (Html.BeginForm("_LeaveComment", "Blog", FormMethod.Post, new { @class = "" }))
+    @using (Html.BeginForm("_LeaveComment", "Home", FormMethod.Post, new { @class = "" }))
     {
         <div class="form-group">
             @Html.ValidationSummary()

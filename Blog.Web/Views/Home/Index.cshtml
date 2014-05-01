@@ -1,4 +1,51 @@
-﻿@{
+﻿@using Blog.Web.Models.Home
+@model List<Blog.Web.Models.Home.BlogEntryListItemModel>
+@{
     ViewBag.Title = "Index";
 }
-
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Posts
+                <small>Blog Homepage</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li>
+                    @Html.ActionLink("Home", "Index", "Home")
+                </li>
+                <li class="active">Blog</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            @{
+                foreach (BlogEntryListItemModel blogEntry in Model)
+                {
+                    @*                    <div class="@(i==0?"well" : "well-sm")">*@
+                    <div class="well">
+                        @Html.Partial("_BlogPostListItem", blogEntry)
+                    </div>
+                }
+            }
+        </div>
+        <div class="col-lg-4">
+            <div class="well">
+                <h4>Blog Search</h4>
+                <div class="input-group">
+                    <input type="text" class="form-control">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    @*    @Html.RenderPartial()*@
+</div>

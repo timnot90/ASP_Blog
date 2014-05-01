@@ -1,5 +1,5 @@
-﻿@model Blog.Web.Models.Blog.CategoryModel
-@using (Html.BeginForm("AddCategory", "Blog", FormMethod.Post, new { @class = "form-inline" }))
+﻿@model Blog.Web.Models.Home.CategoryModel
+@using (Html.BeginForm("AddCategory", "Home", FormMethod.Post, new { @class = "form-inline" }))
 {
     @Html.ValidationSummary("", new { @class = "validation-summary-errors" })
     <div class="container">

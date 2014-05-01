@@ -1,5 +1,5 @@
-﻿@using Blog.Web.Models.Blog
-@model BlogentryDetailModel
+﻿@using Blog.Web.Models.Home
+@model Blog.Web.Models.Home.BlogentryDetailModel
 
 @{
     ViewBag.Title = Model.Header;
@@ -21,7 +21,7 @@
                     @Html.ActionLink("Home", "Index", "Home")
                 </li>
                 <li>
-                    @Html.ActionLink("Blog", "Index", "Blog", new { categoryId = 0 }, null)
+                    @Html.ActionLink("Blog", "Index", "Home", new { categoryId = 0 }, null)
                 </li>
                 <li class="active">@Model.Header</li>
             </ol>

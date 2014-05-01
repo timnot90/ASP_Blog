@@ -1,10 +1,10 @@
-﻿@using Blog.Web.Models.Blog
+﻿@using Blog.Web.Models.Home
 
-@model BlogSidebarModel
+@model Blog.Web.Models.Home.BlogSidebarModel
 
 @foreach (CategoryModel category in Model.Categories)
 {
-    Html.ActionLink(category.Name, "Index", "Blog", new { categoryId = category.Id }, null);
+    Html.ActionLink(category.Name, "Index", "Home", new { categoryId = category.Id }, null);
 }
 @*DatePicker*@
-@Html.ActionLink("Go", "Index", "Blog", new { month="", year="" }, null);
+@Html.ActionLink("Go", "Index", "Home", new { month = "", year = "" }, null);

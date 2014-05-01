@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Blog.Core.Repositories;
 using Blog.Web.Models.Account;
-using Blog.Web.Models.Blog;
+using Blog.Web.Models.Home;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Services
