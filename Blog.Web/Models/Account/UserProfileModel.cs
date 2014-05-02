@@ -13,7 +13,7 @@ namespace Blog.Web.Models.Account
         public string UserName { get; set; }
 
         [DisplayName("Display Name")]
-        [Required(ErrorMessage = "The username must be declared.")]
+        [Required(ErrorMessage = "The Display Name must be declared.")]
         public string DisplayName { get; set; }
 
         [DisplayName("E-Mail")]

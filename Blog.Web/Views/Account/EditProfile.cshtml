@@ -23,7 +23,8 @@
             @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @class = "" }))
             {
                 @Html.ValidationSummary()
-                @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.Id)
                 @*                        @Html.UserProfileTextBoxFor(m => m.UserName, true)*@
                 @Html.UserProfileTextBoxFor(m => m.DisplayName)
                 @Html.ActionLink("Change Password", "ChangePassword", "Account", null, new { @class = "form-group" })
