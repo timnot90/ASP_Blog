@@ -21,6 +21,7 @@ namespace Blog.Web.Services
         
         #region UserProfile
         int StoreUserProfile(UserProfileModel userProfileModel);
+        int RegisterUser(RegisterModel registerModel);
         List<UserProfileModel> GetAllUserProfiles();
         UserProfileModel GetUserProfile(int id);
         void DeleteCategory(int categoryid);
@@ -28,6 +29,7 @@ namespace Blog.Web.Services
 
         #region Comment
         int StoreComment(LeaveCommentModel commentModel);
+        void DeleteComment(int commentId);
         CommentModel GetComment(int id);
         #endregion
     }

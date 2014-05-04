@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Blog.Web.Models.Home;
+using Blog.Web.Models.Shared;
 using Blog.Web.Services;
 using Recaptcha;
 using WebMatrix.WebData;
@@ -37,6 +39,10 @@ namespace Blog.Web.Controllers
             if (!categoryId.HasValue)
             {
                 categoryId = 0;
+            }
+            if (categoryId == 0 && string.IsNullOrEmpty(monthAndYear))
+            {
+                return View(_service.GetAllBlogentries());
             }
             return View(_service.GetBlogentries((int) categoryId, monthAndYear));
         }
@@ -145,5 +151,20 @@ namespace Blog.Web.Controllers
             return RedirectToAction("Categories", model);
         }
         #endregion
+
+        [Authorize(Roles = CustomRoles.Administrator)]
+        public ActionResult DeleteComment(int commentId)
+        {
+            try
+            {
+                int blogentryId = _service.GetComment(commentId).BlogentryId;
+                _service.DeleteComment(commentId);
+                return RedirectToAction("Blogentry", new {id = blogentryId});
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new ErrorModel(ex.Message));
+            }
+        }
     }
 }

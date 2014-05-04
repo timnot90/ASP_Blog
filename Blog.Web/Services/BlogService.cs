@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Blog.Core.DataAccess.Blog;
+using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
 using Blog.Web.Models.Account;
 using Blog.Web.Models.Home;
@@ -128,6 +129,30 @@ namespace Blog.Web.Services
             return _repository.SaveUserProfile(newProfile, isNewProfile);
         }
 
+        public int RegisterUser(RegisterModel registerModel)
+        {
+            if (_repository.EmailExists(registerModel.Email))
+            {
+                throw new EmailAlreadyExistsException();
+            }
+            if (_repository.DisplayNameExists(registerModel.DisplayName))
+            {
+                throw new DisplayNameAlreadyExistsException();
+            }
+            WebSecurity.CreateUserAndAccount(registerModel.UserName, registerModel.Password,
+                new
+                {
+                    UserNameLowercase = registerModel.UserName.ToLower(),
+                    registerModel.DisplayName,
+                    registerModel.Email,
+                    EmailLowercase = registerModel.Email.ToLower(),
+                });
+
+            UserProfile newProfile = new UserProfile();
+            registerModel.UpdateSource(newProfile);
+            return _repository.SaveUserProfile(newProfile, true);
+        }
+
         public List<UserProfileModel> GetAllUserProfiles()
         {
             List<UserProfile> userProfiles = _repository.GetAllUserProfiles();
@@ -156,19 +181,27 @@ namespace Blog.Web.Services
             return _repository.SaveComment(comment, isNewComment);
         }
 
+        public void DeleteComment(int commentId)
+        {
+            _repository.DeleteComment(commentId);
+        }
+
         public CommentModel GetComment(int id)
         {
             Comment comment = _repository.GetComment(id);
             CommentModel commentModel = comment == null ? null : new CommentModel(comment);
             return commentModel;
         }
+
         #endregion
 
         #region private methods
+
         private static string ShortenText(string text)
         {
             return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
         }
+
         #endregion
     }
 }

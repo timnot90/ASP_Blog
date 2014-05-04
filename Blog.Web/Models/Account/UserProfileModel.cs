@@ -57,6 +57,7 @@ namespace Blog.Web.Models.Account
         public void UpdateSource(UserProfile source)
         {
             source.UserName = UserName;
+            source.DisplayName = DisplayName;
             source.Email = Email;
             source.Street = Street;
             source.HouseNumber = HouseNumber;
@@ -71,6 +72,7 @@ namespace Blog.Web.Models.Account
         {
             Id = source.ID;
             UserName = source.UserName;
+            DisplayName = source.DisplayName;
             Email = source.Email;
             Street = source.Street;
             HouseNumber = source.HouseNumber;

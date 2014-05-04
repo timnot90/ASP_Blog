@@ -11,7 +11,7 @@
             @Html.HiddenFor(m => m.UserName)
                 @*                        @Html.UserProfileTextBoxFor(m => m.UserName, true)*@
             @Html.UserProfileTextBoxFor(m => m.DisplayName)
-            @Html.ActionLink("Change Password", "ChangePassword", "Account", null, new {@class = "form-group"})
+            @Html.ActionLink("Change Password", "ChangePassword", "Account", new {area = ""}, new {@class = "form-group"})
             @Html.UserProfileTextBoxFor(m => m.Email, true)
             @Html.UserProfileTextBoxFor(m => m.Street)
             @Html.UserProfileTextBoxFor(m => m.HouseNumber)
@@ -21,7 +21,7 @@
             @Html.UserProfileTextBoxFor(m => m.LastName)
             <div class="form-group pull-right">
                 <div class="">
-                    <button class="btn btn-default">Cancel</button>
+                    @Html.ActionLink("Cancel", "Index", "Home", new {area = ""}, new {@class = "btn btn-default"})
                     <button type="submit" class="btn btn-primary">Save</button>
                 </div>
             </div>

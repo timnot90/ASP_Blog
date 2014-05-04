@@ -12,6 +12,10 @@ namespace Blog.Web.Models.Account
         [Required(ErrorMessage = "The username must be declared.")]
         public string UserName { get; set; }
 
+        [DisplayName("Display Name")]
+        [Required(ErrorMessage = "The display name must be declared.")]
+        public string DisplayName { get; set; }
+
         [DisplayName("NewPassword")]
         [Required(ErrorMessage = "A password must be declared.")]
         public string Password { get; set; }
@@ -39,12 +43,14 @@ namespace Blog.Web.Models.Account
         {
             source.UserName = UserName;
             source.Email = Email;
+            source.DisplayName = DisplayName;
         }
 
         public void UpdateModel(UserProfile source)
         {
             Id = source.ID;
             UserName = source.UserName;
+            DisplayName = source.DisplayName;
             Email = source.Email;
         }
 

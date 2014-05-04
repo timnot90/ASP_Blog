@@ -6,6 +6,8 @@ namespace Blog.Web.Models.Home
 {
     public class CommentModel
     {
+        public int Id { get; set; }
+        public int BlogentryId { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
         public UserProfileModel Creator { get; set; }
@@ -29,6 +31,8 @@ namespace Blog.Web.Models.Home
 
         public void UpdateModel(Comment source)
         {
+            Id = source.ID;
+            BlogentryId = source.BlogentryID;
             Header = source.Header;
             Body = source.Body;
             Creator = new UserProfileModel(source.UserProfile);

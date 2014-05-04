@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using System.Web.Security;
+using Blog.Core.Exceptions;
 using Blog.Web.Models.Account;
 using WebMatrix.WebData;
 using Blog.Web.Services;
@@ -31,19 +32,27 @@ namespace Blog.Web.Controllers
             {
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password,
-                        new
-                        {
-                            UserNameLowercase = model.UserName.ToLower(),
-                            model.Email,
-                            EmailLowercase = model.Email.ToLower(),
-                        });
+                    try
+                    {
+                        _service.RegisterUser(model);
+                    }
+                    catch (DisplayNameAlreadyExistsException)
+                    {
+                        ModelState.AddModelError("DisplayNameAlreadyExists", "The given display name already exists.");
+                        return View(model);
+                    }
+                    catch (EmailAlreadyExistsException)
+                    {
+                        ModelState.AddModelError("EmailAlreadyExists", "The given email address already exists.");
+                        return View(model);
+                    }
                     return View("Created", model);
                 }
                 catch (MembershipCreateUserException ex)
                 {
                     ModelState.AddModelError("", GetErrorString(ex.StatusCode));
                 }
+                return View(model);
             }
             return View(model);
         }
@@ -59,9 +68,23 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.StoreUserProfile(userProfile);
+                try
+                {
+                    _service.StoreUserProfile(userProfile);
+                }
+                catch (DisplayNameAlreadyExistsException)
+                {
+                    ModelState.AddModelError("DisplayNameAlreadyExists", "The given display name already exists.");
+                    return View(userProfile);
+                }
+                catch (EmailAlreadyExistsException)
+                {
+                    ModelState.AddModelError("EmailAlreadyExists", "The given email address already exists.");
+                    return View(userProfile);
+                }
+                return RedirectToAction("Index", "Home");
             }
-            return View();
+            return View(userProfile);
         }
 
         [HttpGet]

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Blog.Web.Models.Shared.ErrorModel
+@{
     Layout = null;
 }
 
@@ -12,6 +13,10 @@
     <hgroup>
         <h1>Error.</h1>
         <h2>An error occurred while processing your request.</h2>
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <h3>@Model.ErrorMessage</h3>
+        }
     </hgroup>
 </body>
 </html>

@@ -29,10 +29,16 @@ namespace Blog.Core.Repositories
         List<UserProfile> GetAllUserProfiles();
 
         UserProfile GetUserProfile(int id);
+
+        bool EmailExists(string email);
+
+        bool DisplayNameExists(string displayName);
         #endregion
 
         #region Comment
         int SaveComment(Comment comment, bool isNewComment = false);
+
+        void DeleteComment(int commentId);
 
         List<Comment> GetAllComments();
 
