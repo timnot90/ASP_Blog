@@ -140,8 +140,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Areas\Administration\Controllers\AdminController.cs" />
-    <Compile Include="Areas\Administration\Models\AdminModel.cs" />
+    <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
+    <Compile Include="Areas\Administration\Models\AdministrationModel.cs" />
+    <Compile Include="Areas\Administration\Models\RoleModel.cs" />
+    <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ChangeRoleController.cs" />
@@ -152,6 +154,7 @@
     </Compile>
     <Compile Include="Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
+    <Compile Include="Models\Shared\BreadcrumbModel.cs" />
     <Compile Include="Models\Home\AddBlogentryModel.cs" />
     <Compile Include="Models\Home\BlogentryDetailModel.cs" />
     <Compile Include="Models\Home\BlogEntryListItemModel.cs" />
@@ -277,7 +280,8 @@
     <Content Include="font-awesome\scss\_variables.scss" />
     <Content Include="Areas\Administration\Views\Web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Administration\Views\Admin\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Administration\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
@@ -313,25 +317,26 @@
     <Content Include="Views\Account\Created.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Shared\_BlogPostListItem.cshtml" />
+    <Content Include="Views\Home\_BlogPostListItem.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AddBlogentry.cshtml" />
-    <Content Include="Views\Home\ShowBlogentry.cshtml" />
-    <Content Include="Views\Shared\BlogSidebar.cshtml" />
+    <Content Include="Views\Home\Blogentry.cshtml" />
+    <Content Include="Views\Home\_BlogSidebar.cshtml" />
     <Content Include="Views\Home\Categories.cshtml" />
-    <Content Include="Views\Shared\AddCategory.cshtml" />
-    <Content Include="Views\Shared\_AddBlogentryAvailableCategories.cshtml" />
+    <Content Include="Views\Home\AddCategory.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Web.sitemap" />
     <Content Include="Views\Home\BlogentryNotFound.cshtml" />
     <Content Include="Views\Home\_Comment.cshtml" />
     <Content Include="Views\Home\_LeaveComment.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
+    <Content Include="Views\Shared\_NavigationBar.cshtml" />
+    <Content Include="Views\Shared\_PageHeader.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Administration\Views\Home\" />
-    <Folder Include="Areas\Administration\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

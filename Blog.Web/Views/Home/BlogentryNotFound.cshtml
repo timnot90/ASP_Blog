@@ -1,10 +1,13 @@
 ﻿@model int
 @{
-    ViewBag.Title = "BlogentryNotFound";
+    ViewBag.Title = "Blogentry Not Found";
 }
 
 <div class="container">
     <div class="row">
-        <h1 class="page-header">Blogentry with id @Model not found</h1>
+        <div class="col-lg-8">
+            <h1 class="page-header">Blogentry with id @Model not found</h1>
+        </div>
+        @Html.Action("_BlogSidebar")
     </div>
 </div>

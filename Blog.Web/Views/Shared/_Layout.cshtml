@@ -1,134 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using Blog.Web
+@using Blog.Web.Models
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
-</head>
-<body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+    </head>
+    <body>
+        @Html.Partial("_NavigationBar")
+        <br />
+        <br />
+        @Html.Partial("_PageHeader")
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
-                @Html.ActionLink(linkText: "Timo's Blog", actionName: "Index", controllerName: "Home", htmlAttributes: new { @class = "navbar-brand" }, routeValues: new { area = "" })
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Blog <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="@Url.Action("Index", "Home", new { area="" })">
-                                    <i class="glyphicon glyphicon-list"></i> View Posts
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Categories", "Home", new { area = "" })">
-                                    <i class="glyphicon glyphicon-inbox"></i> Categories
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("AddBlogentry", "Home", new { area = "" })">
-                                    <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        @*<a href='@Url.Action(actionName: "EditProfile", controllerName: "Account")' class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
-                        *@<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i>
-                            @if (WebSecurity.IsAuthenticated)
-                            {
-                                @:@WebSecurity.CurrentUserName
-                            }
-                            else
-                            {
-                                @:My Profile
-                            }<b class="caret"></b>
-
-                        </a>
-                        <ul class="dropdown-menu">
-                            @if (WebSecurity.IsAuthenticated)
-                            {
-                                <li>
-                                    <a href="@Url.Action("EditProfile", "Account", new { area = "" })">
-                                        <i class="glyphicon glyphicon-cog"></i> Edit Profile
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Logout", "Account", new { area = "" })">
-                                        <i class="glyphicon glyphicon-log-out"></i> Logout
-                                    </a>
-                                </li>
-                            }
-                            else
-                            {
-                                <li>
-                                    <a href="@Url.Action("Register", "Account", new { area = "" })">
-                                        <i class="glyphicon glyphicon-edit"></i> Register
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="@Url.Action("Login", "Account", new { area = "" })">
-                                        <i class="glyphicon glyphicon-log-in"></i> Login
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index", "About", new { area = "" })">
-                            <i class="glyphicon glyphicon-info-sign"></i> About
-                        </a>
-                    </li>
-                    <li>
-                        @if (WebSecurity.IsAuthenticated)
-                        {
-                            <a href="@Url.Action("Logout", "Account", new { area = "" })">
-                                <i class="glyphicon glyphicon-log-out"></i> Logout
-                            </a>
-                        }
-                        else
-                        {
-                            <a href="@Url.Action("Login", "Account", new { area = "" })">
-                                <i class="glyphicon glyphicon-log-in"></i> Login
-                            </a>
-                        }
-                    </li>
-                </ul>
-            </div>
+            @RenderBody()
         </div>
-    </nav>
+        @Html.Partial("_Footer")
+        @RenderSection("scripts", false)
+    </body>
 
-    <br />
-    <br />
-    @RenderBody()
-
-    <div class="container panel-footer">
-
-        <hr>
-
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Company 2013</p>
-                </div>
-            </div>
-        </footer>
-
-    </div>
-    @RenderSection("scripts", required: false)
-</body>
 </html>

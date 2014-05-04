@@ -6,10 +6,10 @@ using Blog.Web.Models.Account;
 
 namespace Blog.Web.Areas.Administration.Models
 {
-    public class AdminModel
+    public class UserListItemModel
     {
-        public List<UserProfileModel> Users { get; set; }
-
+        public UserProfileModel UserProfile { get; set; }
+        public List<RoleModel> Roles { get; set; } 
 
     }
 }

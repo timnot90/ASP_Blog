@@ -1,0 +1,28 @@
+﻿@using Blog.Web.Areas.Administration.Models
+@model UserListItemModel
+<tr>
+    <td>@Model.UserProfile.UserName</td>
+    <td>@Model.UserProfile.DisplayName</td>
+    <td>@Model.UserProfile.Forename</td>
+    <td>@Model.UserProfile.LastName</td>
+    <td>
+        @{ int i = 0; }
+        @foreach (RoleModel role in Model.Roles)
+        {
+            <label>
+                @role.RoleName
+                @Html.CheckBoxFor(m => m.Roles[i].IsActive, new {@onchange = "roleChanged('" + Model.UserProfile.UserName + "','" + role + "')"})
+                @{ i++; }
+            </label>
+        }
+        @*                        @Html.DropDownList("role", new List<SelectListItem>(new[] {new SelectListItem {Text = "Admin"}, new SelectListItem {Text = "User"}}), new {@onchange = "roleChanged('" + user.UserName + "','" + "Administrator" + "')"})*@
+
+        <script type="text/javascript">
+            function roleChanged(username, newRole) {
+                $.ajax("/Administration/Administration/ChangeRole?username=" + username + "&newRole=" + newRole);
+            }
+        </script>
+    </td>
+    <td><button class="btn btn-primary">Reset Password</button></td>
+    <td><button class="btn btn-danger"><i class=" glyphicon glyphicon-lock"></i> Lock</button></td>
+</tr>

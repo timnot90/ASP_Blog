@@ -9,6 +9,7 @@ namespace Blog.Web.Services
         #region Blogentry
         int StoreBlogentry(AddBlogentryModel entry);
         List<BlogEntryListItemModel> GetAllBlogentries();
+        List<BlogEntryListItemModel> GetBlogentries(int categoryId, string monthAndYear);
         BlogentryDetailModel GetBlogentry(int id);
         #endregion
         

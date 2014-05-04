@@ -1,0 +1,33 @@
+﻿@using Blog.Web.Models
+@using Blog.Web.Models.Home
+@using Blog.Web.Models.Shared
+@model BlogentryDetailModel
+
+@{
+    ViewBag.Title = Model.Header;
+    ViewBag.Breadcrumbs = new List<BreadcrumbModel>(new[] {new BreadcrumbModel("Blog", "Index", "Home")});
+}
+<div class="row">
+    <div class="col-lg-8">
+        <hr>
+        <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString by <a href="#">@Model.Creator.UserName</a></p>
+        <hr>
+        <p class="">@Model.Body</p>
+        <hr>
+
+        @{
+            LeaveCommentModel leaveCommentModel = new LeaveCommentModel();
+            leaveCommentModel.BlogentryId = Model.Id;
+        }
+        @Html.Partial("_LeaveComment", leaveCommentModel)
+        <hr>
+        <h2>Comments</h2>
+        @foreach (CommentModel comment in Model.Comments)
+        {
+            <div class="">
+                @Html.Partial("_Comment", comment)
+            </div>
+        }
+    </div>
+    @Html.Action("_BlogSidebar")
+</div>

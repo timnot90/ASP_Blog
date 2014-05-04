@@ -1,7 +1,7 @@
-﻿using Blog.Core.DataAccess.Blog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Blog.Core.DataAccess.Blog;
 using Blog.Core.Repositories;
 using Blog.Web.Models.Account;
 using Blog.Web.Models.Home;
@@ -12,6 +12,7 @@ namespace Blog.Web.Services
     public class BlogService : IBlogService
     {
         private readonly IBlogRepository _repository = new BlogRepository();
+
         #region Blogentry
 
         public int StoreBlogentry(AddBlogentryModel entryModel)
@@ -32,10 +33,16 @@ namespace Blog.Web.Services
 
         public List<BlogEntryListItemModel> GetAllBlogentries()
         {
+            bool isFirst = true;
             return _repository.GetAllBlogentries().OrderByDescending(b => b.CreationDate).Select(
                 b =>
                 {
                     BlogEntryListItemModel entryModel = new BlogEntryListItemModel(b);
+                    if (!isFirst)
+                    {
+                        entryModel.Body = ShortenText(entryModel.Body);
+                    }
+                    isFirst = false;
                     return entryModel;
                 }).ToList();
         }
@@ -46,9 +53,37 @@ namespace Blog.Web.Services
             BlogentryDetailModel entryModel = entry == null ? null : new BlogentryDetailModel(entry);
             return entryModel;
         }
+
+        public List<BlogEntryListItemModel> GetBlogentries(int categoryId, string monthAndYear)
+        {
+            int month = 0;
+            int year = 0;
+            bool monthAndYearIsValid = true;
+            try
+            {
+                month = Convert.ToInt32(monthAndYear.Substring(0, 2));
+                year = Convert.ToInt32(monthAndYear.Substring(2, 4));
+                monthAndYearIsValid = monthAndYear.Length == 6;
+            }
+            catch (Exception)
+            {
+                monthAndYearIsValid = false;
+            }
+
+            List<BlogEntryListItemModel> blogentries = GetAllBlogentries().FindAll(e =>
+            {
+                bool categoryFits = categoryId == 0 || e.Categories.Any(c => c.Id == categoryId);
+                bool monthAndYearFits = !monthAndYearIsValid ||
+                                        (e.CreationDate.Month == month && e.CreationDate.Year == year);
+                return categoryFits && monthAndYearFits;
+            });
+            return blogentries;
+        }
+
         #endregion
 
         #region Category
+
         public int StoreCategory(CategoryModel categoryModel)
         {
             bool isNewEntry = categoryModel.Id == 0;
@@ -56,7 +91,7 @@ namespace Blog.Web.Services
             categoryModel.UpdateSource(category);
             category.CreationDate = DateTime.Now;
             category.CreatorID = WebSecurity.CurrentUserId;
-            return _repository.SaveCategory(category, isNewEntry: isNewEntry);
+            return _repository.SaveCategory(category, isNewEntry);
         }
 
         public void DeleteCategory(int categoryid)
@@ -80,15 +115,17 @@ namespace Blog.Web.Services
             CategoryModel categoryModel = category == null ? null : new CategoryModel(category);
             return categoryModel;
         }
+
         #endregion
 
         #region UserProfile
+
         public int StoreUserProfile(UserProfileModel userProfileModel)
         {
             bool isNewProfile = userProfileModel.Id == 0;
             UserProfile newProfile = isNewProfile ? new UserProfile() : _repository.GetUserProfile(userProfileModel.Id);
             userProfileModel.UpdateSource(newProfile);
-            return _repository.SaveUserProfile(newProfile, isNewProfile: isNewProfile);
+            return _repository.SaveUserProfile(newProfile, isNewProfile);
         }
 
         public List<UserProfileModel> GetAllUserProfiles()
@@ -104,7 +141,10 @@ namespace Blog.Web.Services
             UserProfileModel userProfileModel = userProfile == null ? null : new UserProfileModel(userProfile);
             return userProfileModel;
         }
+
         #endregion
+
+        #region Comment
 
         public int StoreComment(LeaveCommentModel commentModel)
         {
@@ -122,5 +162,13 @@ namespace Blog.Web.Services
             CommentModel commentModel = comment == null ? null : new CommentModel(comment);
             return commentModel;
         }
+        #endregion
+
+        #region private methods
+        private static string ShortenText(string text)
+        {
+            return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
+        }
+        #endregion
     }
 }

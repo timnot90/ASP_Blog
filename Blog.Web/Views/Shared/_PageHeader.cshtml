@@ -1,0 +1,29 @@
+﻿@using Blog.Web.Models
+@using Blog.Web.Models.Shared
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                @ViewBag.Title
+                <small>Timo's Blog</small>
+            </h1>
+            <ol class="breadcrumb">
+                @if (ViewBag.Breadcrumbs != null)
+                {
+                    foreach (BreadcrumbModel breadcrumb in ViewBag.Breadcrumbs)
+                    {
+                        if (breadcrumb != null)
+                        {
+                            <li>
+                                @Html.ActionLink(breadcrumb.Description, breadcrumb.ActionName, breadcrumb.ControllerName, new { area = breadcrumb.AreaName }, null)
+                            </li>
+                        }
+                    }
+                }
+                <li>
+                    @ViewBag.Title
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>

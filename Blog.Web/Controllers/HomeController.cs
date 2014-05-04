@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Web.Mvc;
-using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Home;
 using Blog.Web.Services;
 using Recaptcha;
@@ -15,94 +11,53 @@ namespace Blog.Web.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        IBlogService _service = new BlogService();
+        #region variables
+        private static readonly List<SelectListItem> months = new List<SelectListItem>(new[]
+        {
+            new SelectListItem {Text = "01"},
+            new SelectListItem {Text = "02"},
+            new SelectListItem {Text = "03"},
+            new SelectListItem {Text = "04"},
+            new SelectListItem {Text = "05"},
+            new SelectListItem {Text = "06"},
+            new SelectListItem {Text = "07"},
+            new SelectListItem {Text = "08"},
+            new SelectListItem {Text = "09"},
+            new SelectListItem {Text = "10"},
+            new SelectListItem {Text = "11"},
+            new SelectListItem {Text = "12"}
+        });
+        private readonly IBlogService _service = new BlogService();
+        #endregion
 
+        #region views
+        [AllowAnonymous]
         public ActionResult Index(int? categoryId, string monthAndYear)
         {
             if (!categoryId.HasValue)
             {
                 categoryId = 0;
             }
-            return View(FilterEntries((int)categoryId, monthAndYear));
+            return View(_service.GetBlogentries((int) categoryId, monthAndYear));
         }
 
-        /*
-        /// <summary>
-        /// Shows all blogentries.
-        /// </summary>
-        /// <param name="categoryId">the id of the category to show blogentries for</param>
-        /// <returns></returns>
-        [HttpGet]
         [AllowAnonymous]
-        public ActionResult Index(int categoryId)
+        public ActionResult Categories()
         {
-            return View(FilterEntries(categoryId, string.Empty));
+            CategoryListModel categoryListModel = new CategoryListModel();
+            categoryListModel.Categories = _service.GetAllCategories();
+            return View(categoryListModel);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="monthAndYear">ddyyyy</param>
-        /// <returns></returns>
-        [HttpGet]
         [AllowAnonymous]
-        public ActionResult Index(string monthAndYear = "")
+        public ActionResult Blogentry(int id)
         {
-            return View(FilterEntries(0, monthAndYear));
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="categoryId">the id of the category to show blogentries for</param>
-        /// <param name="monthAndYear">
-        ///     a string containing month and year of the blogentries to show.
-        ///     Format: mmyyyy
-        ///     <example>032014 for March 2014</example>
-        /// </param>
-        /// <returns></returns>
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult Index(int categoryId, string monthAndYear)
-        {
-            return View(FilterEntries(categoryId, monthAndYear));
-        }
-        */
-
-        private List<BlogEntryListItemModel> FilterEntries(int categoryId, string monthAndYear)
-        {
-            int month = 0;
-            int year = 0;
-            bool monthAndYearIsValid = true;
-            try
+            BlogentryDetailModel model = _service.GetBlogentry(id);
+            if (model != null)
             {
-                month = Convert.ToInt32(monthAndYear.Substring(0, 2));
-                year = Convert.ToInt32(monthAndYear.Substring(2, 4));
-                monthAndYearIsValid = monthAndYear.Length == 6;
+                return View(model);
             }
-            catch (InvalidCastException)
-            {
-                monthAndYear = string.Empty;
-                monthAndYearIsValid = false;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                monthAndYear = string.Empty;
-                monthAndYearIsValid = false;
-            }
-            catch (NullReferenceException)
-            {
-                monthAndYear = string.Empty;
-                monthAndYearIsValid = false;
-            }
-
-            List<BlogEntryListItemModel> blogentries = _service.GetAllBlogentries().FindAll(e =>
-            {
-                bool categoryFits = categoryId == 0 || e.Categories.Any(c => c.Id == categoryId);
-                bool monthAndYearFits = !monthAndYearIsValid || (e.CreationDate.Month == month && e.CreationDate.Year == year);
-                return categoryFits && monthAndYearFits;
-            });
-            return blogentries;
+            return View("BlogentryNotFound", id);
         }
 
         [HttpGet]
@@ -114,36 +69,62 @@ namespace Blog.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult AddBlogentry(AddBlogentryModel blogentry)
         {
             if (ModelState.IsValid)
             {
                 int id = _service.StoreBlogentry(blogentry);
-                return RedirectToAction("ShowBlogentry", new { id });
+                return RedirectToAction("Blogentry", new {id});
             }
             return View(blogentry);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult ShowBlogentry(int id)
+        [HttpPost]
+        public ActionResult DeleteCategory(int categoryid)
         {
-            BlogentryDetailModel model = _service.GetBlogentry(id);
-            if (model != null)
-            {
-                return View(model);
-            }
-            return View("BlogentryNotFound", id);
+            _service.DeleteCategory(categoryid);
+            return RedirectToAction("Categories");
+        }
+        #endregion
 
+        #region partial views
+        [HttpPost]
+        [RecaptchaControlMvc.CaptchaValidatorAttribute]
+        public ActionResult _LeaveComment(LeaveCommentModel comment, bool captchaValid, string captchaErrorMessage)
+        {
+            if (!WebSecurity.IsAuthenticated && !captchaValid)
+            {
+                ModelState.AddModelError("captcha", captchaErrorMessage);
+            }
+            if (ModelState.IsValid)
+            {
+                _service.StoreComment(comment);
+                return RedirectToAction("Blogentry", new {id = comment.BlogentryId});
+            }
+            return View();
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult Categories()
+        public ActionResult _BlogSidebar()
         {
-            CategoryListModel categoryListModel = new CategoryListModel();
-            categoryListModel.Categories = _service.GetAllCategories();
-            return View(categoryListModel);
+            BlogSidebarModel model = new BlogSidebarModel();
+            model.Categories = _service.GetAllCategories();
+            model.AvailableYears =
+                _service.GetAllBlogentries()
+                    .GroupBy(m => m.CreationDate.Year)
+                    .Select(m => new SelectListItem {Text = m.Key.ToString()})
+                    .ToList();
+            model.AvailableMonths = months;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult _BlogSidebar(BlogSidebarModel model)
+        {
+            return Index(model.Categories[0].Id, model.SelectedMonth + model.SelectedYear);
+//            return RedirectToAction("Index",
+//                new {categoryId = model.Categories[0], monthAndYear = model.SelectedMonth + model.SelectedYear});
         }
 
         [HttpGet]
@@ -163,45 +144,6 @@ namespace Blog.Web.Controllers
             //TODO: add and show error when model state is not valid
             return RedirectToAction("Categories", model);
         }
-
-        [HttpPost]
-        public ActionResult DeleteCategory(int categoryid)
-        {
-            _service.DeleteCategory(categoryid);
-            return RedirectToAction("Categories");
-        }
-
-        [HttpGet]
-        public PartialViewResult _AddBlogentryAvailableCategories()
-        {
-            return PartialView(_service.GetAllCategories());
-        }
-
-        [HttpPost]
-        [RecaptchaControlMvc.CaptchaValidatorAttribute]
-        public ActionResult _LeaveComment(LeaveCommentModel comment, bool captchaValid, string captchaErrorMessage)
-        {
-            if (!WebSecurity.IsAuthenticated && !captchaValid)
-            {
-                ModelState.AddModelError("captcha", captchaErrorMessage);
-            }
-            if (ModelState.IsValid)
-            {
-                _service.StoreComment(comment);
-                return RedirectToAction("ShowBlogentry", new { id = comment.BlogentryId });
-            }
-            return View();
-        }
-
-//        [HttpPost]
-//        public ActionResult _LeaveCommentAuthenticated(LeaveCommentModel comment)
-//        {
-//            if (ModelState.IsValid)
-//            {
-//                _service.StoreComment(comment);
-//                return RedirectToAction("ShowBlogentry", new { id = comment.BlogentryId });
-//            }
-//            return View("_LeaveComment");
-//        }
+        #endregion
     }
 }

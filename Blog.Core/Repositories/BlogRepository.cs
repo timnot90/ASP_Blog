@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Core.Repositories
@@ -10,6 +11,7 @@ namespace Blog.Core.Repositories
         #region Blogentry
         public int SaveBlogentry(Blogentry entry, bool isNewEntry = false)
         {
+            entry.Body = FilterHtmlTags(entry.Body);
             if (isNewEntry)
             {
                 entry.CreationDate = DateTime.Now;
@@ -27,6 +29,13 @@ namespace Blog.Core.Repositories
         public Blogentry GetBlogentry(int id)
         {
             return BlogDataContext.Current.Blogentries.FirstOrDefault(e => e.ID == id);
+        }
+
+        private string FilterHtmlTags(string text)
+        {
+            Regex removeHtml = new Regex(@"<[^>]*>");
+            Regex insertBr = new Regex(@"(\r\n)|\r|\n");
+            return insertBr.Replace(removeHtml.Replace(text, ""), "<br/>");
         }
         #endregion
 

@@ -1,11 +1,12 @@
-﻿@using Blog.Web.Models.Home
+﻿@using Blog.Core.DataAccess.Blog
+@using Blog.Web.Models.Home
 @model Blog.Web.Models.Home.BlogEntryListItemModel
 
 @{
     Layout = null;
 }
 <h1>
-    @Html.ActionLink(Model.Header, "ShowBlogentry", "Home", new { id = Model.Id }, htmlAttributes: null)
+    @Html.ActionLink(Model.Header, "Blogentry", "Home", new { id = Model.Id }, htmlAttributes: null)
 </h1>
 <p class="lead">
     by <a href="#">@Model.Creator.UserName</a>
@@ -26,5 +27,5 @@
             <img src="http://placehold.it/900x300" class="img-responsive">
     </a>*@
 <hr>
-<p>@Html.BlogEntryListItemBodyShort(Model.Body)</p>
-<a class="btn btn-primary" href="@Url.Action("ShowBlogentry", "Home", new { id = Model.Id })">Read More <i class="fa fa-angle-right"></i></a>
+<p>@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
+<a class="btn btn-primary" href="@Url.Action("Blogentry", "Home", new { id = Model.Id })">Read More <i class="fa fa-angle-right"></i></a>
