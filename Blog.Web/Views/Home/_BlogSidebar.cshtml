@@ -1,0 +1,61 @@
+﻿@using Blog.Web.Models.Home
+@model Blog.Web.Models.Home.BlogSidebarModel
+@{
+    Layout = null;
+}
+<div class="col-lg-4">
+    <div class="well">
+        <h4>Blog Search</h4>
+        <div class="input-group">
+            <input type="text" class="form-control">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+    <div class="well">
+        <h4>Blog Filter</h4>
+        @*        @using (Html.BeginForm())*@
+        @*        {*@
+        <div class="form-group">
+            @{ int i = 0; }
+            <label class="radio-inline">
+                @Html.RadioButton("Categories", "All", true)
+                All
+            </label>
+            @foreach (CategoryModel category in Model.Categories)
+            {
+                <label class="radio-inline">
+                    @Html.HiddenFor(c => c.Categories[i].Id)
+                    @*                        @Html.RadioButtonFor(c => category.IsSelected, "", new{@name="Categories"})*@
+                    @Html.RadioButton("Categories", category.Id)
+                    @*                        @Html.CheckBoxFor(c => category.IsSelected)*@
+                    @category.Name
+                </label>
+                i++;
+            }
+        </div>
+        <div class="form-group">
+            <label>
+                Month:
+                @Html.DropDownListFor(m => m.SelectedMonth, Model.AvailableMonths)
+            </label>
+            <label>
+                Year:
+                @Html.DropDownListFor(m => m.SelectedYear, Model.AvailableYears)
+            </label>
+        </div>
+        <a class="btn btn-primary" onclick=" Go_Click() ">Go</a>
+        @*            @Html.ActionLink("Go", "Index", "Home", new {month = "", year = ""}, new {@class = ""})*@
+        <script>
+            function Go_Click() {
+                var selectedCategory = $('input[name=Categories]:checked').val();
+                var monthAndYear = $("#SelectedMonth").val() + $("#SelectedYear").val();
+                $.ajax("/Home/Index?categoryId=" + selectedCategory + "&monthAndYear=" + monthAndYear);
+            }
+        </script>
+        @*        }*@
+    </div>
+</div>
