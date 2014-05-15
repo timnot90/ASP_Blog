@@ -1,0 +1,17 @@
+﻿@using Blog.Web.Models.Home
+@model BlogentryListModel
+@{
+    Layout = null;
+    ViewBag.Breadcrumbs = null;
+}
+<div id="blogentries-container">
+    @{
+        foreach (BlogEntryListItemModel blogEntry in Model.Blogentries)
+        {
+            @*                    <div class="@(i==0?"well" : "well-sm")">*@
+            <div class="well">
+                @Html.Partial("_BlogPostListItem", blogEntry)
+            </div>
+        }
+    }
+</div>
