@@ -73,7 +73,7 @@ namespace Blog.Core.Repositories
         {
             if (isNewProfile)
             {
-                if (EmailExists(userProfile.EmailLowercase))
+                if (EmailExists(userProfile.Email))
                 {
                     throw new EmailAlreadyExistsException();
                 }

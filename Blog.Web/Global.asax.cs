@@ -21,6 +21,8 @@ namespace Blog.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "ID", "UserName", true);
+
+            MvcHandler.DisableMvcResponseHeader = true;
         }
     }
 }
