@@ -14,20 +14,20 @@ namespace Blog.Web.Controllers
     public class HomeController : Controller
     {
         #region variables
-        private static readonly List<SelectListItem> months = new List<SelectListItem>(new[]
+        private static readonly List<string> months = new List<string>(new[]
         {
-            new SelectListItem {Text = "01"},
-            new SelectListItem {Text = "02"},
-            new SelectListItem {Text = "03"},
-            new SelectListItem {Text = "04"},
-            new SelectListItem {Text = "05"},
-            new SelectListItem {Text = "06"},
-            new SelectListItem {Text = "07"},
-            new SelectListItem {Text = "08"},
-            new SelectListItem {Text = "09"},
-            new SelectListItem {Text = "10"},
-            new SelectListItem {Text = "11"},
-            new SelectListItem {Text = "12"}
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+            "12"
         });
         private readonly IBlogService _service = new BlogService();
         #endregion
@@ -97,6 +97,7 @@ namespace Blog.Web.Controllers
         #region partial views
         [HttpPost]
         [RecaptchaControlMvc.CaptchaValidatorAttribute]
+        [ValidateAntiForgeryToken]
         public ActionResult _LeaveComment(LeaveCommentModel comment, bool captchaValid, string captchaErrorMessage)
         {
             if (!WebSecurity.IsAuthenticated && !captchaValid)
@@ -118,7 +119,7 @@ namespace Blog.Web.Controllers
             model.AvailableYears =
                 _service.GetAllBlogentries()
                     .GroupBy(m => m.CreationDate.Year)
-                    .Select(m => new SelectListItem {Text = m.Key.ToString()})
+                    .Select(m => m.Key.ToString())
                     .ToList();
             model.AvailableMonths = months;
 

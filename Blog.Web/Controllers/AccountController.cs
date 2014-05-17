@@ -103,11 +103,11 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginModel model, string ReturnUrl)
         {
             if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, model.StaySignedIn))
             {
-                return RedirectToLocal(returnUrl);
+                return RedirectToLocal(ReturnUrl);
             }
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
             return View(model);

@@ -6,6 +6,7 @@
 <div class="row">
     @using (Html.BeginForm("Login", "Account", FormMethod.Post, new {@class = "form-signin", @role = "form"}))
     {
+        @Html.Hidden("ReturnUrl", Request.Params["ReturnUrl"])
         <h2 class="form-signin-heading">Please sign in</h2>
         @Html.ValidationSummary()
 

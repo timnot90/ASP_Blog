@@ -1,5 +1,4 @@
-﻿@using Blog.Web.Models
-@using Blog.Web.Models.Home
+﻿@using Blog.Web.Models.Home
 @model List<Blog.Web.Models.Home.BlogEntryListItemModel>
 @{
     ViewBag.Title = "Blog";
@@ -9,17 +8,21 @@
     <div class="row">
         <div class="col-lg-8">
             <div>
-                @{
+                @if (Model.Count > 0)
+                {
                     foreach (BlogEntryListItemModel blogEntry in Model)
                     {
-                        @*                    <div class="@(i==0?"well" : "well-sm")">*@
-                        <div class="well">
-                            @Html.Partial("_BlogPostListItem", blogEntry)
+                        <div class= "well" >
+                            @Html.Partial( "_BlogPostListItem", blogEntry )
                         </div>
                     }
                 }
+                else
+                {
+                    <div>There are no blogentries matching the applied filter.</div>
+                }
             </div>
         </div>
-        @Html.Action("_BlogSidebar")
+        @Html.Action( "_BlogSidebar" )
     </div>
 </div>
