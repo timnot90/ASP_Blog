@@ -11,7 +11,6 @@ function BlogentryPagination() {
     console.log("constructor");
     var allEntries = $(".blogentry");
     var allPaginationItems = $(".pagination-item");
-    var totalNumberOfEntries = allEntries.length;
     var entriesPerPage = $("#blogentries-pagination").data("blogentries-per-page");
     var lastPageIndex = allPaginationItems.length - 1;
     var currentPageIndex = 0;

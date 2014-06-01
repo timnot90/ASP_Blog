@@ -11,18 +11,28 @@
         {
             <label>
                 @role.RoleName
-                @Html.CheckBoxFor(m => m.Roles[i].IsActive, new {@onchange = "roleChanged('" + Model.UserProfile.UserName + "','" + role + "')"})
+                @Html.CheckBoxFor(m => m.Roles[i].IsActive, new {@class="roleCheckbox", @onchange = "roleChanged('" + Model.UserProfile.UserName + "','" + role + "')", data_user_name=Model.UserProfile.UserName, data_role=role.RoleName})
                 @{ i++; }
             </label>
         }
         @*                        @Html.DropDownList("role", new List<SelectListItem>(new[] {new SelectListItem {Text = "Admin"}, new SelectListItem {Text = "User"}}), new {@onchange = "roleChanged('" + user.UserName + "','" + "Administrator" + "')"})*@
 
         <script type="text/javascript">
-            function roleChanged(username, newRole) {
-                $.ajax("/Administration/Administration/ChangeRole?username=" + username + "&newRole=" + newRole);
+            $(".roleCheckbox").each(function() {
+                $(this).click(function () {
+                    if ($(this).is(':checked')) {
+                        roleChanged($(this).data("user-name"), $(this).data("role"), true);
+                        console.log($(this).data("user-name") + "is now " + $(this).data("role"));
+                    } else {
+                        console.log($(this).data("user-name") + "is now not " + $(this).data("role"));
+                        roleChanged($(this).data("user-name"), $(this).data("role"), false);
+                    }
+                });
+            })
+            function roleChanged(username, newRole, added) {
+                $.ajax("/Administration/Administration/ChangeRole?username=" + username + "&newRole=" + newRole + "&added=" + added);
             }
         </script>
     </td>
-    <td><button class="btn btn-primary">Reset Password</button></td>
     <td><button class="btn btn-danger"><i class=" glyphicon glyphicon-lock"></i> Lock</button></td>
 </tr>
