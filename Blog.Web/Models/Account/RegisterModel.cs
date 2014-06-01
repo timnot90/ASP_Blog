@@ -16,7 +16,7 @@ namespace Blog.Web.Models.Account
         [Required(ErrorMessage = "The display name must be declared.")]
         public string DisplayName { get; set; }
 
-        [DisplayName("NewPassword")]
+        [DisplayName("New Password")]
         [Required(ErrorMessage = "A password must be declared.")]
         public string Password { get; set; }
 
@@ -25,7 +25,7 @@ namespace Blog.Web.Models.Account
         public string PasswordConfirmed { get; set; }
 
         [DisplayName("E-Mail")]
-        [EmailAddress(ErrorMessage = "E-Mail falsch")]
+        [EmailAddress(ErrorMessage = "The format of the entered E-Mail adress is not valid.")]
 //        [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$", ErrorMessage = "The E-Mail Adress is not valid.")]
         [Required(ErrorMessage = "An E-Mail adress must be declared.")]
         public string Email { get; set; }

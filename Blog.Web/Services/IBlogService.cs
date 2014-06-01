@@ -26,6 +26,8 @@ namespace Blog.Web.Services
         UserProfileModel GetUserProfile(int id);
         void DeleteCategory(int categoryid);
         bool ValidateUser( string token );
+        void SendPasswordResetToken(ResetPasswordModel model);
+        void ResetPasswordSecondStep(ResetPasswordSecondStepModel model);
         #endregion
 
         #region Comment
@@ -33,5 +35,6 @@ namespace Blog.Web.Services
         void DeleteComment(int commentId);
         CommentModel GetComment(int id);
         #endregion
+
     }
 }
