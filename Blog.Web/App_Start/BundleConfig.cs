@@ -12,7 +12,8 @@ namespace Blog.Web
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/modern-business.js",
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/bootstrap.min.js"));
+                        "~/Scripts/bootstrap.min.js",
+                        "~/Scripts/Site.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));

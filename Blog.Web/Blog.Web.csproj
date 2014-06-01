@@ -158,6 +158,7 @@
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\ResetPasswordModel.cs" />
     <Compile Include="Models\Account\ResetPasswordSecondStepModel.cs" />
+    <Compile Include="Models\Home\BlogentryListModel.cs" />
     <Compile Include="Models\Shared\BreadcrumbModel.cs" />
     <Compile Include="Models\Home\AddBlogentryModel.cs" />
     <Compile Include="Models\Home\BlogentryDetailModel.cs" />
@@ -289,6 +290,7 @@
     <Content Include="Areas\Administration\Views\Administration\Index.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />

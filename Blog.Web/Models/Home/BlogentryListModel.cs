@@ -8,15 +8,10 @@ namespace Blog.Web.Models.Home
     public class BlogentryListModel
     {
         public List<BlogEntryListItemModel> Blogentries { get; set; }
-        public FilterModel Filter { get; set; }
+        public int NumberOfBlogentriesPerPage { get; set; }
 
         public BlogentryListModel()
         {
-        }
-
-        public BlogentryListModel( List<BlogEntryListItemModel>  entries)
-        {
-            this.Blogentries = entries;
         }
     }
 }

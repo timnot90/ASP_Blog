@@ -1,31 +1,33 @@
-﻿@using Blog.Core.DataAccess.Blog
-@using Blog.Web.Models.Home
+﻿@using Blog.Web.Models.Home
 @model Blog.Web.Models.Home.BlogEntryListItemModel
 
 @{
     Layout = null;
 }
-<h1>
-    @Html.ActionLink(Model.Header, "Blogentry", "Home", new { id = Model.Id }, htmlAttributes: null)
-</h1>
-<p class="lead">
-    by <a href="#">@Model.Creator.UserName</a>
-</p>
-<hr/>
-<p>Categories</p>
-<p>
-    @foreach (CategoryModel category in Model.Categories)
-{
-@*    @Html.ActionLink(, )*@
-        <a class="btn btn-success" href="@Url.Action("Index", "Home", new { categoryId = category.Id, monthAndYear = "" })">@category.Name</a>
-}
-</p>
-<hr/>
-<p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString</p>
-@*<hr>
-        <a href="blog-post.html">
-            <img src="http://placehold.it/900x300" class="img-responsive">
-    </a>*@
-<hr>
-<p>@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
-<a class="btn btn-primary" href="@Url.Action("Blogentry", "Home", new { id = Model.Id })">Read More <i class="fa fa-angle-right"></i></a>
+<div class="well blogentry">
+    <h1>
+        @Html.ActionLink(Model.Header, "Blogentry", "Home", new {id = Model.Id}, null)
+    </h1>
+    <p class="lead">
+        by <a href="#">@Model.Creator.UserName</a>
+    </p>
+    <hr />
+    <p>Categories</p>
+    <p>
+        @foreach (CategoryModel category in Model.Categories)
+        {
+            @*    @Html.ActionLink(, )*@
+            <a class="btn btn-success" href="@Url.Action("Index", "Home", new {categoryId = category.Id, monthAndYear = ""})">@category.Name</a>
+        }
+    </p>
+    <hr />
+    <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString</p>
+    @*<hr>
+            <a href="blog-post.html">
+                <img src="http://placehold.it/900x300" class="img-responsive">
+        </a>*@
+    <hr>
+    <p>@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
+    <a class="btn btn-primary" href="@Url.Action("Blogentry", "Home", new {id = Model.Id})">Read More <i class="fa fa-angle-right"></i></a>
+
+</div>
