@@ -25,6 +25,7 @@ namespace Blog.Web.Services
         List<UserProfileModel> GetAllUserProfiles();
         UserProfileModel GetUserProfile(int id);
         void DeleteCategory(int categoryid);
+        bool ValidateUser( string token );
         #endregion
 
         #region Comment

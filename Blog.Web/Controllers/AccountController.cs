@@ -145,6 +145,14 @@ namespace Blog.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ValidateUser( string token )
+        {
+            _service.ValidateUser( token );
+            return RedirectToAction( "Index", "Home" );
+        }
+
         #region private methods
         private ActionResult RedirectToLocal(string returnUrl)
         {

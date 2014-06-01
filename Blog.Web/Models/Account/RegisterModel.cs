@@ -42,7 +42,9 @@ namespace Blog.Web.Models.Account
         public void UpdateSource(UserProfile source)
         {
             source.UserName = UserName;
+            source.UserNameLowercase = UserName.ToLower();
             source.Email = Email;
+            source.EmailLowercase = Email.ToLower();
             source.DisplayName = DisplayName;
         }
 

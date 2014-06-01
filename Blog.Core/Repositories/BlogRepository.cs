@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Blog.Core.DataAccess.Blog;
@@ -73,19 +74,26 @@ namespace Blog.Core.Repositories
         {
             if (isNewProfile)
             {
-                if (EmailExists(userProfile.Email))
-                {
-                    throw new EmailAlreadyExistsException();
-                }
-
-                if (EmailExists(userProfile.DisplayName))
-                {
-                    throw new DisplayNameAlreadyExistsException();
-                }
+//                if (EmailExists(userProfile.Email))
+//                {
+//                    throw new EmailAlreadyExistsException();
+//                }
+//
+//                if (EmailExists(userProfile.DisplayName))
+//                {
+//                    throw new DisplayNameAlreadyExistsException();
+//                }
                 BlogDataContext.Current.UserProfiles.Add(userProfile);
             }
-            BlogDataContext.Current.SaveChanges();
-            return userProfile.ID;
+            try
+            {
+                BlogDataContext.Current.SaveChanges();
+                return userProfile.ID;
+            }
+            catch (DbEntityValidationException ex)
+            {
+                return 0;
+            }
         }
 
         public List<UserProfile> GetAllUserProfiles()
