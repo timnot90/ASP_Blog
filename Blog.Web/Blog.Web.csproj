@@ -157,6 +157,9 @@
     <Compile Include="MailSender.cs" />
     <Compile Include="Models\Account\ChangePasswordModel.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
+    <Compile Include="Models\Account\ResetPasswordModel.cs" />
+    <Compile Include="Models\Account\ResetPasswordSecondStepModel.cs" />
+    <Compile Include="Models\Home\BlogentryListModel.cs" />
     <Compile Include="Models\Shared\BreadcrumbModel.cs" />
     <Compile Include="Models\Home\AddBlogentryModel.cs" />
     <Compile Include="Models\Home\BlogentryDetailModel.cs" />
@@ -289,6 +292,7 @@
     <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
     <Content Include="Areas\Administration\Views\Administration\BlogSettings.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
@@ -341,6 +345,10 @@
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Errors\Error500.cshtml" />
     <Content Include="Views\Account\AccountActivated.cshtml" />
+    <Content Include="Views\Account\ResetPasswordFirstStep.cshtml" />
+    <Content Include="Views\Account\ResetPasswordSecondStep.cshtml" />
+    <Content Include="Views\Account\ResetPasswordSecondStepCompleted.cshtml" />
+    <Content Include="Views\Account\ResetPasswordFirstStepCompleted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

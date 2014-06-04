@@ -122,7 +122,6 @@ namespace Blog.Web.Services
         #endregion
 
         #region UserProfile
-
         public int StoreUserProfile( UserProfileModel userProfileModel )
         {
             bool isNewProfile = userProfileModel.Id == 0;
@@ -152,7 +151,7 @@ namespace Blog.Web.Services
                     EmailLowercase = registerModel.Email.ToLower(),
                 }, true );
 
-            MailSender.SendToken( token, /*registerModel.Email*/"timo.sit.blog@gmail.com" );
+            MailSender.SendAccountValidationToken( token, registerModel.Email );
 
             UserProfile newProfile = new UserProfile();
             registerModel.UpdateSource( newProfile );
@@ -187,6 +186,28 @@ namespace Blog.Web.Services
 //            Roles.AddUserToRole( userName, CustomRoles.User );
         }
 
+        public void SendPasswordResetToken(ResetPasswordModel model)
+        {
+            try
+            {
+                UserProfile userProfile =  _repository.GetAllUserProfiles().First(u => u.EmailLowercase == model.Email.ToLower());
+                if (userProfile != null)
+                {
+                    string passwordResetToken = WebSecurity.GeneratePasswordResetToken(userProfile.UserName);
+                    MailSender.SendAccountValidationToken(passwordResetToken, model.Email);
+                }
+            }
+            catch (InvalidOperationException) { }
+        }
+
+        public void ResetPasswordSecondStep(ResetPasswordSecondStepModel model)
+        {
+            try
+            {
+                WebSecurity.ResetPassword(model.Token, model.NewPassword);
+            }
+            catch (InvalidOperationException) { }
+        }
         #endregion
 
         #region Comment
@@ -212,7 +233,6 @@ namespace Blog.Web.Services
             CommentModel commentModel = comment == null ? null : new CommentModel( comment );
             return commentModel;
         }
-
         #endregion
 
         #region Settings

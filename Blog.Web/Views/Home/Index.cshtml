@@ -1,5 +1,6 @@
 ﻿@using Blog.Web.Models.Home
-@model List<Blog.Web.Models.Home.BlogEntryListItemModel>
+@model Blog.Web.Models.Home.BlogentryListModel
+@*@model List<Blog.Web.Models.Home.BlogEntryListItemModel>*@
 @{
     ViewBag.Title = "Blog";
     ViewBag.Breadcrumbs = null;
@@ -8,13 +9,11 @@
     <div class="row">
         <div class="col-lg-8">
             <div>
-                @if (Model.Count > 0)
+                @if (Model.Blogentries.Count > 0)
                 {
-                    foreach (BlogEntryListItemModel blogEntry in Model)
+                    foreach (BlogEntryListItemModel blogEntry in Model.Blogentries)
                     {
-                        <div class= "well" >
-                            @Html.Partial( "_BlogPostListItem", blogEntry )
-                        </div>
+                        @Html.Partial("_BlogPostListItem", blogEntry)
                     }
                 }
                 else
@@ -22,7 +21,17 @@
                     <div>There are no blogentries matching the applied filter.</div>
                 }
             </div>
+            <div class="text-center">
+                <ul class="pagination" id="blogentries-pagination" data-blogentries-per-page=@Model.NumberOfBlogentriesPerPage>
+                    <li class="" id="blogentries-pagination-prev" onclick="entryPagination.goToPreviousPage()"><a href="#">«</a></li>
+                    @for (int i = 0; i < Model.Blogentries.Count/Model.NumberOfBlogentriesPerPage + 1; i++)
+                    {
+                        <li class="pagination-item @(i == 0 ? "active" : "")" onclick="entryPagination.goToPage(@i)"><a href="#">@(i+1)</a></li>
+                    }
+                    <li class="" id="blogentries-pagination-next" onclick="entryPagination.goToNextPage()"><a href="#">»</a></li>
+                </ul>
+            </div>
         </div>
-        @Html.Action( "_BlogSidebar" )
+        @Html.Action("_BlogSidebar")
     </div>
 </div>

@@ -14,6 +14,9 @@ namespace Blog.Web
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/bootstrap.min.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/custom").Include(
+                        "~/Scripts/Site.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 

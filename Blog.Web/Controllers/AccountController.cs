@@ -3,15 +3,15 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Blog.Core.Exceptions;
 using Blog.Web.Models.Account;
-using WebMatrix.WebData;
 using Blog.Web.Services;
+using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        IBlogService _service = new BlogService();
+        private readonly IBlogService _service = new BlogService();
 
         [HttpGet]
         [AllowAnonymous]
@@ -147,13 +147,64 @@ namespace Blog.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult ValidateUser( string token )
+        public ActionResult ValidateUser(string token)
         {
-            _service.ValidateUser( token );
-            return RedirectToAction( "Index", "Home" );
+            _service.ValidateUser(token);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ResetPasswordFirstStep()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ResetPasswordFirstStep(ResetPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.SendPasswordResetToken(model);
+                return View();
+            }
+            else
+            {
+                return View("ResetPasswordFirstStepCompleted");
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ResetPasswordSecondStep(string token)
+        {
+            var model = new ResetPasswordSecondStepModel(token);
+            //            _service.ResetPasswordSecondStep(token);
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ResetPasswordSecondStep(ResetPasswordSecondStepModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.NewPassword != model.NewPasswordConfirmed)
+                {
+                    ModelState.AddModelError("DifferentPasswords", "Your confirmed password doesn't match.");
+                }
+                else
+                {
+                    _service.ResetPasswordSecondStep(model);
+                    return View("ResetPasswordSecondStepCompleted");
+                }
+            }
+            return View(model);
         }
 
         #region private methods
+
         private ActionResult RedirectToLocal(string returnUrl)
         {
             if (Url.IsLocalUrl(returnUrl))
@@ -191,7 +242,7 @@ namespace Blog.Web.Controllers
                     return "An error occured.";
             }
         }
-        #endregion
 
+        #endregion
     }
 }

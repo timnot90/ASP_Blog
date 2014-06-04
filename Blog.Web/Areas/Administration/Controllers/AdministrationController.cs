@@ -21,9 +21,9 @@ namespace Blog.Web.Areas.Administration.Controllers
             return View(model);
         }
 
-        public ActionResult ChangeRole(string username, string newRole)
+        public ActionResult ChangeRole(string username, string newRole, bool added)
         {
-            if (!Roles.GetRolesForUser(username).Contains(newRole))
+            if (added)
             {
                 Roles.AddUserToRole(username, newRole);
             }

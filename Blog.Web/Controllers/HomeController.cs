@@ -36,15 +36,19 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index(int? categoryId, string monthAndYear)
         {
+            BlogentryListModel model = new BlogentryListModel();
+            model.NumberOfBlogentriesPerPage = 10;
+            
             if (!categoryId.HasValue)
             {
                 categoryId = 0;
             }
             if (categoryId == 0 && string.IsNullOrEmpty(monthAndYear))
             {
-                return View(_service.GetAllBlogentries());
+                model.Blogentries = _service.GetAllBlogentries();
             }
-            return View(_service.GetBlogentries((int) categoryId, monthAndYear));
+            model.Blogentries = _service.GetBlogentries((int) categoryId, monthAndYear);
+            return View(model);
         }
 
         [AllowAnonymous]
