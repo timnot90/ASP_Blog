@@ -5,6 +5,7 @@ using System.Web.Security;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
+using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Models.Account;
 using Blog.Web.Models.Home;
 using WebMatrix.WebData;
@@ -178,7 +179,7 @@ namespace Blog.Web.Services
             {
                 return WebSecurity.ConfirmAccount( token );
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException)
             {
                 return false;
             }
@@ -212,6 +213,15 @@ namespace Blog.Web.Services
             return commentModel;
         }
 
+        #endregion
+
+        #region Settings
+
+        public BlogSettingsModel GetBlogSettings()
+        {
+            var blogSettings = new BlogSettingsModel(_repository.GetBlogSettings());
+            return blogSettings;
+        }
         #endregion
 
         #region private methods

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Models.Account;
 using Blog.Web.Models.Home;
 
@@ -32,6 +33,12 @@ namespace Blog.Web.Services
         int StoreComment(LeaveCommentModel commentModel);
         void DeleteComment(int commentId);
         CommentModel GetComment(int id);
+        #endregion
+
+        #region Settings
+
+        BlogSettingsModel GetBlogSettings();
+
         #endregion
     }
 }

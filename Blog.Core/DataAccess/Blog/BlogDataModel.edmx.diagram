@@ -20,6 +20,7 @@
         <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles" ManuallyRouted="false" />
         <AssociationConnector Association="Blog.Core.DataAccess.Blog.fk_RoleId" ManuallyRouted="false" />
         <AssociationConnector Association="Blog.Core.DataAccess.Blog.CategoriesToEntries" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Setting" Width="1.5" PointX="3.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

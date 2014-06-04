@@ -55,6 +55,30 @@
           <Property Name="Likes" Type="int" Nullable="false" />
           <Property Name="Dislikes" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="UNIQUE_ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SiteName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="NumberOfEntriesPerPage" Type="int" Nullable="false" />
+          <Property Name="RegistrationMailSubject" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="RegistrationMailBody" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RegistrationMailSender" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordChangeMailSubject" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PasswordChangeMailBody" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PasswordChangeMailSender" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="WelcomeMailSubject" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="WelcomeMailBody" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="WelcomeMailSender" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FooterText" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="SmtpServerAddress" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SmtpServerUsername" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SmtpServerPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SmtpIsPasswordMandatoryForLogin" Type="bit" Nullable="false" />
+          <Property Name="CommentsActivated" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="UserProfiles">
           <Key>
             <PropertyRef Name="ID" />
@@ -73,6 +97,7 @@
           <Property Name="Forename" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="char" MaxLength="1" />
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsLocked" Type="bit" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -206,6 +231,7 @@
           <EntitySet Name="CategoriesToEntries" EntityType="Self.CategoriesToEntries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Oppinions" EntityType="Self.Oppinions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" Schema="dbo" store:Type="Tables" />
@@ -314,6 +340,7 @@
           <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_UserProfiles" FromRole="UserProfiles" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_UserProfiles" FromRole="UserProfiles" ToRole="Comments" />
           <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocked" Type="Boolean" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -455,7 +482,32 @@
             <End Role="Blogentries" EntitySet="Blogentries" />
             <End Role="Categories" EntitySet="Categories" />
           </AssociationSet>
+          <EntitySet Name="Settings" EntityType="Blog.Core.DataAccess.Blog.Setting" />
         </EntityContainer>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="UNIQUE_ID" Type="Guid" Nullable="false" />
+          <Property Name="SiteName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfEntriesPerPage" Type="Int32" Nullable="false" />
+          <Property Name="RegistrationMailSubject" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RegistrationMailBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegistrationMailSender" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangeMailSubject" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangeMailBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangeMailSender" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WelcomeMailSubject" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WelcomeMailBody" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WelcomeMailSender" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FooterText" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpServerAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpServerUsername" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpServerPassword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpIsPasswordMandatoryForLogin" Type="Boolean" Nullable="false" />
+          <Property Name="CommentsActivated" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -511,6 +563,7 @@
           <EntitySetMapping Name="UserProfiles">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.UserProfile">
               <MappingFragment StoreEntitySet="UserProfiles">
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
                 <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
@@ -578,6 +631,31 @@
               <ScalarProperty Name="ID" ColumnName="CategoryID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Setting">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="CommentsActivated" ColumnName="CommentsActivated" />
+                <ScalarProperty Name="SmtpIsPasswordMandatoryForLogin" ColumnName="SmtpIsPasswordMandatoryForLogin" />
+                <ScalarProperty Name="SmtpServerPassword" ColumnName="SmtpServerPassword" />
+                <ScalarProperty Name="SmtpServerUsername" ColumnName="SmtpServerUsername" />
+                <ScalarProperty Name="SmtpServerAddress" ColumnName="SmtpServerAddress" />
+                <ScalarProperty Name="FooterText" ColumnName="FooterText" />
+                <ScalarProperty Name="WelcomeMailSender" ColumnName="WelcomeMailSender" />
+                <ScalarProperty Name="WelcomeMailBody" ColumnName="WelcomeMailBody" />
+                <ScalarProperty Name="WelcomeMailSubject" ColumnName="WelcomeMailSubject" />
+                <ScalarProperty Name="PasswordChangeMailSender" ColumnName="PasswordChangeMailSender" />
+                <ScalarProperty Name="PasswordChangeMailBody" ColumnName="PasswordChangeMailBody" />
+                <ScalarProperty Name="PasswordChangeMailSubject" ColumnName="PasswordChangeMailSubject" />
+                <ScalarProperty Name="RegistrationMailSender" ColumnName="RegistrationMailSender" />
+                <ScalarProperty Name="RegistrationMailBody" ColumnName="RegistrationMailBody" />
+                <ScalarProperty Name="RegistrationMailSubject" ColumnName="RegistrationMailSubject" />
+                <ScalarProperty Name="NumberOfEntriesPerPage" ColumnName="NumberOfEntriesPerPage" />
+                <ScalarProperty Name="SiteName" ColumnName="SiteName" />
+                <ScalarProperty Name="UNIQUE_ID" ColumnName="UNIQUE_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

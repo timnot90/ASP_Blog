@@ -14,9 +14,9 @@ namespace Blog.Web.Areas.Administration.Controllers
     {
         IBlogService _service = new BlogService();
 
-        public ActionResult Index()
+        public ActionResult Users()
         {
-            AdministrationModel model = new AdministrationModel();
+            UsersModel model = new UsersModel();
             model.Users = _service.GetAllUserProfiles();
             return View(model);
         }
@@ -37,6 +37,11 @@ namespace Blog.Web.Areas.Administration.Controllers
         public ActionResult _UserListItem()
         {
             return View();
+        }
+
+        public ActionResult BlogSettings()
+        {
+            return View(_service.GetBlogSettings());
         }
     }
 }

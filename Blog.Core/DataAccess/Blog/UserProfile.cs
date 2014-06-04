@@ -35,6 +35,7 @@ namespace Blog.Core.DataAccess.Blog
         public string Gender { get; set; }
         public string Country { get; set; }
         public string DisplayName { get; set; }
+        public Nullable<bool> IsLocked { get; set; }
     
         public virtual ICollection<Blogentry> Blogentries { get; set; }
         public virtual ICollection<Category> Categories { get; set; }

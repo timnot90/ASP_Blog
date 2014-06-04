@@ -141,8 +141,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
-    <Compile Include="Areas\Administration\Models\AdministrationModel.cs" />
+    <Compile Include="Areas\Administration\Models\UsersModel.cs" />
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
+    <Compile Include="Areas\Administration\Models\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -284,8 +285,9 @@
     <Content Include="font-awesome\scss\_variables.scss" />
     <Content Include="Areas\Administration\Views\Web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Administration\Views\Administration\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Administration\Users.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
+    <Content Include="Areas\Administration\Views\Administration\BlogSettings.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
@@ -342,7 +344,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Administration\Views\Home\" />
+    <Folder Include="Areas\Administration\Views\Setting\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

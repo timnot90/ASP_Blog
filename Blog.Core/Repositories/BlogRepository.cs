@@ -10,6 +10,10 @@ namespace Blog.Core.Repositories
 {
     public class BlogRepository : IBlogRepository
     {
+        public BlogRepository()
+        {
+        }
+
         #region Blogentry
 
         public int SaveBlogentry(Blogentry entry, bool isNewEntry = false)
@@ -74,15 +78,6 @@ namespace Blog.Core.Repositories
         {
             if (isNewProfile)
             {
-//                if (EmailExists(userProfile.Email))
-//                {
-//                    throw new EmailAlreadyExistsException();
-//                }
-//
-//                if (EmailExists(userProfile.DisplayName))
-//                {
-//                    throw new DisplayNameAlreadyExistsException();
-//                }
                 BlogDataContext.Current.UserProfiles.Add(userProfile);
             }
             try
@@ -90,7 +85,7 @@ namespace Blog.Core.Repositories
                 BlogDataContext.Current.SaveChanges();
                 return userProfile.ID;
             }
-            catch (DbEntityValidationException ex)
+            catch (DbEntityValidationException)
             {
                 return 0;
             }
@@ -147,6 +142,48 @@ namespace Blog.Core.Repositories
             BlogDataContext.Current.Comments.Remove(
                 BlogDataContext.Current.Comments.FirstOrDefault(c => c.ID == commentId));
             BlogDataContext.Current.SaveChanges();
+        }
+
+        #endregion
+
+        #region Settings
+
+        public Setting GetBlogSettings()
+        {
+            Setting blogSetting = BlogDataContext.Current.Settings.First(s => s.UNIQUE_ID == Guid.Empty);
+            if (blogSetting == null)
+            {
+                blogSetting = new Setting();
+                blogSetting.UNIQUE_ID = Guid.Empty;
+                blogSetting.SiteName = "Blog";
+                blogSetting.FooterText = "Your Footer Text. Go to the settings to change it.";
+                blogSetting.CommentsActivated = true;
+                blogSetting.NumberOfEntriesPerPage = 10;
+
+                blogSetting.RegistrationMailSubject = "Registration Confirmation";
+                blogSetting.RegistrationMailBody =
+                    "Your successfully registered for Blog. Please click on the link below to activate your account.</br>{0}";
+                blogSetting.RegistrationMailSender = "default_registration@blog.com";
+
+                blogSetting.WelcomeMailSubject = "Welcome to Blog.";
+                blogSetting.WelcomeMailBody =
+                    "Welcome to Blog. Have Fun!";
+                blogSetting.WelcomeMailSender = "default_welcome@blog.com";
+
+                blogSetting.PasswordChangeMailSubject = "Password Change Confirmation";
+                blogSetting.PasswordChangeMailBody =
+                    "To complete your password change, click on the link below.</br>{0}";
+                blogSetting.PasswordChangeMailSender = "default_password_change@blog.com";
+
+                blogSetting.SmtpServerAddress = "smtp@blog.com";
+                blogSetting.SmtpServerUsername = "admin";
+                blogSetting.SmtpServerPassword = "password";
+                blogSetting.SmtpIsPasswordMandatoryForLogin = true;
+
+                BlogDataContext.Current.Settings.Add(blogSetting);
+                BlogDataContext.Current.SaveChanges();
+            }
+            return blogSetting;
         }
 
         #endregion

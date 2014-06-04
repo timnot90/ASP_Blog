@@ -9,7 +9,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
-            @Html.ActionLink("Timo's Blog", "Index", "Home", htmlAttributes: new { @class = "navbar-brand" }, routeValues: new { area = "" })
+            @Html.ActionLink( "Timo's Blog", "Index", "Home", htmlAttributes: new {@class = "navbar-brand"}, routeValues: new {area = ""} )
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,17 +19,17 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Blog <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="@Url.Action("Index", "Home", new {area = ""})">
+                            <a href="@Url.Action( "Index", "Home", new {area = ""} )">
                                 <i class="glyphicon glyphicon-list"></i> View Posts
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Categories", "Home", new {area = ""})">
+                            <a href="@Url.Action( "Categories", "Home", new {area = ""} )">
                                 <i class="glyphicon glyphicon-inbox"></i> Categories
                             </a>
                         </li>
                         <li>
-                            <a href="@Url.Action("AddBlogentry", "Home", new {area = ""})">
+                            <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
                                 <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
                             </a>
                         </li>
@@ -38,27 +38,27 @@
                 <li class="dropdown">
                     @*<a href='@Url.Action(actionName: "EditProfile", controllerName: "Account")' class="dropdown-toggle" data-toggle="dropdown">My Account <b class="caret"></b></a>
                     *@<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-user"></i>
-                        @if (WebSecurity.IsAuthenticated)
-                        {
-                            @:@WebSecurity.CurrentUserName
-                              }
-                        else
-                        {
-                            @:My Profile
-                              }<b class="caret"></b>
+                          <i class="glyphicon glyphicon-user"></i>
+                          @if (WebSecurity.IsAuthenticated)
+                          {
+                              @:@WebSecurity.CurrentUserName
+                          }
+                          else
+                          {
+                              @:My Profile
+                          }<b class="caret"></b>
 
-                    </a>
+                      </a>
                     <ul class="dropdown-menu">
                         @if (WebSecurity.IsAuthenticated)
                         {
                             <li>
-                                <a href="@Url.Action("EditProfile", "Account", new {area = ""})">
+                                <a href="@Url.Action( "EditProfile", "Account", new {area = ""} )">
                                     <i class="glyphicon glyphicon-cog"></i> Edit Profile
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Logout", "Account", new {area = ""})">
+                                <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
                                     <i class="glyphicon glyphicon-log-out"></i> Logout
                                 </a>
                             </li>
@@ -66,12 +66,12 @@
                         else
                         {
                             <li>
-                                <a href="@Url.Action("Register", "Account", new {area = ""})">
+                                <a href="@Url.Action( "Register", "Account", new {area = ""} )">
                                     <i class="glyphicon glyphicon-edit"></i> Register
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Login", "Account", new {area = ""})">
+                                <a href="@Url.Action( "Login", "Account", new {area = ""} )">
                                     <i class="glyphicon glyphicon-log-in"></i> Login
                                 </a>
                             </li>
@@ -79,28 +79,39 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="@Url.Action("Index", "About", new {area = ""})">
+                    <a href="@Url.Action( "Index", "About", new {area = ""} )">
                         <i class="glyphicon glyphicon-info-sign"></i> About
                     </a>
                 </li>
-                <li>
-                    @if (Roles.IsUserInRole(CustomRoles.Administrator))
-                    {
-                        <a href="@Url.Action("Index", "Administration", new {area = "Administration"})">
-                            <i class="glyphicon glyphicon-eye-open"></i> Administration
-                        </a>
-                    }
-                </li>
+                @if (Roles.IsUserInRole( CustomRoles.Administrator ))
+                {
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-signal"></i> Administration <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="@Url.Action( "Users", "Administration", new {area = "Administration"} )">
+                                    <i class="glyphicon glyphicon-eye-open"></i> Users
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action( "BlogSettings", "Administration", new {area = "Administration"} )">
+                                    <i class="glyphicon glyphicon-eye-open"></i> Settings
+                                </a>
+                            </li>
+                            <li>
+                        </ul>
+                    </li>
+                }
                 <li>
                     @if (WebSecurity.IsAuthenticated)
                     {
-                        <a href="@Url.Action("Logout", "Account", new {area = ""})">
+                        <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
                             <i class="glyphicon glyphicon-log-out"></i> Logout
                         </a>
                     }
                     else
                     {
-                        <a href="@Url.Action("Login", "Account", new {area = ""})">
+                        <a href="@Url.Action( "Login", "Account", new {area = ""} )">
                             <i class="glyphicon glyphicon-log-in"></i> Login
                         </a>
                     }

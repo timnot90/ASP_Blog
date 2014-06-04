@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Core.Repositories
@@ -43,6 +44,12 @@ namespace Blog.Core.Repositories
         List<Comment> GetAllComments();
 
         Comment GetComment(int id);
+        #endregion
+
+        #region
+
+        Setting GetBlogSettings();
+
         #endregion
     }
 }

@@ -6,7 +6,7 @@ using Blog.Web.Models.Account;
 
 namespace Blog.Web.Areas.Administration.Models
 {
-    public class AdministrationModel
+    public class UsersModel
     {
         public List<UserProfileModel> Users { get; set; }
 
