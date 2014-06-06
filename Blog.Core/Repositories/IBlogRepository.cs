@@ -46,9 +46,10 @@ namespace Blog.Core.Repositories
         Comment GetComment(int id);
         #endregion
 
-        #region
+        #region Settings
 
         Setting GetBlogSettings();
+        void StoreSettings( Setting settings );
 
         #endregion
     }

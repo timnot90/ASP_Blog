@@ -1,5 +1,4 @@
-﻿@using Blog.Web.Models
-@using Blog.Web.Models.Shared
+﻿@using Blog.Web.Models.Shared
 @model Blog.Web.Models.Home.AddBlogentryModel
 
 @{
@@ -37,7 +36,7 @@
             </div>
             <div class="form-group">
                 <div class="">
-                    <a href="@Url.Action("Index", "Home", new {categoryId = 0})" class="btn btn-default">Cancel</a>
+                    @Html.ActionLink("Cancel", "Index", "Home", new { area = "", categoryId = 0 }, new { @class = "btn btn-default" }))
                     <button type="submit" class="btn btn-primary">Post</button>
                 </div>
             </div>

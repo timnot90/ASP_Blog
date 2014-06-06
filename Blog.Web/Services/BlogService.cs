@@ -242,6 +242,13 @@ namespace Blog.Web.Services
             var blogSettings = new BlogSettingsModel(_repository.GetBlogSettings());
             return blogSettings;
         }
+
+        public void StoreSettings(BlogSettingsModel model)
+        {
+            Setting setting = _repository.GetBlogSettings();
+            model.UpdateSource( setting );
+            _repository.StoreSettings( setting );
+        }
         #endregion
 
         #region private methods

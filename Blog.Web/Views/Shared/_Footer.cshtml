@@ -1,9 +1,11 @@
-﻿<div class="container panel-footer">
+﻿@model Blog.Web.Models.Shared.FooterModel
+
+<div class="container panel-footer">
     <hr>
     <footer>
         <div class="row">
             <div class="col-lg-12">
-                <p>Copyright &copy; Company 2013</p>
+                <p>@Model.FooterText</p>
             </div>
         </div>
     </footer>

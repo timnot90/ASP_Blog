@@ -1,21 +1,20 @@
 ﻿body {
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
     background-color: #fff;
+    color: #232323;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
+    font-size: .85em;
 }
 
-header, footer, nav, section {
-    display: block;
-}
+header, footer, nav, section { display: block; }
 
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
+
 fieldset {
     border: 1px solid #ddd;
-    padding: 0 1.4em 1.4em 1.4em;
     margin: 0 0 1.5em 0;
+    padding: 0 1.4em 1.4em 1.4em;
 }
 
 legend {
@@ -23,42 +22,31 @@ legend {
     font-weight: bold;
 }
 
-textarea {
-    min-height: 75px;
-}
+textarea { min-height: 75px; }
 
-.editor-label {
-    margin: 1em 0 0 0;
-}
+.editor-label { margin: 1em 0 0 0; }
 
-.editor-field {
-    margin: 0.5em 0 0 0;
-}
+.editor-field { margin: 0.5em 0 0 0; }
 
 
 /* Styles for validation helpers
 -----------------------------------------------------------*/
-.field-validation-error {
-    color: #f00;
-}
 
-.field-validation-valid {
-    display: none;
-}
+.field-validation-error { color: #f00; }
+
+.field-validation-valid { display: none; }
 
 .input-validation-error {
-    border: 1px solid #f00;
     background-color: #fee;
+    border: 1px solid #f00;
 }
 
 .validation-summary-errors {
-    font-weight: bold;
     color: #f00;
+    font-weight: bold;
 }
 
-.validation-summary-valid {
-    display: none;
-}
+.validation-summary-valid { display: none; }
 
 /*.required:after {
     content: "*";
@@ -86,58 +74,69 @@ textarea {
 }*/
 
 /**************Login Form*********************/
+
 .form-signin {
+    margin: 0 auto;
     max-width: 330px;
     padding: 15px;
-    margin: 0 auto;
 }
 
-    .form-signin .form-signin-heading,
-    .form-signin .checkbox {
-        margin-bottom: 10px;
-    }
+.form-signin .form-signin-heading,
+.form-signin .checkbox { margin-bottom: 10px; }
 
-    .form-signin .checkbox {
-        font-weight: normal;
-    }
+.form-signin .checkbox { font-weight: normal; }
 
-    .form-signin .form-control {
-        position: relative;
-        height: auto;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-        padding: 10px;
-        font-size: 16px;
-    }
-
-        .form-signin .form-control:focus {
-            z-index: 2;
-        }
-
-    .form-signin input[type="text"] {
-        margin-bottom: -1px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-
-    .form-signin input[type="password"] {
-        margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-
-/*****************Icon in Textbox*************************/
-.left-inner-addon {
+.form-signin .form-control {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
     position: relative;
 }
 
-    .left-inner-addon input {
-        padding-left: 30px;
-    }
+.form-signin .form-control:focus { z-index: 2; }
 
-    .left-inner-addon i {
-        position: absolute;
-        padding: 10px 12px;
-        pointer-events: none;
-    }
+.form-signin input[type="text"] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: -1px;
+}
+
+.form-signin input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin-bottom: 10px;
+}
+
+/*****************Icon in Textbox*************************/
+
+.left-inner-addon { position: relative; }
+
+.left-inner-addon input { padding-left: 30px; }
+
+.left-inner-addon i {
+    padding: 10px 12px;
+    pointer-events: none;
+    position: absolute;
+}
+
+fieldset.scheduler-border {
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+    border: 1px groove #ddd !important;
+    -ms-box-shadow: 0px 0px 0px 0px #000;
+    box-shadow: 0px 0px 0px 0px #000;
+    margin: 0 0 1.5em 0 !important;
+    padding: 0 3em;
+    /*padding: 0 1.4em 1.4em 1.4em !important;*/
+}
+
+legend.scheduler-border {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}

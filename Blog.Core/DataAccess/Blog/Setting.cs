@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Net.Mail;
+
 namespace Blog.Core.DataAccess.Blog
 {
     using System;

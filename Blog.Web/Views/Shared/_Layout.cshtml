@@ -1,26 +1,33 @@
-﻿@using Blog.Web
-@using Blog.Web.Models
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title</title>
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/custom")
+        @Styles.Render( "~/Content/css" )
+        @Scripts.Render( "~/bundles/modernizr" )
+        @Scripts.Render( "~/bundles/jquery" )
+        @Scripts.Render( "~/bundles/custom" )
     </head>
     <body>
-        @Html.Partial("_NavigationBar")
+        @*        @Html.Partial( "_NavigationBar" )*@
+        @Html.Action("_NavigationBar", "Home", new { area = "" })
         <br />
         <br />
-        @Html.Partial("_PageHeader")
+        @Html.Action("_PageHeader", "Home", new { area="", title=ViewBag.Title })
+@*        @Html.Partial( "_PageHeader" )*@
         <div class="container">
             @RenderBody()
         </div>
-        @Html.Partial("_Footer")
-        @RenderSection("scripts", false)
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    @Html.Action("_Footer", "Home", new { area = "" })
+                </div>
+            </div>
+        </div>
+@*        @Html.Partial( "_Footer" )*@
+        @RenderSection( "scripts", false )
     </body>
 
 </html>

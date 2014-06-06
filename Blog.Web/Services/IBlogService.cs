@@ -40,6 +40,7 @@ namespace Blog.Web.Services
         #region Settings
 
         BlogSettingsModel GetBlogSettings();
+        void StoreSettings( BlogSettingsModel model );
 
         #endregion
     }

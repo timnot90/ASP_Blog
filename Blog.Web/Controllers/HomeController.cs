@@ -10,7 +10,6 @@ using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         #region variables
@@ -37,7 +36,7 @@ namespace Blog.Web.Controllers
         public ActionResult Index(int? categoryId, string monthAndYear)
         {
             BlogentryListModel model = new BlogentryListModel();
-            model.NumberOfBlogentriesPerPage = 10;
+            model.NumberOfBlogentriesPerPage = _service.GetBlogSettings().NumberOfEntriesPerPage;
             
             if (!categoryId.HasValue)
             {
@@ -101,7 +100,6 @@ namespace Blog.Web.Controllers
         #region partial views
         [HttpPost]
         [RecaptchaControlMvc.CaptchaValidatorAttribute]
-        [ValidateAntiForgeryToken]
         public ActionResult _LeaveComment(LeaveCommentModel comment, bool captchaValid, string captchaErrorMessage)
         {
             if (!WebSecurity.IsAuthenticated && !captchaValid)
@@ -139,6 +137,13 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
+        public PartialViewResult _Footer()
+        {
+            var model = new FooterModel {FooterText = _service.GetBlogSettings().FooterText};
+            return PartialView( model );
+        }
+
+        [HttpGet]
         public PartialViewResult AddCategory()
         {
             return PartialView(new CategoryModel());
@@ -170,6 +175,20 @@ namespace Blog.Web.Controllers
             {
                 return View("Error", new ErrorModel(ex.Message));
             }
+        }
+
+        [HttpGet]
+        public PartialViewResult _PageHeader(string title)
+        {
+            var model = new PageHeaderModel {SiteName = _service.GetBlogSettings().SiteName};
+            model.Title = title;
+            return PartialView(model);
+        }
+
+        public PartialViewResult _NavigationBar()
+        {
+            var model = new NavigationBarModel {SiteName = _service.GetBlogSettings().SiteName};
+            return PartialView( model );
         }
     }
 }

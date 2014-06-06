@@ -3,39 +3,24 @@
 @model Blog.Web.Areas.Administration.Models.UsersModel
 
 @{
-    ViewBag.Title = "Administration";
+    ViewBag.Title = "User Administration";
 }
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">
-                @ViewBag.Title
-                <small>Blog Homepage</small>
-            </h1>
-            <ol class="breadcrumb">
-                <li>
-                    @Html.ActionLink("Home", "Index", "Home")
-                </li>
-                <li class="active">@ViewBag.Title</li>
-            </ol>
-        </div>
-    </div>
-    <div class="row">
-        <table class="table table-hover table-striped table-bordered table-condensed table-responsive">
-            <tr>
-                <th>Username</th>
-                <th>Display Name</th>
-                <th>Forename</th>
-                <th>Last Name</th>
-                <th>Role</th>
-                <th></th>
-            </tr>            
-            @foreach (UserProfileModel user in Model.Users)
-            {
-                UserListItemModel model = new UserListItemModel();
-                model.Roles = Roles.GetAllRoles().Select(r => new RoleModel(r, Roles.GetRolesForUser(user.UserName).Contains(r))).ToList();
-                model.UserProfile = user;
-                Html.RenderPartial("_UserListItem", model);
+<div class="row">
+    <table class="table table-hover table-striped table-bordered table-condensed table-responsive">
+        <tr>
+            <th>Username</th>
+            <th>Display Name</th>
+            <th>Forename</th>
+            <th>Last Name</th>
+            <th>Role</th>
+            <th></th>
+        </tr>            
+        @foreach (UserProfileModel user in Model.Users)
+        {
+            UserListItemModel model = new UserListItemModel();
+            model.Roles = Roles.GetAllRoles().Select( r => new RoleModel( r, Roles.GetRolesForUser( user.UserName ).Contains( r ) ) ).ToList();
+            model.UserProfile = user;
+            Html.RenderPartial( "_UserListItem", model );
 @*                <tr>*@
 @*                    <td>@user.UserName</td>*@
 @*                    <td>@user.DisplayName</td>*@
@@ -60,7 +45,6 @@
 @*                    <td><button class="btn btn-primary">Reset Password</button></td>*@
 @*                    <td><button class="btn btn-danger"><i class=" glyphicon glyphicon-lock"></i> Lock</button></td>*@
 @*                </tr>*@
-            }
-        </table>
-    </div>
+        }
+    </table>
 </div>

@@ -1,19 +1,31 @@
-﻿using System.Net.Mail;
+﻿using System;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Policy;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Blog.Core.DataAccess.Blog;
+using Blog.Core.Repositories;
 using Microsoft.Ajax.Utilities;
 
 namespace Blog.Web
 {
     public static class MailSender
     {
-        private static readonly SmtpClient smtp = new SmtpClient();
+        private static readonly BlogRepository BlogRepository = new BlogRepository();
+        private static readonly SmtpClient Smtp = new SmtpClient();
 
         public static void SendAccountValidationToken(string token, string recipient)
         {
+            Setting blogSettings = BlogRepository.GetBlogSettings();
+
+            Smtp.Credentials = new NetworkCredential( blogSettings.SmtpServerUsername, blogSettings.SmtpServerPassword );
+            Smtp.Host = blogSettings.SmtpServerAddress;
+
+
             MailMessage mail = new MailMessage();
+            mail.Sender = new MailAddress( blogSettings.RegistrationMailSender );
             string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port + "/Account/ValidateUser?token=" + token;
 
             mail.To.Add(new MailAddress(recipient));
@@ -28,8 +40,8 @@ namespace Blog.Web
             mailBody.AppendLine("<head>");
             mailBody.AppendLine("</head>");
             mailBody.AppendLine("<body>");
-            mailBody.AppendLine("Click on the following link or copy it into the address bar of your browser in order to reset your password:<br/>");
-            mailBody.AppendLine(linkTag.ToString());
+            //mailBody.AppendLine("Click on the following link or copy it into the address bar of your browser in order to reset your password:<br/>");
+            mailBody.AppendLine( String.Format(blogSettings.RegistrationMailBody, linkTag.ToString() ));
             mailBody.AppendLine("</body>");
             mailBody.AppendLine("</html>");
 
@@ -37,7 +49,7 @@ namespace Blog.Web
             mail.Body = mailBody.ToString();
             mail.Subject = "Subject";
 
-            smtp.Send(mail);
+            Smtp.Send(mail);
         }
 
         public static void SendPasswordResetToken(string token, string recipient)
@@ -66,7 +78,7 @@ namespace Blog.Web
             mail.Body = mailBody.ToString();
             mail.Subject = "Subject";
 
-            smtp.Send(mail);
+            Smtp.Send(mail);
         }
     }
 }

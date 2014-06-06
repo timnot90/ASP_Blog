@@ -39,9 +39,24 @@ namespace Blog.Web.Areas.Administration.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult BlogSettings()
         {
             return View(_service.GetBlogSettings());
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult BlogSettings(BlogSettingsModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.StoreSettings( model );
+                model.SuccessfullySaved = true;
+                return View(model);
+            }
+            model.SuccessfullySaved = false;
+            return View(model);
         }
     }
 }
