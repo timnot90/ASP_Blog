@@ -19,48 +19,50 @@ function BlogentryPagination() {
     var maxNumberOfPaginationItems = 5;
 
     this.goToPage = function (pageIndex) {
-        console.log("goToPage " + pageIndex);
+        if (allPaginationItems.length > 0) {
+            console.log("goToPage " + pageIndex);
 
-        entryStartIndex = (pageIndex) * entriesPerPage;
-        entryEndIndex = (pageIndex + 1) * (entriesPerPage) - 1;
-        currentPageIndex = pageIndex;
-        console.log("Start: " + entryStartIndex);
-        console.log("End: " + entryEndIndex);
-        allEntries.each(function (index) {
-            if (index >= entryStartIndex && index <= entryEndIndex) {
-                $(this).css("display", "block");
+            entryStartIndex = (pageIndex) * entriesPerPage;
+            entryEndIndex = (pageIndex + 1) * (entriesPerPage) - 1;
+            currentPageIndex = pageIndex;
+            console.log("Start: " + entryStartIndex);
+            console.log("End: " + entryEndIndex);
+            allEntries.each(function(index) {
+                if (index >= entryStartIndex && index <= entryEndIndex) {
+                    $(this).css("display", "block");
+                } else {
+                    $(this).css("display", "none");
+                }
+            });
+
+            allPaginationItems.each(function(index) {
+                if (index == currentPageIndex) {
+                    $(this).addClass("active");
+                } else {
+                    $(this).removeClass("active");
+                }
+
+                if (index >= currentPageIndex - parseInt(maxNumberOfPaginationItems / 2) && index <= currentPageIndex + parseInt(maxNumberOfPaginationItems / 2)
+                    || currentPageIndex < parseInt(maxNumberOfPaginationItems / 2) && index < maxNumberOfPaginationItems
+                    || currentPageIndex >= lastPageIndex - parseInt(maxNumberOfPaginationItems / 2) && index > lastPageIndex - maxNumberOfPaginationItems) {
+
+                    $(this).css("display", "inline");
+                } else {
+                    $(this).css("display", "none");
+                }
+            });
+
+            if (currentPageIndex == lastPageIndex) {
+                $("#blogentries-pagination-next").addClass("disabled");
             } else {
-                $(this).css("display", "none");
+                $("#blogentries-pagination-next").removeClass("disabled");
             }
-        });
 
-        allPaginationItems.each(function(index) {
-            if (index == currentPageIndex) {
-                $(this).addClass("active");
+            if (currentPageIndex == 0) {
+                $("#blogentries-pagination-prev").addClass("disabled");
             } else {
-                $(this).removeClass("active");
+                $("#blogentries-pagination-prev").removeClass("disabled");
             }
-
-            if (index >= currentPageIndex - parseInt(maxNumberOfPaginationItems / 2) && index <= currentPageIndex + parseInt(maxNumberOfPaginationItems / 2)
-                || currentPageIndex < parseInt(maxNumberOfPaginationItems / 2) && index < maxNumberOfPaginationItems
-                || currentPageIndex >= lastPageIndex - parseInt(maxNumberOfPaginationItems / 2) && index > lastPageIndex - maxNumberOfPaginationItems) {
-
-                $(this).css("display", "inline");
-            } else {
-                $(this).css("display", "none");
-            }
-        });
-
-        if (currentPageIndex == lastPageIndex) {
-            $("#blogentries-pagination-next").addClass("disabled");
-        } else {
-            $("#blogentries-pagination-next").removeClass("disabled");
-        }
-
-        if (currentPageIndex == 0) {
-            $("#blogentries-pagination-prev").addClass("disabled");
-        } else {
-            $("#blogentries-pagination-prev").removeClass("disabled");
         }
     }
 

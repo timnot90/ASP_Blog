@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Blog.Web.Areas.Administration.Models;
+using Blog.Web.Areas.Administration.Services;
 using Blog.Web.Services;
 
 namespace Blog.Web.Areas.Administration.Controllers
@@ -12,13 +13,11 @@ namespace Blog.Web.Areas.Administration.Controllers
     [Authorize(Roles = CustomRoles.Administrator)]
     public class AdministrationController : Controller
     {
-        IBlogService _service = new BlogService();
+        readonly IBlogAdministrationService _service = new BlogAdministrationService();
 
         public ActionResult Users()
         {
-            UsersModel model = new UsersModel();
-            model.Users = _service.GetAllUserProfiles();
-            return View(model);
+            return View(_service.GetUserListModel());
         }
 
         public ActionResult ChangeRole(string username, string newRole, bool added)

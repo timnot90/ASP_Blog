@@ -4,6 +4,7 @@ using System.Web.Security;
 using Blog.Core.Exceptions;
 using Blog.Web.Models.Account;
 using Blog.Web.Services;
+using Blog.Web.Services.Account;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
@@ -11,7 +12,7 @@ namespace Blog.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly IBlogService _service = new BlogService();
+        private readonly IBlogAccountService _service = new BlogAccountService();
 
         [HttpGet]
         [AllowAnonymous]
@@ -22,76 +23,73 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register( RegisterModel model )
         {
             if (model.Password != model.PasswordConfirmed)
             {
-                ModelState.AddModelError("DISSENTING_PASSWORD", "The given passwords do not correspond.");
+                ModelState.AddModelError( "DISSENTING_PASSWORD", "The given passwords do not correspond." );
             }
             if (ModelState.IsValid)
             {
                 try
                 {
-                    try
-                    {
-                        _service.RegisterUser(model);
-                    }
-                    catch (DisplayNameAlreadyExistsException)
-                    {
-                        ModelState.AddModelError("DisplayNameAlreadyExists", "The given display name already exists.");
-                        return View(model);
-                    }
-                    catch (EmailAlreadyExistsException)
-                    {
-                        ModelState.AddModelError("EmailAlreadyExists", "The given email address already exists.");
-                        return View(model);
-                    }
+                    _service.RegisterUser(model);
                     return View("Created", model);
-                }
-                catch (MembershipCreateUserException ex)
-                {
-                    ModelState.AddModelError("", GetErrorString(ex.StatusCode));
-                }
-                return View(model);
-            }
-            return View(model);
-        }
-
-        [HttpGet]
-        public ActionResult EditProfile()
-        {
-            return View(_service.GetUserProfile(WebSecurity.CurrentUserId));
-        }
-
-        [HttpPost]
-        public ActionResult EditProfile(UserProfileModel userProfile)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _service.StoreUserProfile(userProfile);
                 }
                 catch (DisplayNameAlreadyExistsException)
                 {
-                    ModelState.AddModelError("DisplayNameAlreadyExists", "The given display name already exists.");
-                    return View(userProfile);
+                    ModelState.AddModelError( "DisplayNameAlreadyExists", "The given display name already exists." );
                 }
                 catch (EmailAlreadyExistsException)
                 {
-                    ModelState.AddModelError("EmailAlreadyExists", "The given email address already exists.");
-                    return View(userProfile);
+                    ModelState.AddModelError( "EmailAlreadyExists", "The given email address already exists." );
                 }
-                return RedirectToAction("Index", "Home");
+                catch (MembershipCreateUserException ex)
+                {
+                    ModelState.AddModelError("MembershipCreateUserException", GetErrorString(ex.StatusCode));
+                }
             }
-            return View(userProfile);
+            return View( model );
         }
 
         [HttpGet]
+        [Authorize]
+        public ActionResult EditProfile()
+        {
+            return View( _service.GetEditProfileModel( WebSecurity.CurrentUserId ) );
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult EditProfile( EditUserProfileModel userProfile )
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _service.SaveUserProfile(userProfile);
+                }
+                catch (DisplayNameAlreadyExistsException)
+                {
+                    ModelState.AddModelError( "DisplayNameAlreadyExists", "The given display name already exists." );
+                    return View( userProfile );
+                }
+                catch (EmailAlreadyExistsException)
+                {
+                    ModelState.AddModelError( "EmailAlreadyExists", "The given email address already exists." );
+                    return View( userProfile );
+                }
+                return RedirectToAction( "Index", "Home" );
+            }
+            return View( userProfile );
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult Logout()
         {
             WebSecurity.Logout();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction( "Index", "Home" );
         }
 
         [HttpGet]
@@ -103,54 +101,57 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult Login(LoginModel model, string ReturnUrl)
+        public ActionResult Login( LoginModel model, string returnUrl )
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, model.StaySignedIn))
+            if (ModelState.IsValid && WebSecurity.Login( model.UserName, model.Password, model.StaySignedIn ))
             {
-                return RedirectToLocal(ReturnUrl);
+                return RedirectToLocal( returnUrl );
             }
-            ModelState.AddModelError("", "The user name or password provided is incorrect.");
-            return View(model);
+            ModelState.AddModelError( "", "The user name or password provided is incorrect." );
+            return View( model );
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult ChangePassword()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
+        [Authorize]
+        public ActionResult ChangePassword( ChangePasswordModel model )
         {
             if (model.NewPassword != model.NewPasswordConfirmed)
             {
-                ModelState.AddModelError("DISSENTING_PASSWORD", "The given passwords do not correspond.");
+                ModelState.AddModelError( "DISSENTING_PASSWORD", "The given passwords do not correspond." );
             }
             try
             {
                 if (ModelState.IsValid)
                 {
-                    if (WebSecurity.ChangePassword(WebSecurity.CurrentUserName, model.CurrentPassword, model.NewPassword))
+                    if (WebSecurity.ChangePassword( WebSecurity.CurrentUserName, model.CurrentPassword,
+                        model.NewPassword ))
                     {
-                        return RedirectToAction("EditProfile");
+                        return RedirectToAction( "EditProfile" );
                     }
-                    ModelState.AddModelError("WrongPassword", "The current password was wrong.");
+                    ModelState.AddModelError( "WrongPassword", "The current password was wrong." );
                 }
             }
             catch (InvalidOperationException ex)
             {
-                ModelState.AddModelError("", ex.Message);
+                ModelState.AddModelError( "", ex.Message );
             }
 
-            return View(model);
+            return View( model );
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult ValidateUser(string token)
+        public ActionResult ValidateRegistrationToken( string token )
         {
-            _service.ValidateUser(token);
-            return RedirectToAction("Index", "Home");
+            _service.ValidateRegistrationToken( token );
+            return RedirectToAction( "Index", "Home" );
         }
 
         [HttpGet]
@@ -162,59 +163,55 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult ResetPasswordFirstStep(ResetPasswordModel model)
+        public ActionResult ResetPasswordFirstStep( ResetPasswordModel model )
         {
             if (ModelState.IsValid)
             {
-                _service.SendPasswordResetToken(model);
+                _service.SendPasswordResetToken( model );
                 return View();
             }
-            else
-            {
-                return View("ResetPasswordFirstStepCompleted");
-            }
+            return View( "ResetPasswordFirstStepCompleted" );
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public ActionResult ResetPasswordSecondStep(string token)
+        public ActionResult ResetPasswordSecondStep( string token )
         {
-            var model = new ResetPasswordSecondStepModel(token);
-            //            _service.ResetPasswordSecondStep(token);
-            return View(model);
+            var model = new ResetPasswordSecondStepModel( token );
+            return View( model );
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult ResetPasswordSecondStep(ResetPasswordSecondStepModel model)
+        public ActionResult ResetPasswordSecondStep( ResetPasswordSecondStepModel model )
         {
             if (ModelState.IsValid)
             {
                 if (model.NewPassword != model.NewPasswordConfirmed)
                 {
-                    ModelState.AddModelError("DifferentPasswords", "Your confirmed password doesn't match.");
+                    ModelState.AddModelError( "DifferentPasswords", "Your confirmed password doesn't match." );
                 }
                 else
                 {
-                    _service.ResetPasswordSecondStep(model);
-                    return View("ResetPasswordSecondStepCompleted");
+                    _service.ResetPasswordSecondStep( model );
+                    return View( "ResetPasswordSecondStepCompleted" );
                 }
             }
-            return View(model);
+            return View( model );
         }
 
         #region private methods
 
-        private ActionResult RedirectToLocal(string returnUrl)
+        private ActionResult RedirectToLocal( string returnUrl )
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (Url.IsLocalUrl( returnUrl ))
             {
-                return Redirect(returnUrl);
+                return Redirect( returnUrl );
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction( "Index", "Home" );
         }
 
-        private static string GetErrorString(MembershipCreateStatus createStatus)
+        private static string GetErrorString( MembershipCreateStatus createStatus )
         {
             // Vollständige Liste Fehlercodes: http://go.microsoft.com/fwlink/?LinkID=177550 
 

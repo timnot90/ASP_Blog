@@ -9,9 +9,5 @@ namespace Blog.Web.Models.Home
     {
         public List<BlogEntryListItemModel> Blogentries { get; set; }
         public int NumberOfBlogentriesPerPage { get; set; }
-
-        public BlogentryListModel()
-        {
-        }
     }
 }

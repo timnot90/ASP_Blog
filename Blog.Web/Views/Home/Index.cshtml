@@ -5,33 +5,34 @@
     ViewBag.Title = "Blog";
     ViewBag.Breadcrumbs = null;
 }
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8">
-            <div>
-                @if (Model.Blogentries.Count > 0)
+<div class="row">
+    <div class="col-lg-8">
+        <div>
+            @if (Model.Blogentries.Count > 0)
+            {
+                foreach (BlogEntryListItemModel blogEntry in Model.Blogentries)
                 {
-                    foreach (BlogEntryListItemModel blogEntry in Model.Blogentries)
-                    {
-                        @Html.Partial("_BlogPostListItem", blogEntry)
-                    }
+                    @Html.Partial( "_BlogPostListItem", blogEntry )
                 }
-                else
-                {
-                    <div>There are no blogentries matching the applied filter.</div>
-                }
-            </div>
+            }
+            else
+            {
+                <div>There are no blogentries matching the applied filter.</div>
+            }
+        </div>
+        @if (Model.Blogentries.Count > Model.NumberOfBlogentriesPerPage)
+        {
             <div class="text-center">
                 <ul class="pagination" id="blogentries-pagination" data-blogentries-per-page=@Model.NumberOfBlogentriesPerPage>
-                    <li class="" id="blogentries-pagination-prev" onclick="entryPagination.goToPreviousPage()"><a href="#">«</a></li>
+                    <li class="" id="blogentries-pagination-prev" onclick=" entryPagination.goToPreviousPage() "><a href="#">«</a></li>
                     @for (int i = 0; i < Model.Blogentries.Count/Model.NumberOfBlogentriesPerPage + 1; i++)
                     {
-                        <li class="pagination-item @(i == 0 ? "active" : "")" onclick="entryPagination.goToPage(@i)"><a href="#">@(i+1)</a></li>
+                        <li class="pagination-item @(i == 0 ? "active" : "")" onclick=" entryPagination.goToPage(@i) "><a href="#">@(i + 1)</a></li>
                     }
-                    <li class="" id="blogentries-pagination-next" onclick="entryPagination.goToNextPage()"><a href="#">»</a></li>
+                    <li class="" id="blogentries-pagination-next" onclick=" entryPagination.goToNextPage() "><a href="#">»</a></li>
                 </ul>
             </div>
-        </div>
-        @Html.Action("_BlogSidebar")
+        }
     </div>
+    @Html.Action( "_BlogSidebar" )
 </div>

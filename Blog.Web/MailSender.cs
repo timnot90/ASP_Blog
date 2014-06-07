@@ -26,7 +26,7 @@ namespace Blog.Web
 
             MailMessage mail = new MailMessage();
             mail.Sender = new MailAddress( blogSettings.RegistrationMailSender );
-            string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port + "/Account/ValidateUser?token=" + token;
+            string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port + "/Account/ValidateRegistrationToken?token=" + token;
 
             mail.To.Add(new MailAddress(recipient));
             mail.Priority = MailPriority.High;
