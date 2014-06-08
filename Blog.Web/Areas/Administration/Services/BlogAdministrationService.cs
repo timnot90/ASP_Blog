@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration.Provider;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Repositories;
 using Blog.Web.Areas.Administration.Models;
@@ -19,11 +21,45 @@ namespace Blog.Web.Areas.Administration.Services
         {
             var model = new UserListModel
             {
-                Users = _repository.GetAllUserProfiles().Select(e => new UserProfileModel(e)).ToList()
+                Users = _repository.GetAllUserProfiles().Select(e => new UserListItemModel(e)).ToList()
             };
+
+            foreach(UserListItemModel user in model.Users)
+            {
+                user.Roles = Roles.GetAllRoles().Select(r => new RoleModel(r, Roles.GetRolesForUser(user.UserName).Contains(r))).ToList();
+            }
             return model;
         }
 
+        public void SetUserLockedState(int userId, bool state)
+        {
+            _repository.SetUserLockedSate( userId, state );
+        }
+
+        public void ChangeRole( int id, string newRole, bool added )
+        {
+            try
+            {
+                string username = _repository.GetUserProfile( id ).UserName;
+                if (added)
+                {
+                    Roles.AddUserToRole( username, newRole );
+                }
+                else
+                {
+                    Roles.RemoveUserFromRole( username, newRole );
+                }
+            }
+            catch (ArgumentNullException)
+            {
+            }
+            catch (ArgumentException)
+            {
+            }
+            catch (ProviderException)
+            {
+            }
+        }
 
         #region Settings
 

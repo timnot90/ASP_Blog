@@ -1,84 +1,91 @@
 ﻿using System;
 using System.Net;
 using System.Net.Mail;
-using System.Security.Policy;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Repositories;
-using Microsoft.Ajax.Utilities;
 
 namespace Blog.Web
 {
     public static class MailSender
     {
         private static readonly BlogRepository BlogRepository = new BlogRepository();
-        private static readonly SmtpClient Smtp = new SmtpClient();
+        private static readonly SmtpClient SmtpClient = new SmtpClient();
 
-        public static void SendAccountValidationToken(string token, string recipient)
+        public static void SendRegistrationToken( string token, string recipient )
+        {
+            Setting blogSettings = BlogRepository.GetBlogSettings();
+            string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port +
+                              "/Account/ValidateRegistrationToken?token=" + token;
+            var linkTag = new TagBuilder("a");
+            linkTag.Attributes.Add("href", linkText);
+            linkTag.InnerHtml += linkText;
+
+            SendMail(blogSettings.RegistrationMailSender, recipient, blogSettings.RegistrationMailSubject, String.Format( blogSettings.RegistrationMailBody, linkText ));
+
+//            StringBuilder mailBody = new StringBuilder();
+//            mailBody.AppendLine( "<html>" );
+//            mailBody.AppendLine( "<head>" );
+//            mailBody.AppendLine( "</head>" );
+//            mailBody.AppendLine( "<body>" );
+//            //mailBody.AppendLine("Click on the following link or copy it into the address bar of your browser in order to reset your password:<br/>");
+//            mailBody.AppendLine( String.Format( blogSettings.RegistrationMailBody, linkTag ) );
+//            mailBody.AppendLine( "</body>" );
+//            mailBody.AppendLine( "</html>" );
+
+//            mail.IsBodyHtml = true;
+//            mail.Body = mailBody.ToString();
+//            mail.Subject = "Subject";
+
+//            Smtp.Send( mail );
+        }
+
+        public static void SendPasswordResetToken( string token, string recipient )
+        {
+            Setting blogSettings = BlogRepository.GetBlogSettings();
+            string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port +
+                              "/Account/ResetPasswordSecondStep?token=" + token;
+            var link = new TagBuilder("a");
+            link.Attributes.Add("href", linkText);
+            link.InnerHtml = linkText;
+
+            SendMail(blogSettings.PasswordChangeMailSender, recipient, blogSettings.PasswordChangeMailSubject, String.Format(blogSettings.PasswordChangeMailBody, linkText));
+        }
+
+        public static void SendWelcomeMail( string recipient )
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
 
-            Smtp.Credentials = new NetworkCredential( blogSettings.SmtpServerUsername, blogSettings.SmtpServerPassword );
-            Smtp.Host = blogSettings.SmtpServerAddress;
-
-
-            MailMessage mail = new MailMessage();
-            mail.Sender = new MailAddress( blogSettings.RegistrationMailSender );
-            string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port + "/Account/ValidateRegistrationToken?token=" + token;
-
-            mail.To.Add(new MailAddress(recipient));
-            mail.Priority = MailPriority.High;
-
-            TagBuilder linkTag = new TagBuilder("a");
-            linkTag.Attributes.Add("href", linkText);
-            linkTag.InnerHtml += linkText;
-
-            StringBuilder mailBody = new StringBuilder();
-            mailBody.AppendLine("<html>");
-            mailBody.AppendLine("<head>");
-            mailBody.AppendLine("</head>");
-            mailBody.AppendLine("<body>");
-            //mailBody.AppendLine("Click on the following link or copy it into the address bar of your browser in order to reset your password:<br/>");
-            mailBody.AppendLine( String.Format(blogSettings.RegistrationMailBody, linkTag.ToString() ));
-            mailBody.AppendLine("</body>");
-            mailBody.AppendLine("</html>");
-
-            mail.IsBodyHtml = true;
-            mail.Body = mailBody.ToString();
-            mail.Subject = "Subject";
-
-            Smtp.Send(mail);
+            SendMail(blogSettings.WelcomeMailSender, recipient, blogSettings.WelcomeMailSubject, blogSettings.WelcomeMailBody);
         }
 
-        public static void SendPasswordResetToken(string token, string recipient)
+        private static void SendMail( string sender, string recipient, string subject, string body )
         {
-            MailMessage mail = new MailMessage();
-            string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port + "/Account/ResetPasswordSecondStep?token=" + token;
+            Setting blogSettings = BlogRepository.GetBlogSettings();
+            SmtpClient.Host = blogSettings.SmtpServerAddress;
+            SmtpClient.Credentials = new NetworkCredential(blogSettings.SmtpServerUsername, blogSettings.SmtpServerPassword);
 
-            mail.To.Add(new MailAddress(recipient));
+            var mail = new MailMessage();
+            mail.To.Add( new MailAddress( recipient ) );
+            mail.Sender = new MailAddress( sender );
             mail.Priority = MailPriority.High;
 
-            TagBuilder linkTag = new TagBuilder("a");
-            linkTag.Attributes.Add("href", linkText);
-            linkTag.InnerHtml += linkText;
-
-            StringBuilder mailBody = new StringBuilder();
-            mailBody.AppendLine("<html>");
-            mailBody.AppendLine("<head>");
-            mailBody.AppendLine("</head>");
-            mailBody.AppendLine("<body>");
-            mailBody.AppendLine("Click on the following link or copy it into the address bar of your browser in order to reset your password:<br/>");
-            mailBody.AppendLine(linkTag.ToString());
-            mailBody.AppendLine("</body>");
-            mailBody.AppendLine("</html>");
+            var mailBody = new StringBuilder();
+            mailBody.AppendLine( "<html>" );
+            mailBody.AppendLine( "<head>" );
+            mailBody.AppendLine( "</head>" );
+            mailBody.AppendLine( "<body>" );
+            mailBody.AppendLine( body );
+            mailBody.AppendLine( "</body>" );
+            mailBody.AppendLine( "</html>" );
 
             mail.IsBodyHtml = true;
             mail.Body = mailBody.ToString();
-            mail.Subject = "Subject";
+            mail.Subject = subject;
 
-            Smtp.Send(mail);
+            SmtpClient.Send( mail );
         }
     }
 }

@@ -8,43 +8,16 @@
 <div class="row">
     <table class="table table-hover table-striped table-bordered table-condensed table-responsive">
         <tr>
+            <th>Id</th>
             <th>Username</th>
             <th>Display Name</th>
-            <th>Forename</th>
-            <th>Last Name</th>
-            <th>Role</th>
+            <th>Email</th>
+            <th>Roles</th>
             <th></th>
         </tr>            
-        @foreach (UserProfileModel user in Model.Users)
+        @foreach (UserListItemModel user in Model.Users)
         {
-            UserListItemModel model = new UserListItemModel();
-            model.Roles = Roles.GetAllRoles().Select( r => new RoleModel( r, Roles.GetRolesForUser( user.UserName ).Contains( r ) ) ).ToList();
-            model.UserProfile = user;
-            Html.RenderPartial( "_UserListItem", model );
-@*                <tr>*@
-@*                    <td>@user.UserName</td>*@
-@*                    <td>@user.DisplayName</td>*@
-@*                    <td>@user.Forename</td>*@
-@*                    <td>@user.LastName</td>*@
-@*                    <td>*@
-@*                        @foreach (string role in Roles.GetAllRoles())*@
-@*                        {*@
-@*                            <label>*@
-@*                                @role*@
-@*                                @Html.CheckBox(role, new {@onchange = "roleChanged('" + user.UserName + "','" + role + "')", Roles.GetRolesForUser(user.UserName).Contains(role) ? @checked})*@
-@*                            </label>*@
-@*                        }*@
-@*$1$                        @Html.DropDownList("role", new List<SelectListItem>(new[] {new SelectListItem {Text = "Admin"}, new SelectListItem {Text = "User"}}), new {@onchange = "roleChanged('" + user.UserName + "','" + "Administrator" + "')"})#1#*@
-@*                        *@
-@*                        <script type="text/javascript">*@
-@*                            function roleChanged(username, newRole) {*@
-@*                                $.ajax("/Administration/Administration/ChangeRole?username=" + username + "&newRole=" + newRole);*@
-@*                            }*@
-@*                        </script>*@
-@*                    </td>*@
-@*                    <td><button class="btn btn-primary">Reset Password</button></td>*@
-@*                    <td><button class="btn btn-danger"><i class=" glyphicon glyphicon-lock"></i> Lock</button></td>*@
-@*                </tr>*@
+            Html.RenderPartial("_UserListItem", user);
         }
     </table>
 </div>

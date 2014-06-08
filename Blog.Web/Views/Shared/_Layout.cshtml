@@ -10,17 +10,19 @@
         @Scripts.Render( "~/bundles/custom" )
     </head>
     <body>
-        @Html.Action("_NavigationBar", "Shared", new { area = "" })
+        @{
+            Html.RenderAction( "_NavigationBar", "Shared", new {area = ""} );
+        }
         <br />
         <br />
         <div class="container">
-            @Html.Action("_PageHeader", "Shared", new { area = "", title = ViewBag.Title })
+            @{ Html.RenderAction( "_PageHeader", "Shared", new {area = "", title = ViewBag.Title} ); }
         </div>
         <div class="container">
             @RenderBody()
         </div>
         <div class="container">
-            @Html.Action("_Footer", "Shared", new { area = "" })
+            @{Html.RenderAction("_Footer", "Shared", new { area = "" }); }
         </div>
         @RenderSection( "scripts", false )
     </body>

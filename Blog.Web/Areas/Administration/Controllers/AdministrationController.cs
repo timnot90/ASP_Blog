@@ -20,17 +20,9 @@ namespace Blog.Web.Areas.Administration.Controllers
             return View(_service.GetUserListModel());
         }
 
-        public ActionResult ChangeRole(string username, string newRole, bool added)
+        public void ChangeRole(int id, string newRole, bool added)
         {
-            if (added)
-            {
-                Roles.AddUserToRole(username, newRole);
-            }
-            else
-            {
-                Roles.RemoveUserFromRole(username, newRole);
-            }
-            return null;
+            _service.ChangeRole( id, newRole, added );
         }
 
         public ActionResult _UserListItem()
@@ -56,6 +48,11 @@ namespace Blog.Web.Areas.Administration.Controllers
             }
             model.SuccessfullySaved = false;
             return View(model);
+        }
+
+        public void SetUserActivationState(int userId, bool state)
+        {
+            _service.SetUserLockedState( userId, state );
         }
     }
 }

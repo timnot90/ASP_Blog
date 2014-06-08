@@ -34,6 +34,10 @@ namespace Blog.Core.Repositories
         bool EmailExists(string email);
 
         bool DisplayNameExists(string displayName);
+
+        UserProfile GetUserByRegistrationToken( string token );
+
+        void SetUserLockedSate( int userId, bool state );
         #endregion
 
         #region Comment

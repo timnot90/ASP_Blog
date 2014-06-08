@@ -107,6 +107,20 @@ namespace Blog.Core.Repositories
             return GetAllUserProfiles().Any( u => u.DisplayName == displayName );
         }
 
+        public UserProfile GetUserByRegistrationToken(string token)
+        {
+            return BlogDataContext.Current.UserProfiles.FirstOrDefault(u => u.ID ==  BlogDataContext.Current.webpages_Membership.FirstOrDefault( m => m.ConfirmationToken == token ).UserId);
+        }
+
+        public void SetUserLockedSate( int userId, bool state )
+        {
+            UserProfile user = BlogDataContext.Current.UserProfiles.FirstOrDefault( u => u.ID == userId );
+            if (user != null)
+            {
+                user.IsLocked = state;
+            }
+        }
+
         #endregion
 
         #region Comment

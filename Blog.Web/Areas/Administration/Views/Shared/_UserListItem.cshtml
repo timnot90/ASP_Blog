@@ -1,36 +1,33 @@
 ﻿@using Blog.Web.Areas.Administration.Models
 @model UserListItemModel
 <tr>
-    <td>@Model.UserProfile.UserName</td>
-    <td>@Model.UserProfile.DisplayName</td>
-    <td>@Model.UserProfile.Forename</td>
-    <td>@Model.UserProfile.LastName</td>
+    <td>@Model.Id</td>
+    <td>@Model.UserName</td>
+    <td>@Model.DisplayName</td>
+    <td>@Model.Email</td>
     <td>
         @{ int i = 0; }
         @foreach (RoleModel role in Model.Roles)
         {
             <label>
                 @role.RoleName
-                @Html.CheckBoxFor(m => m.Roles[i].IsActive, new {@class="roleCheckbox", @onchange = "roleChanged('" + Model.UserProfile.UserName + "','" + role + "')", data_user_name=Model.UserProfile.UserName, data_role=role.RoleName})
+                @Html.CheckBoxFor(m => m.Roles[i].IsActive, new {@class="roleCheckbox", data_user_id=Model.Id, data_role=role.RoleName})
                 @{ i++; }
             </label>
         }
-        @*                        @Html.DropDownList("role", new List<SelectListItem>(new[] {new SelectListItem {Text = "Admin"}, new SelectListItem {Text = "User"}}), new {@onchange = "roleChanged('" + user.UserName + "','" + "Administrator" + "')"})*@
 
         <script type="text/javascript">
             $(".roleCheckbox").each(function() {
-                $(this).click(function () {
+                $(this).click(function() {
                     if ($(this).is(':checked')) {
-                        roleChanged($(this).data("user-name"), $(this).data("role"), true);
-                        console.log($(this).data("user-name") + "is now " + $(this).data("role"));
+                        roleChanged($(this).data("user-id"), $(this).data("role"), true);
                     } else {
-                        console.log($(this).data("user-name") + "is now not " + $(this).data("role"));
-                        roleChanged($(this).data("user-name"), $(this).data("role"), false);
+                        roleChanged($(this).data("user-id"), $(this).data("role"), false);
                     }
                 });
-            })
-            function roleChanged(username, newRole, added) {
-                $.ajax("/Administration/Administration/ChangeRole?username=" + username + "&newRole=" + newRole + "&added=" + added);
+            });
+            function roleChanged(id, newRole, added) {
+                $.ajax("/Administration/Administration/ChangeRole?id=" + id + "&newRole=" + newRole + "&added=" + added);
             }
         </script>
     </td>

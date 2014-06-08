@@ -8,8 +8,8 @@ namespace Blog.Web.Areas.Administration.Models
 {
     public class UserListModel
     {
-        public List<UserProfileModel> Users { get; set; }
-
+        public List<UserListItemModel> Users { get; set; }
+        public List<RoleModel> Roles { get; set; } 
 
     }
 }

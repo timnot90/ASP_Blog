@@ -150,7 +150,10 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult ValidateRegistrationToken( string token )
         {
-            _service.ValidateRegistrationToken( token );
+            if (_service.ValidateRegistrationToken( token ))
+            {
+                return View( "AccountActivated" );
+            }
             return RedirectToAction( "Index", "Home" );
         }
 

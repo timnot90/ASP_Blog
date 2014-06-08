@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Security;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
@@ -42,10 +43,13 @@ namespace Blog.Web.Services.Account
                     EmailLowercase = registerModel.Email.ToLower(),
                 }, true);
 
-            MailSender.SendAccountValidationToken(token, registerModel.Email);
+            MailSender.SendRegistrationToken(token, registerModel.Email);
 
-            UserProfile newProfile = new UserProfile();
+            var newProfile = new UserProfile();
             registerModel.UpdateSource(newProfile);
+
+            Roles.AddUserToRole( newProfile.UserName, CustomRoles.User );
+
             return _repository.SaveUserProfile(newProfile, true);
         }
 
@@ -60,14 +64,16 @@ namespace Blog.Web.Services.Account
         {
             try
             {
-                return WebSecurity.ConfirmAccount(token);
+                UserProfile correspondingUser = _repository.GetUserByRegistrationToken( token );
+                if (correspondingUser == null) return false;
+
+                MailSender.SendWelcomeMail( correspondingUser.Email );
+                return WebSecurity.ConfirmAccount( token );
             }
             catch (InvalidOperationException)
             {
                 return false;
             }
-            //            string userName = ""; 
-            //            Roles.AddUserToRole( userName, CustomRoles.User );
         }
 
         public void SendPasswordResetToken(ResetPasswordModel model)
@@ -79,7 +85,7 @@ namespace Blog.Web.Services.Account
                 if (userProfile != null)
                 {
                     string passwordResetToken = WebSecurity.GeneratePasswordResetToken(userProfile.UserName);
-                    MailSender.SendAccountValidationToken(passwordResetToken, model.Email);
+                    MailSender.SendRegistrationToken(passwordResetToken, model.Email);
                 }
             }
             catch (InvalidOperationException)
@@ -97,7 +103,6 @@ namespace Blog.Web.Services.Account
             {
             }
         }
-
         #endregion
     }
 }
