@@ -3,16 +3,14 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Blog.Core.Exceptions;
 using Blog.Web.Models.Account;
-using Blog.Web.Services;
 using Blog.Web.Services.Account;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
-        private readonly IBlogAccountService _service = new BlogAccountService();
+        private static readonly IBlogAccountService Service = new BlogAccountService();
 
         [HttpGet]
         [AllowAnonymous]
@@ -33,8 +31,8 @@ namespace Blog.Web.Controllers
             {
                 try
                 {
-                    _service.RegisterUser(model);
-                    return View("Created", model);
+                    Service.RegisterUser( model );
+                    return View( "Created", model );
                 }
                 catch (DisplayNameAlreadyExistsException)
                 {
@@ -46,17 +44,16 @@ namespace Blog.Web.Controllers
                 }
                 catch (MembershipCreateUserException ex)
                 {
-                    ModelState.AddModelError("MembershipCreateUserException", GetErrorString(ex.StatusCode));
+                    ModelState.AddModelError( "MembershipCreateUserException", GetErrorString( ex.StatusCode ) );
                 }
             }
             return View( model );
         }
 
         [HttpGet]
-        [Authorize]
         public ActionResult EditProfile()
         {
-            return View( _service.GetEditProfileModel( WebSecurity.CurrentUserId ) );
+            return View( Service.GetEditProfileModel( WebSecurity.CurrentUserId ) );
         }
 
         [HttpPost]
@@ -67,7 +64,7 @@ namespace Blog.Web.Controllers
             {
                 try
                 {
-                    _service.SaveUserProfile(userProfile);
+                    Service.SaveUserProfile( userProfile );
                 }
                 catch (DisplayNameAlreadyExistsException)
                 {
@@ -103,11 +100,20 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login( LoginModel model, string returnUrl )
         {
+            UserProfileModel user = Service.GetUserByName( model.UserName );
+
             if (ModelState.IsValid && WebSecurity.Login( model.UserName, model.Password, model.StaySignedIn ))
             {
-                return RedirectToLocal( returnUrl );
+                if (user != null && !user.IsLocked)
+                {
+                    return RedirectToLocal( returnUrl );
+                }
+                ModelState.AddModelError( "AccountLocked",
+                    "Your account is currently locked. Please contact us to unlock it." );
+                WebSecurity.Logout();
+                return View( model );
             }
-            ModelState.AddModelError( "", "The user name or password provided is incorrect." );
+            ModelState.AddModelError( "WrongUsernameOrPassword", "The user name or password provided is incorrect." );
             return View( model );
         }
 
@@ -150,7 +156,7 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult ValidateRegistrationToken( string token )
         {
-            if (_service.ValidateRegistrationToken( token ))
+            if (Service.ValidateRegistrationToken( token ))
             {
                 return View( "AccountActivated" );
             }
@@ -170,7 +176,7 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.SendPasswordResetToken( model );
+                Service.SendPasswordResetToken( model );
                 return View();
             }
             return View( "ResetPasswordFirstStepCompleted" );
@@ -180,7 +186,7 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordSecondStep( string token )
         {
-            var model = new ResetPasswordSecondStepModel( token );
+            ResetPasswordSecondStepModel model = new ResetPasswordSecondStepModel( token );
             return View( model );
         }
 
@@ -196,7 +202,7 @@ namespace Blog.Web.Controllers
                 }
                 else
                 {
-                    _service.ResetPasswordSecondStep( model );
+                    Service.ResetPasswordSecondStep( model );
                     return View( "ResetPasswordSecondStepCompleted" );
                 }
             }

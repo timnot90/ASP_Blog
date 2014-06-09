@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Blog.Web.Models.Account;
 
 namespace Blog.Web.Services.Account
@@ -10,5 +11,6 @@ namespace Blog.Web.Services.Account
         bool ValidateRegistrationToken(string token);
         void SendPasswordResetToken(ResetPasswordModel model);
         void ResetPasswordSecondStep(ResetPasswordSecondStepModel model);
+        UserProfileModel GetUserByName(string username);
     }
 }

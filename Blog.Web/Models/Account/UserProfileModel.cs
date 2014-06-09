@@ -45,6 +45,8 @@ namespace Blog.Web.Models.Account
         [DisplayName("Gender")]
         public char Gender { get; set; }
 
+        public bool IsLocked { get; set; }
+
         public UserProfileModel()
         {
         }
@@ -81,6 +83,7 @@ namespace Blog.Web.Models.Account
             Country = source.Country;
             Forename = source.Forename;
             LastName = source.LastName;
+            IsLocked = source.IsLocked;
         }
 
     }

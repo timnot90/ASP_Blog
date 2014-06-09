@@ -12,7 +12,9 @@ namespace Blog.Web
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/modern-business.js",
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/bootstrap.min.js"));
+                        "~/Scripts/bootstrap.min.js",
+                        "~/Scripts/bootstrap-switch.min.js",
+                        "~/Scripts/bootstrap-switch.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                         "~/Scripts/Site.js"));
@@ -34,7 +36,9 @@ namespace Blog.Web
                 "~/Content/bootstrap.min.css",
                 "~/font-awesome/css/font-awesome.css",
                 "~/font-awesome/css/font-awesome.min.css",
-                "~/Content/bootstrap/bootstrap-glyphicons.css"));
+                "~/Content/bootstrap/bootstrap-glyphicons.css",
+                "~/Content/bootstrap-switch.css",
+                "~/Content/bootstrap-switch.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
                         "~/Content/themes/base/jquery.ui.core.css",

@@ -31,11 +31,14 @@
                                 <i class="glyphicon glyphicon-inbox"></i> Categories
                             </a>
                         </li>
-                        <li>
-                            <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
-                                <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
-                            </a>
-                        </li>
+                        @if (Roles.IsUserInRole( CustomRoles.Administrator ))
+                        {
+                            <li>
+                                <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
+                                    <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
+                                </a>
+                            </li>
+                        }
                     </ul>
                 </li>
                 <li class="dropdown">

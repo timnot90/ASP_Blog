@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -16,14 +15,15 @@
     <script src="/Scripts/bootstrap.js"></script>
 
 </head>
-    <%
+<%
         Response.Status = "404 Not Found"
         Response.ContentType = "text/html"
         Response.Expires = 0
         Response.CacheControl = "no-cache"
         Response.AddHeader "Pragma", "no-cache"
-    %>
+%>
 <body>
+
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
@@ -33,124 +33,131 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
-                <a class="navbar-brand" href="/">Timo&#39;s Blog</a>
+                <a class="navbar-brand" href="/" rel="noreferrer">Timo's Blog</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Blog <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="noreferrer"><i class="glyphicon glyphicon-list"></i>Blog <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/">
-                                    <i class="glyphicon glyphicon-list"></i> View Posts
+                                <a href="/" rel="noreferrer">
+                                    <i class="glyphicon glyphicon-list"></i>View Posts
                                 </a>
                             </li>
                             <li>
-                                <a href="/Home/Categories">
-                                    <i class="glyphicon glyphicon-inbox"></i> Categories
+                                <a href="/Home/Categories" rel="noreferrer">
+                                    <i class="glyphicon glyphicon-inbox"></i>Categories
                                 </a>
                             </li>
                             <li>
-                                <a href="/Home/AddBlogentry">
-                                    <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
+                                <a href="/Home/AddBlogentry" rel="noreferrer">
+                                    <i class="glyphicon glyphicon-plus-sign"></i>Add Entry
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="noreferrer">
                             <i class="glyphicon glyphicon-user"></i>
-                            My Profile
+                            timo
                             <b class="caret"></b>
 
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/Account/Register">
-                                    <i class="glyphicon glyphicon-edit"></i> Register
+                                <a href="/Account/EditProfile" rel="noreferrer">
+                                    <i class="glyphicon glyphicon-cog"></i>Edit Profile
                                 </a>
                             </li>
                             <li>
-                                <a href="/Account/Login">
-                                    <i class="glyphicon glyphicon-log-in"></i> Login
+                                <a href="/Account/Logout" rel="noreferrer">
+                                    <i class="glyphicon glyphicon-log-out"></i>Logout
                                 </a>
                             </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="/About">
-                            <i class="glyphicon glyphicon-info-sign"></i> About
+                        <a href="/About" rel="noreferrer">
+                            <i class="glyphicon glyphicon-info-sign"></i>About
                         </a>
                     </li>
-                    <li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" rel="noreferrer"><i class="glyphicon glyphicon-signal"></i>Administration <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="/Administration/Administration/Users" rel="noreferrer">
+                                    <i class="glyphicon glyphicon-eye-open"></i>Users
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/Administration/Administration/BlogSettings" rel="noreferrer">
+                                    <i class="glyphicon glyphicon-eye-open"></i>Settings
+                                </a>
+                            </li>
+                            <li></li>
+                        </ul>
                     </li>
                     <li>
-                        <a href="/Account/Login">
-                            <i class="glyphicon glyphicon-log-in"></i> Login
+                        <a href="/Account/Logout" rel="noreferrer">
+                            <i class="glyphicon glyphicon-log-out"></i>Logout
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <br />
-    <br />
+    <br>
+    <br>
     <div class="container">
+
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">
-                    Error404
-                    <small>Timo's Blog</small>
+                <h1 class="page-header">Error 404
+            <small>Timo's Blog</small>
                 </h1>
-                <ol class="breadcrumb">
-                    <li>
-                        Error404
-                    </li>
-                </ol>
             </div>
         </div>
     </div>
     <div class="container">
 
 
+        <div class="row">
+            <div class="col-lg-12">
 
-
-
-
-
-
-
-
-        <h2>An error occurred while processing your request. The requested page wasn't found</h2>
-
-
-
-
-
-
-
-    </div>
-    <div class="container panel-footer">
-        <hr>
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Company 2013</p>
-                </div>
+                <h2>An error occurred while processing your request. The requested page wasn't found</h2>
             </div>
-        </footer>
+        </div>
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <hr>
+                <footer>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Your Footer Text. Go to the settings to change it.</p>
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+
     </div>
 
 
     <!-- Visual Studio Browser Link -->
     <script type="application/json" id="__browserLink_initializationData">
-        {"appName":"Chrome","requestId":"c492cf5640fb4baa950030ded53455a6"}
+    {"appName":"Chrome","requestId":"4d8abeec63db4baf9da9a8583358dbc9"}
     </script>
-    <script type="text/javascript" src="http://localhost:50628/6d030b5672c84d7cafa513545b88ca1c/browserLink" async="async"></script>
+    <script type="text/javascript" src="http://localhost:55135/76bfe348acb64255b32670d239193260/browserLink" async="async"></script>
     <!-- End Browser Link -->
+
+
 
 </body>
 

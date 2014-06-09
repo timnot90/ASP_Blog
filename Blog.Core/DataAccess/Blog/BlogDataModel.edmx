@@ -86,7 +86,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UserNameLowercase" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmailLowercase" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Street" Type="nvarchar" MaxLength="100" />
@@ -97,7 +97,7 @@
           <Property Name="Forename" Type="nvarchar" MaxLength="50" />
           <Property Name="Gender" Type="char" MaxLength="1" />
           <Property Name="Country" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsLocked" Type="bit" />
+          <Property Name="IsLocked" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>
@@ -339,8 +339,8 @@
           <NavigationProperty Name="Blogentries" Relationship="Self.FK_Blogentries_UserProfiles" FromRole="UserProfiles" ToRole="Blogentries" />
           <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_UserProfiles" FromRole="UserProfiles" ToRole="Categories" />
           <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_UserProfiles" FromRole="UserProfiles" ToRole="Comments" />
-          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsLocked" Type="Boolean" />
+          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="webpages_Membership">
           <Key>

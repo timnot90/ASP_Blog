@@ -50,9 +50,9 @@ namespace Blog.Web.Areas.Administration.Controllers
             return View(model);
         }
 
-        public void SetUserActivationState(int userId, bool state)
+        public void SetUserLockedState(int id, bool state)
         {
-            _service.SetUserLockedState( userId, state );
+            _service.SetUserLockedState( id, state );
         }
     }
 }

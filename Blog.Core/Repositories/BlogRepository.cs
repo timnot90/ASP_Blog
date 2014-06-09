@@ -118,6 +118,7 @@ namespace Blog.Core.Repositories
             if (user != null)
             {
                 user.IsLocked = state;
+                BlogDataContext.Current.SaveChanges();
             }
         }
 

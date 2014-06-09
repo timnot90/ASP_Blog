@@ -1,14 +1,51 @@
 ﻿"use strict";
 var entryPagination;
 $(document).ready(function () {
-    console.log("initializing entryPagination");
     entryPagination = new BlogentryPagination();
     entryPagination.goToPage(0);
+
+    console.log("ad");
+    $(".lock-button").each(function () {
+        $(this).click(function () {
+            setUserLockedState($(this).data("user-id"), true);
+        });
+    });
+    $(".unlock-button").each(function () {
+        $(this).click(function () {
+        });
+    });
+    $(".lock-switch").each(function () {
+        var state2 = $(this).data("is-locked");
+        if (state2 == "False") {
+            $(this).bootstrapSwitch("state", false, false);
+        } else {
+            $(this).bootstrapSwitch("state", true, true);
+        }
+        $(this).on('switchChange.bootstrapSwitch', function (event, state) {
+            setUserLockedState($(this).data("user-id"), state);
+        });
+    });
+    $(".roleCheckbox").each(function () {
+        $(this).click(function () {
+            if ($(this).is(':checked')) {
+                roleChanged($(this).data("user-id"), $(this).data("role"), true);
+            } else {
+                roleChanged($(this).data("user-id"), $(this).data("role"), false);
+            }
+        });
+    });
 });
+
+function roleChanged(id, newRole, added) {
+    $.ajax("/Administration/Administration/ChangeRole?id=" + id + "&newRole=" + newRole + "&added=" + added);
+}
+function setUserLockedState(id, state) {
+    console.log("set" + id + " to " + state);
+    $.ajax("/Administration/Administration/SetUserLockedState?id=" + id + "&state=" + state);
+}
 
 function BlogentryPagination() {
 
-    console.log("constructor");
     var allEntries = $(".blogentry");
     var allPaginationItems = $(".pagination-item");
     var entriesPerPage = $("#blogentries-pagination").data("blogentries-per-page");
@@ -20,13 +57,9 @@ function BlogentryPagination() {
 
     this.goToPage = function (pageIndex) {
         if (allPaginationItems.length > 0) {
-            console.log("goToPage " + pageIndex);
-
             entryStartIndex = (pageIndex) * entriesPerPage;
             entryEndIndex = (pageIndex + 1) * (entriesPerPage) - 1;
             currentPageIndex = pageIndex;
-            console.log("Start: " + entryStartIndex);
-            console.log("End: " + entryEndIndex);
             allEntries.each(function(index) {
                 if (index >= entryStartIndex && index <= entryEndIndex) {
                     $(this).css("display", "block");

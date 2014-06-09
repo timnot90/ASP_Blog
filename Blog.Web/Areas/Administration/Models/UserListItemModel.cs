@@ -28,6 +28,8 @@ namespace Blog.Web.Areas.Administration.Models
         [Required(ErrorMessage = "An E-Mail adress must be declared.")]
         public string Email { get; set; }
 
+        public bool IsLocked { get; set; }
+
         public UserListItemModel()
         {
         }
@@ -38,6 +40,7 @@ namespace Blog.Web.Areas.Administration.Models
             UserName = source.UserName;
             DisplayName = source.DisplayName;
             Email = source.Email;
+            IsLocked = source.IsLocked;
         }
     }
 }
