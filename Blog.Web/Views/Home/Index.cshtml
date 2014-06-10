@@ -1,6 +1,5 @@
-﻿@using Blog.Web
-@using Blog.Web.Models.Home
-@model Blog.Web.Models.Home.BlogentryListModel
+﻿@using Blog.Web.Models.Home
+@model BlogentryListModel
 @*@model List<Blog.Web.Models.Home.BlogEntryListItemModel>*@
 @{
     ViewBag.Title = "Blog";
@@ -28,7 +27,7 @@
                     <li class="" id="blogentries-pagination-prev" onclick=" entryPagination.goToPreviousPage() "><a href="#">«</a></li>
                     @for (int i = 0; i < Model.Blogentries.Count/Model.NumberOfBlogentriesPerPage + 1; i++)
                     {
-                        <li class="pagination-item @(i == 0 ? "active" : "")" onclick=" entryPagination.goToPage(@i) "><a href="#">@(i + 1)</a></li>
+                        <li class="pagination-item @(i == 0 ? "active" : "")" onclick="entryPagination.goToPage(@i)"><a href="#">@(i + 1)</a></li>
                     }
                     <li class="" id="blogentries-pagination-next" onclick=" entryPagination.goToNextPage() "><a href="#">»</a></li>
                 </ul>

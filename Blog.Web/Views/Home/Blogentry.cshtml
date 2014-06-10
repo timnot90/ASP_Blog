@@ -5,21 +5,22 @@
 
 @{
     ViewBag.Title = Model.Header;
-    ViewBag.Breadcrumbs = new List<BreadcrumbModel>(new[] {new BreadcrumbModel("Blog", "Index", "Home")});
 }
-<div class="row">
+<div class="row" id="blogentryDetail">
     <div class="col-lg-8">
-        <hr>
-        <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString by <a href="#">@Model.Creator.UserName</a></p>
-        <hr>
-        <p class="">@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
-        <hr>
-
-        @{
-            LeaveCommentModel leaveCommentModel = new LeaveCommentModel();
-            leaveCommentModel.BlogentryId = Model.Id;
+        @if (WebSecurity.CurrentUserId == Model.Creator.Id)
+        {
+            <div class="text-left">
+                <button class="btn btn-default" data-toggle="modal" data-target="#editBlogentryModal">Edit</button>
+                <button class="btn btn-danger">Delete</button>
+            </div>
         }
-        @Html.Partial("_LeaveComment", leaveCommentModel)
+        <hr>
+        <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString by <a href="#">@Model.Creator.DisplayName</a></p>
+        <hr>
+        <p id="blogentryBody">@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
+        <hr>
+        @Html.Partial("_LeaveComment", new LeaveCommentModel {BlogentryId = Model.Id})
         <hr>
         <h2>Comments</h2>
         <table class="table table-hover table-responsive table-striped">
@@ -31,7 +32,8 @@
                     </td>
                 </tr>
             }
-        </table>
+        </table>        
+        @Html.Action("_EditBlogentry", "Home", new {area="", blogentryId = Model.Id})
     </div>
     @Html.Action("_BlogSidebar")
 </div>

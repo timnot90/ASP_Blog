@@ -4,7 +4,6 @@ $(document).ready(function () {
     entryPagination = new BlogentryPagination();
     entryPagination.goToPage(0);
 
-    console.log("ad");
     $(".lock-button").each(function () {
         $(this).click(function () {
             setUserLockedState($(this).data("user-id"), true);

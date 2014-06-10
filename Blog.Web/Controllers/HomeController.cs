@@ -61,7 +61,7 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                int id = _service.StoreBlogentry( blogentry );
+                int id = _service.CreateNewBlogentry( blogentry );
                 return RedirectToAction( "Blogentry", new {id} );
             }
             return View( blogentry );
@@ -130,6 +130,24 @@ namespace Blog.Web.Controllers
             return RedirectToAction( "Categories", model );
         }
 
+        [HttpGet]
+        public ActionResult _EditBlogentry(int blogentryId)
+        {
+            return PartialView(_service.GetEditBlogentryModel( blogentryId ));
+        }
+
+        [HttpPost]
+        public ActionResult _EditBlogentry(EditBlogentryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.SaveBlogentryChanges( model );
+//                return Json( new {html = Blogentry( model.Id ), statusCode = 200});
+                return RedirectToAction( "Blogentry", "Home", new {area = "", id = model.Id} );
+            }
+//            return Json(new { html = "", statusCode = 403 });
+            return PartialView( model );
+        }
         #endregion
 
         [HttpGet] // I would rather use POST, but I didn't find a nice way to make a POST-Request with a link (a href)

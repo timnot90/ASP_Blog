@@ -1,33 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Web;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Account;
 
 namespace Blog.Web.Models.Home
 {
-    public class BlogentryDetailModel
+    public class EditBlogentryModel
     {
         public int Id { get; set; }
+        [Required(ErrorMessage="The header of your blogentry mustn't be empty.")]
         public string Header { get; set; }
+        [Required(ErrorMessage = "The body of your blogentry mustn't be empty.")]
         public string Body { get; set; }
         public List<CategoryModel> Categories { get; set; }
-        public List<CommentModel> Comments { get; set; }
-        public UserProfileModel Creator { get; set; }
-        public DateTime CreationDate { get; private set; }
-        public string CreationDateString
-        {
-            get
-            {
-                return string.Format("{0:D}, um {0:t} Uhr", CreationDate);
-            }
-        }
+        public bool SuccessfullySaved { get; set; }
 
-        public BlogentryDetailModel()
+        public EditBlogentryModel()
         {
         }
 
-        public BlogentryDetailModel(Blogentry blogentry)
+        public EditBlogentryModel(Blogentry blogentry)
         {
             UpdateModel(blogentry);
         }
@@ -37,9 +32,6 @@ namespace Blog.Web.Models.Home
             Id = source.ID;
             Header = source.Header;
             Body = source.Body;
-            CreationDate = source.CreationDate;
-            Creator = new UserProfileModel(source.UserProfile);
-            Comments = source.Comments.Select(m => new CommentModel(m)).ToList();
         }
 
         public void UpdateSource(Blogentry source)

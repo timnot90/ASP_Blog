@@ -1,5 +1,5 @@
 ﻿@using Blog.Web.Models.Home
-@model Blog.Web.Models.Home.BlogEntryListItemModel
+@model BlogEntryListItemModel
 
 @{
     Layout = null;
@@ -9,7 +9,7 @@
         @Html.ActionLink(Model.Header, "Blogentry", "Home", new {id = Model.Id}, null)
     </h1>
     <p class="lead">
-        by <a href="#">@Model.Creator.UserName</a>
+        by <a href="#">@Model.Creator.DisplayName</a>
     </p>
     <hr />
     <p>Categories</p>
@@ -22,12 +22,7 @@
     </p>
     <hr />
     <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString</p>
-    @*<hr>
-            <a href="blog-post.html">
-                <img src="http://placehold.it/900x300" class="img-responsive">
-        </a>*@
     <hr>
     <p>@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
     <a class="btn btn-primary" href="@Url.Action("Blogentry", "Home", new {id = Model.Id})">Read More <i class="fa fa-angle-right"></i></a>
-
 </div>

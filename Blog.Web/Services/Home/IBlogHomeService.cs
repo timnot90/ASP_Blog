@@ -4,9 +4,11 @@ namespace Blog.Web.Services.Home
 {
     public interface IBlogHomeService
     {
-        int StoreBlogentry(AddBlogentryModel entryModel);
+        int CreateNewBlogentry(AddBlogentryModel entryModel);
+        int SaveBlogentryChanges(EditBlogentryModel model);
         BlogentryListModel GetBlogentryListModel();
         BlogentryDetailModel GetBlogentry(int id);
+        EditBlogentryModel GetEditBlogentryModel( int id );
         BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear);
         BlogSidebarModel GetBlogSidebarModel();
         AddBlogentryModel GetAddBlogentryModel();

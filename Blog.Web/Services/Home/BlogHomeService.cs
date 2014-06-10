@@ -31,20 +31,32 @@ namespace Blog.Web.Services.Home
 
         #region Blogentry
 
-        public int StoreBlogentry(AddBlogentryModel entryModel)
+        public int CreateNewBlogentry(AddBlogentryModel entryModel)
         {
-            bool isNewEntry = entryModel.Id == 0;
-            Blogentry entry = isNewEntry ? new Blogentry() : _repository.GetBlogentry(entryModel.Id);
+            var entry = new Blogentry();
             entryModel.UpdateSource(entry);
             entry.CreatorID = WebSecurity.CurrentUserId;
-            foreach (CategoryModel categoryModel in entryModel.Categories)
+            foreach (CategoryModel categoryModel in entryModel.Categories.Where( categoryModel => categoryModel.IsSelected ))
             {
-                if (categoryModel.IsSelected)
+                entry.Categories.Add(_repository.GetCategory(categoryModel.Id));
+            }
+            return _repository.SaveBlogentry(entry, true);
+        }
+
+        public int SaveBlogentryChanges( EditBlogentryModel model )
+        {
+            Blogentry entry = _repository.GetBlogentry(model.Id);
+            model.UpdateSource(entry);
+            if (model.Categories != null)
+            {
+                entry.Categories.Clear();
+                foreach (
+                    CategoryModel categoryModel in model.Categories.Where( categoryModel => categoryModel.IsSelected ))
                 {
-                    entry.Categories.Add(_repository.GetCategory(categoryModel.Id));
+                    entry.Categories.Add( _repository.GetCategory( categoryModel.Id ) );
                 }
             }
-            return _repository.SaveBlogentry(entry, isNewEntry);
+            return _repository.SaveBlogentry(entry);
         }
 
         public BlogentryListModel GetBlogentryListModel()
@@ -132,6 +144,20 @@ namespace Blog.Web.Services.Home
             return model;
         }
 
+        public EditBlogentryModel GetEditBlogentryModel(int id)
+        {
+            Blogentry entry = _repository.GetBlogentry(id);
+            EditBlogentryModel model = entry == null ? null : new EditBlogentryModel(entry);
+            if (model != null)
+            {
+                model.Categories = _repository.GetAllCategories().Select( c => new CategoryModel( c ) ).ToList();
+                foreach (CategoryModel category in model.Categories.Where( category => entry.Categories.Any( c => c.ID == category.Id ) ))
+                {
+                    category.IsSelected = true;
+                }
+            }
+            return model;
+        }
         #endregion
 
         #region Category
