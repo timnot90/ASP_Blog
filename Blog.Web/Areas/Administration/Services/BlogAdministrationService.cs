@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration.Provider;
+using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Sockets;
 using System.Web;
 using System.Web.Security;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Repositories;
 using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Models.Account;
+using WebMatrix.WebData;
 
 namespace Blog.Web.Areas.Administration.Services
 {
@@ -17,6 +21,7 @@ namespace Blog.Web.Areas.Administration.Services
         private readonly IBlogRepository _repository = new BlogRepository();
         #endregion
 
+        #region Users
         public UserListModel GetUserListModel()
         {
             var model = new UserListModel
@@ -60,6 +65,7 @@ namespace Blog.Web.Areas.Administration.Services
             {
             }
         }
+        #endregion
 
         #region Settings
 
@@ -70,11 +76,43 @@ namespace Blog.Web.Areas.Administration.Services
 
         public void StoreSettings(BlogSettingsModel model)
         {
-            Setting setting = _repository.GetBlogSettings();
-            model.UpdateSource(setting);
-            _repository.StoreSettings(setting);
+            if (ValidSMTP( model.SmtpServerAddress ))
+            {
+                Setting setting = _repository.GetBlogSettings();
+                model.UpdateSource( setting );
+                _repository.StoreSettings( setting );
+            }
+            else
+            {
+                throw new SmtpException();
+            }
         }
 
+        private bool ValidSMTP(string hostName)
+        {
+            bool valid = false;
+            try
+            {
+                TcpClient smtpTest = new TcpClient();
+                smtpTest.Connect(hostName, 587);
+                smtpTest.ReceiveTimeout = 500;
+                if (smtpTest.Connected)
+                {
+                    NetworkStream ns = smtpTest.GetStream();
+                    StreamReader sr = new StreamReader(ns);
+                    if (sr.ReadLine().Contains("220"))
+                    {
+                        valid = true;
+                    }
+                    smtpTest.Close();
+                }
+            }
+            catch
+            {
+
+            }
+            return valid;
+        }
         #endregion
     }
 }

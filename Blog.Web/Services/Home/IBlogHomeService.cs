@@ -9,7 +9,7 @@ namespace Blog.Web.Services.Home
         BlogentryListModel GetBlogentryListModel();
         BlogentryDetailModel GetBlogentry(int id);
         EditBlogentryModel GetEditBlogentryModel( int id );
-        BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear);
+        BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear, string searchText );
         BlogSidebarModel GetBlogSidebarModel();
         AddBlogentryModel GetAddBlogentryModel();
         int StoreCategory(CategoryModel categoryModel);

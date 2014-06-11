@@ -1,18 +1,13 @@
 ﻿"use strict";
 var entryPagination;
 $(document).ready(function () {
+    $(".blog-navbar-nojs").hide();
+    $(".blog-navbar-js").show();
+
     entryPagination = new BlogentryPagination();
     entryPagination.goToPage(0);
 
-    $(".lock-button").each(function () {
-        $(this).click(function () {
-            setUserLockedState($(this).data("user-id"), true);
-        });
-    });
-    $(".unlock-button").each(function () {
-        $(this).click(function () {
-        });
-    });
+    // Initialize all lock-switches and their click-events
     $(".lock-switch").each(function () {
         var state2 = $(this).data("is-locked");
         if (state2 == "False") {
@@ -24,6 +19,8 @@ $(document).ready(function () {
             setUserLockedState($(this).data("user-id"), state);
         });
     });
+
+    // Initialize role-checkbox click-events
     $(".roleCheckbox").each(function () {
         $(this).click(function () {
             if ($(this).is(':checked')) {
@@ -44,7 +41,7 @@ function setUserLockedState(id, state) {
 }
 
 function BlogentryPagination() {
-
+    $(".pagination-wrapper").show();
     var allEntries = $(".blogentry");
     var allPaginationItems = $(".pagination-item");
     var entriesPerPage = $("#blogentries-pagination").data("blogentries-per-page");

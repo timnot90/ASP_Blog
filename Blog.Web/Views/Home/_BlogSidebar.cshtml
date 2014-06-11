@@ -4,17 +4,33 @@
     Layout = null;
 }
 <div class="col-lg-4">
-    <div class="well">
-        <h4>Search</h4>
-        <div class="input-group">
-            <input type="text" class="form-control">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button">
-                    <i class="fa fa-search"></i>
-                </button>
-            </span>
-        </div>
-    </div>
+@*    <div class="well">*@
+@*        <h4>Search</h4>*@
+@*        <div class="input-group">*@
+@*            @using (Ajax.BeginForm("Index", "Home", new{area=""}, new AjaxOptions{HttpMethod="POST"}))*@
+@*            {*@
+@*                @Html.TextBoxFor( m => m.SearchText, new {@class = "form-control"} )*@
+@*                <span class="input-group-btn">*@
+@*                    <button class="btn btn-default" id="searchTextSubmit" type="submit">*@
+@*                        <i class="fa fa-search"></i>*@
+@*                    </button>*@
+@*                </span>*@
+@*            }*@
+@*$1$            <script>#1#*@
+@*$1$                $("#searchTextSubmit").click(function() {#1#*@
+@*$1$                    console.log($("#SearchText").value);#1#*@
+@*$1$//                    window.location = "Home/Index?searchText=" + $("#SearchText").val();#1#*@
+@*$1$                    //window.location.href = "?searchText=" + $("#SearchText").val();#1#*@
+@*$1$                    window.location = "http://" + window.location.host + ":" + window.location.port + "/" + "?searchText=" + $("#SearchText").val();#1#*@
+@*$1$//                    $.ajax({#1#*@
+@*$1$//                        type: "POST",#1#*@
+@*$1$//                        url: "Home/Index?searchText=" + $("#SearchText").value#1#*@
+@*$1$//                    });#1#*@
+@*$1$                });#1#*@
+@*$1$            </script>#1#*@
+@*        </div>*@
+@*        *@
+@*    </div>*@
     <div class="well">
         <h3>Filter</h3>
         <div class="form-group">

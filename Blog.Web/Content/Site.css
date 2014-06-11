@@ -140,3 +140,18 @@ legend.scheduler-border {
     padding:0 10px; /* To give a bit of padding on the left and right */
     border-bottom:none;
 }
+
+
+/******************Pagination*******************************/
+.pagination-wrapper {
+    display: none;
+}
+
+/******************Navigation*******************************/
+.blog-navbar-js {
+    display: none;
+}
+
+.blog-navbar-nojs {
+    display: block;
+}

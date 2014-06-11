@@ -3,7 +3,7 @@
 }
 @using Blog.Web
 @model Blog.Web.Models.Shared.NavigationBarModel
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top blog-navbar-js" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
@@ -43,17 +43,17 @@
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          <i class="glyphicon glyphicon-user"></i>
-                          @if (WebSecurity.IsAuthenticated)
-                          {
-                              @:@WebSecurity.CurrentUserName
-                          }
-                          else
-                          {
-                              @:My Profile
-                          }<b class="caret"></b>
+                        <i class="glyphicon glyphicon-user"></i>
+                        @if (WebSecurity.IsAuthenticated)
+                        {
+                            @:@WebSecurity.CurrentUserName
+                        }
+                        else
+                        {
+                            @:My Profile
+                        }<b class="caret"></b>
 
-                      </a>
+                    </a>
                     <ul class="dropdown-menu">
                         @if (WebSecurity.IsAuthenticated)
                         {
@@ -123,5 +123,94 @@
                 </li>
             </ul>
         </div>
+    </div>
+</nav>
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top blog-navbar-nojs" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink( Model.SiteName, "Index", "Home", htmlAttributes: new {@class = "navbar-brand"}, routeValues: new {area = ""} )
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="@Url.Action( "Index", "Home", new {area = ""} )">
+                        <i class="glyphicon glyphicon-list"></i> View Posts
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action( "Categories", "Home", new {area = ""} )">
+                        <i class="glyphicon glyphicon-inbox"></i> Categories
+                    </a>
+                </li>
+                @if (Roles.IsUserInRole(CustomRoles.Administrator))
+                {
+                    <li>
+                        <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
+                            <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
+                        </a>
+                    </li>
+                }
+
+                @if (WebSecurity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="@Url.Action( "EditProfile", "Account", new {area = ""} )">
+                            <i class="glyphicon glyphicon-cog"></i> Edit Profile
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action( "Register", "Account", new {area = ""} )">
+                            <i class="glyphicon glyphicon-edit"></i> Register
+                        </a>
+                    </li>
+                }
+                <li>
+                    <a href="@Url.Action( "Index", "About", new {area = ""} )">
+                        <i class="glyphicon glyphicon-info-sign"></i> About
+                    </a>
+                </li>
+                @if (Roles.IsUserInRole(CustomRoles.Administrator))
+                {
+                    <li>
+                        <a href="@Url.Action( "Users", "Administration", new {area = "Administration"} )">
+                            <i class="glyphicon glyphicon-eye-open"></i> Users
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action( "BlogSettings", "Administration", new {area = "Administration"} )">
+                            <i class="glyphicon glyphicon-eye-open"></i> Settings
+                        </a>
+                    </li>
+                }
+                <li>
+                    @if (WebSecurity.IsAuthenticated)
+                    {
+                        <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
+                            <i class="glyphicon glyphicon-log-out"></i> Logout
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action( "Login", "Account", new {area = ""} )">
+                            <i class="glyphicon glyphicon-log-in"></i> Login
+                        </a>
+                    }
+                </li>
+            </ul>
+        </div>
+
     </div>
 </nav>

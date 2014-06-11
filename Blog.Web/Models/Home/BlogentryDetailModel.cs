@@ -11,6 +11,7 @@ namespace Blog.Web.Models.Home
         public int Id { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
+        public bool CommentsActivated { get; set; }
         public List<CategoryModel> Categories { get; set; }
         public List<CommentModel> Comments { get; set; }
         public UserProfileModel Creator { get; set; }

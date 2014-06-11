@@ -19,20 +19,25 @@
         <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString by <a href="#">@Model.Creator.DisplayName</a></p>
         <hr>
         <p id="blogentryBody">@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
-        <hr>
-        @Html.Partial("_LeaveComment", new LeaveCommentModel {BlogentryId = Model.Id})
-        <hr>
-        <h2>Comments</h2>
-        <table class="table table-hover table-responsive table-striped">
-            @foreach (CommentModel comment in Model.Comments)
-            {
-                <tr>
-                    <td>
-                        @Html.Partial("_Comment", comment)
-                    </td>
-                </tr>
-            }
-        </table>        
+        @if (Model.CommentsActivated)
+        {
+            <div id="commentStuff">
+                <hr>
+                @Html.Partial( "_LeaveComment", new LeaveCommentModel {BlogentryId = Model.Id} )
+                <hr>
+                <h2>Comments</h2>
+                <table class="table table-hover table-responsive table-striped">
+                    @foreach (CommentModel comment in Model.Comments)
+                    {
+                        <tr>
+                            <td>
+                                @Html.Partial( "_Comment", comment )
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        }      
         @Html.Action("_EditBlogentry", "Home", new {area="", blogentryId = Model.Id})
     </div>
     @Html.Action("_BlogSidebar")

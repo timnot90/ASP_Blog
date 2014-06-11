@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -42,9 +43,16 @@ namespace Blog.Web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.StoreSettings( model );
-                model.SuccessfullySaved = true;
-                return View(model);
+                try
+                {
+                    _service.StoreSettings( model );
+                    model.SuccessfullySaved = true;
+                    return View( model );
+                }
+                catch (SmtpException)
+                {
+                    ModelState.AddModelError( "SmtpInvalid", "The given smtp settings are invalid." );
+                }
             }
             model.SuccessfullySaved = false;
             return View(model);

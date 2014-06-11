@@ -188,6 +188,7 @@
     <Compile Include="Services\Home\IBlogHomeService.cs" />
     <Compile Include="Models\Shared\PageHeaderModel.cs" />
     <Compile Include="Services\Shared\IBlogSharedService.cs" />
+    <Compile Include="Exceptions\SmtpInvalidException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-switch.css" />
@@ -307,6 +308,7 @@
     <Content Include="Areas\Administration\Views\Administration\Users.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
     <Content Include="Areas\Administration\Views\Administration\BlogSettings.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />

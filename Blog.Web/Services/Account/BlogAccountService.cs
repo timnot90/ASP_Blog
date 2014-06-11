@@ -41,6 +41,7 @@ namespace Blog.Web.Services.Account
                     registerModel.DisplayName,
                     EMail = registerModel.Email,
                     EmailLowercase = registerModel.Email.ToLower(),
+                    IsLocked = false
                 }, true);
 
             MailSender.SendRegistrationToken(token, registerModel.Email);

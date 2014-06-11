@@ -17,17 +17,17 @@ namespace Blog.Web.Controllers
         #region views
 
         [AllowAnonymous]
-        public ActionResult Index( int? categoryId, string monthAndYear )
+        public ActionResult Index( int? categoryId, string monthAndYear, string searchText )
         {
             if (!categoryId.HasValue)
             {
                 categoryId = 0;
             }
-            if (categoryId == 0 && string.IsNullOrEmpty( monthAndYear ))
-            {
-                return View( _service.GetBlogentryListModel() );
-            }
-            return View( _service.GetBlogentryListModel( (int) categoryId, monthAndYear ) );
+//            if (categoryId == 0 && string.IsNullOrEmpty( monthAndYear ))
+//            {
+//                return View( _service.GetBlogentryListModel() );
+//            }
+            return View( _service.GetBlogentryListModel( (int) categoryId, monthAndYear, searchText ) );
         }
 
         [AllowAnonymous]
@@ -105,9 +105,9 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult _BlogSidebar( BlogSidebarModel model )
+        public ActionResult _BlogSidebar( string searchText )
         {
-            return Index( model.Categories[0].Id, model.SelectedMonth + model.SelectedYear );
+            return Index( null, null, searchText );
         }
 
         [HttpGet]

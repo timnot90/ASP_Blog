@@ -4,6 +4,7 @@ using System.Linq;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Repositories;
 using Blog.Web.Models.Home;
+using Microsoft.Ajax.Utilities;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Services.Home
@@ -84,10 +85,14 @@ namespace Blog.Web.Services.Home
         {
             Blogentry entry = _repository.GetBlogentry(id);
             BlogentryDetailModel entryModel = entry == null ? null : new BlogentryDetailModel(entry);
+            if (entryModel != null)
+            {
+                entryModel.CommentsActivated = _repository.GetBlogSettings().CommentsActivated;
+            }
             return entryModel;
         }
 
-        public BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear)
+        public BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear, string searchText)
         {
             int month = 0;
             int year = 0;
@@ -102,22 +107,15 @@ namespace Blog.Web.Services.Home
             {
                 monthAndYearIsValid = false;
             }
-            List<BlogEntryListItemModel> blogentries = GetBlogentryListModel().Blogentries.FindAll(e =>
-            {
-                bool categoryFits = categoryId == 0 || e.Categories.Any(c => c.Id == categoryId);
-                bool monthAndYearFits = !monthAndYearIsValid ||
-                                        (e.CreationDate.Month == month && e.CreationDate.Year == year);
-                return categoryFits && monthAndYearFits;
-            });
             BlogentryListModel model = GetBlogentryListModel();
             model.Blogentries.RemoveAll(e =>
             {
                 bool categoryFits = categoryId == 0 || e.Categories.Any(c => c.Id == categoryId);
                 bool monthAndYearFits = !monthAndYearIsValid ||
                                         (e.CreationDate.Month == month && e.CreationDate.Year == year);
-                return !(categoryFits && monthAndYearFits);
+                bool searchTextFits = string.IsNullOrEmpty(searchText) || e.Body.Contains(searchText);
+                return !(categoryFits && monthAndYearFits && searchTextFits);
             });
-            //new BlogentryListModel {Blogentries = blogentries};
             return model;
         }
 

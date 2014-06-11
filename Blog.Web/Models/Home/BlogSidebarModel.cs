@@ -11,6 +11,7 @@ namespace Blog.Web.Models.Home
         public string SelectedYear { get; set; }
         public List<string> AvailableMonths { get; set; }
         public List<string> AvailableYears { get; set; }
+        public string SearchText { get; set; }
 
         public BlogSidebarModel()
         {
