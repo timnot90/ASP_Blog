@@ -42,16 +42,30 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public PartialViewResult _NavigationBar( NavigationBarModel model )
+        public PartialViewResult _NavigationBar(NavigationBarModel model)
         {
             return PartialView(_service.GetNavigationBarModel());
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public PartialViewResult _Footer( FooterModel model )
+        public PartialViewResult _Footer(FooterModel model)
         {
             return PartialView(_service.GetFooterModel());
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public PartialViewResult _Keywords(NavigationBarModel model)
+        {
+            return PartialView(_service.GetKeywordsModel());
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public PartialViewResult _Keywords(FooterModel model)
+        {
+            return PartialView(_service.GetKeywordsModel());
         }
     }
 }

@@ -50,6 +50,11 @@
                     @Html.LabelFor( m => m.NumberOfEntriesPerPage )
                     @Html.TextBoxFor( m => m.NumberOfEntriesPerPage, new {@class = "form-control"} )
                 </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Keywords)
+                    @Html.TextBoxFor(m => m.Keywords, new { @class = "form-control" })
+                </div>
+
             </fieldset>
 
             <fieldset class="scheduler-border">

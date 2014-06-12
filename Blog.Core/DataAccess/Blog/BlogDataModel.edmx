@@ -78,6 +78,7 @@
           <Property Name="SmtpServerPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="SmtpIsPasswordMandatoryForLogin" Type="bit" Nullable="false" />
           <Property Name="CommentsActivated" Type="bit" Nullable="false" />
+          <Property Name="Keywords" Type="nvarchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="UserProfiles">
           <Key>
@@ -507,6 +508,7 @@
           <Property Name="SmtpServerPassword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="SmtpIsPasswordMandatoryForLogin" Type="Boolean" Nullable="false" />
           <Property Name="CommentsActivated" Type="Boolean" Nullable="false" />
+          <Property Name="Keywords" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -634,6 +636,7 @@
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Setting">
               <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
                 <ScalarProperty Name="CommentsActivated" ColumnName="CommentsActivated" />
                 <ScalarProperty Name="SmtpIsPasswordMandatoryForLogin" ColumnName="SmtpIsPasswordMandatoryForLogin" />
                 <ScalarProperty Name="SmtpServerPassword" ColumnName="SmtpServerPassword" />

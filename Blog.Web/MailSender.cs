@@ -23,7 +23,7 @@ namespace Blog.Web
             linkTag.Attributes.Add("href", linkText);
             linkTag.InnerHtml += linkText;
 
-            SendMail(blogSettings.RegistrationMailSender, recipient, blogSettings.RegistrationMailSubject, String.Format( blogSettings.RegistrationMailBody, linkText ));
+            SendMail(blogSettings.RegistrationMailSender, recipient, blogSettings.RegistrationMailSubject, String.Format( blogSettings.RegistrationMailBody, linkTag.ToString() ));
 
 //            StringBuilder mailBody = new StringBuilder();
 //            mailBody.AppendLine( "<html>" );

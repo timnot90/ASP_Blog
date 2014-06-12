@@ -33,5 +33,6 @@ namespace Blog.Core.DataAccess.Blog
         public string SmtpServerPassword { get; set; }
         public bool SmtpIsPasswordMandatoryForLogin { get; set; }
         public bool CommentsActivated { get; set; }
+        public string Keywords { get; set; }
     }
 }

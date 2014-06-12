@@ -27,6 +27,11 @@ namespace Blog.Web.Services.Shared
             return new NavigationBarModel { SiteName = _repository.GetBlogSettings().SiteName };
         }
 
+        public KeywordsModel GetKeywordsModel()
+        {
+            return new KeywordsModel(_repository.GetBlogSettings());
+        }
+
         #endregion
     }
 }

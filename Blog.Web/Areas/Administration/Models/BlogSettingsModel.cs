@@ -20,6 +20,10 @@ namespace Blog.Web.Areas.Administration.Models
         [Required(ErrorMessage = "You have to specify the number of blogentries that should be displayed per page.")]
         public int NumberOfEntriesPerPage { get; set; }
 
+        [RegularExpression(@"[A-Za-z0-9]+(,[A-Za-z0-9\s]*)*[A-Za-z0-9]+", ErrorMessage = "The Keywords do not have a valid format.")]
+        [DisplayName("Keywords (separated by ',')")]
+        public string Keywords { get; set; }
+
         [DisplayName("Subject")]
         [Required(ErrorMessage = "You have to specify the subject of the registration mails.")]
         public string RegistrationMailSubject { get; set; }
@@ -87,46 +91,48 @@ namespace Blog.Web.Areas.Administration.Models
             UpdateModel( settings );
         }
 
-        public void UpdateSource(Setting settings)
+        public void UpdateSource(Setting source)
         {
-            settings.SiteName = SiteName;
-            settings.NumberOfEntriesPerPage = NumberOfEntriesPerPage;
-            settings.RegistrationMailSubject = RegistrationMailSubject;
-            settings.RegistrationMailBody = RegistrationMailBody;
-            settings.RegistrationMailSender = RegistrationMailSender;
-            settings.PasswordChangeMailSubject = PasswordChangeMailSubject;
-            settings.PasswordChangeMailBody = PasswordChangeMailBody;
-            settings.PasswordChangeMailSender = PasswordChangeMailSender;
-            settings.WelcomeMailSubject = WelcomeMailSubject;
-            settings.WelcomeMailBody = WelcomeMailBody;
-            settings.WelcomeMailSender = WelcomeMailSender;
-            settings.FooterText = FooterText;
-            settings.SmtpServerAddress = SmtpServerAddress;
-            settings.SmtpServerUsername = SmtpServerUsername;
-            settings.SmtpServerPassword = SmtpServerPassword;
-            settings.SmtpIsPasswordMandatoryForLogin = SmtpIsPasswordMandatoryForLogin;
-            settings.CommentsActivated = CommentsActivated;
+            source.SiteName = SiteName;
+            source.NumberOfEntriesPerPage = NumberOfEntriesPerPage;
+            source.Keywords = Keywords;
+            source.RegistrationMailSubject = RegistrationMailSubject;
+            source.RegistrationMailBody = RegistrationMailBody;
+            source.RegistrationMailSender = RegistrationMailSender;
+            source.PasswordChangeMailSubject = PasswordChangeMailSubject;
+            source.PasswordChangeMailBody = PasswordChangeMailBody;
+            source.PasswordChangeMailSender = PasswordChangeMailSender;
+            source.WelcomeMailSubject = WelcomeMailSubject;
+            source.WelcomeMailBody = WelcomeMailBody;
+            source.WelcomeMailSender = WelcomeMailSender;
+            source.FooterText = FooterText;
+            source.SmtpServerAddress = SmtpServerAddress;
+            source.SmtpServerUsername = SmtpServerUsername;
+            source.SmtpServerPassword = SmtpServerPassword;
+            source.SmtpIsPasswordMandatoryForLogin = SmtpIsPasswordMandatoryForLogin;
+            source.CommentsActivated = CommentsActivated;
         }
 
-        public void UpdateModel( Setting settings )
+        public void UpdateModel( Setting source )
         {
-            SiteName = settings.SiteName;
-            NumberOfEntriesPerPage = settings.NumberOfEntriesPerPage;
-            RegistrationMailSubject = settings.RegistrationMailSubject;
-            RegistrationMailBody = settings.RegistrationMailBody;
-            RegistrationMailSender = settings.RegistrationMailSender;
-            PasswordChangeMailSubject = settings.PasswordChangeMailSubject;
-            PasswordChangeMailBody = settings.PasswordChangeMailBody;
-            PasswordChangeMailSender = settings.PasswordChangeMailSender;
-            WelcomeMailSubject = settings.WelcomeMailSubject;
-            WelcomeMailBody = settings.WelcomeMailBody;
-            WelcomeMailSender = settings.WelcomeMailSender;
-            FooterText = settings.FooterText;
-            SmtpServerAddress = settings.SmtpServerAddress;
-            SmtpServerUsername = settings.SmtpServerUsername;
-            SmtpServerPassword = settings.SmtpServerPassword;
-            SmtpIsPasswordMandatoryForLogin = settings.SmtpIsPasswordMandatoryForLogin;
-            CommentsActivated = settings.CommentsActivated;
+            SiteName = source.SiteName;
+            NumberOfEntriesPerPage = source.NumberOfEntriesPerPage;
+            Keywords = source.Keywords;
+            RegistrationMailSubject = source.RegistrationMailSubject;
+            RegistrationMailBody = source.RegistrationMailBody;
+            RegistrationMailSender = source.RegistrationMailSender;
+            PasswordChangeMailSubject = source.PasswordChangeMailSubject;
+            PasswordChangeMailBody = source.PasswordChangeMailBody;
+            PasswordChangeMailSender = source.PasswordChangeMailSender;
+            WelcomeMailSubject = source.WelcomeMailSubject;
+            WelcomeMailBody = source.WelcomeMailBody;
+            WelcomeMailSender = source.WelcomeMailSender;
+            FooterText = source.FooterText;
+            SmtpServerAddress = source.SmtpServerAddress;
+            SmtpServerUsername = source.SmtpServerUsername;
+            SmtpServerPassword = source.SmtpServerPassword;
+            SmtpIsPasswordMandatoryForLogin = source.SmtpIsPasswordMandatoryForLogin;
+            CommentsActivated = source.CommentsActivated;
         }
     }
 }

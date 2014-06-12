@@ -178,6 +178,7 @@
     <Compile Include="Models\Home\LeaveCommentModel.cs" />
     <Compile Include="Models\Shared\ErrorModel.cs" />
     <Compile Include="Models\Shared\FooterModel.cs" />
+    <Compile Include="Models\Shared\KeywordsModel.cs" />
     <Compile Include="Models\Shared\NavigationBarModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Account\BlogAccountService.cs" />
@@ -187,7 +188,6 @@
     <Compile Include="Services\Home\IBlogHomeService.cs" />
     <Compile Include="Models\Shared\PageHeaderModel.cs" />
     <Compile Include="Services\Shared\IBlogSharedService.cs" />
-    <Compile Include="Exceptions\SmtpInvalidException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-switch.css" />
@@ -370,9 +370,11 @@
     <Content Include="Views\Account\ResetPasswordSecondStepCompleted.cshtml" />
     <Content Include="Views\Account\ResetPasswordFirstStepCompleted.cshtml" />
     <Content Include="Views\Home\_EditBlogentry.cshtml" />
+    <Content Include="Views\Shared\_Keywords.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

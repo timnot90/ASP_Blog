@@ -7,5 +7,6 @@ namespace Blog.Web.Services.Shared
         FooterModel GetFooterModel();
         PageHeaderModel GetPageHeaderModel(string title);
         NavigationBarModel GetNavigationBarModel();
+        KeywordsModel GetKeywordsModel();
     }
 }
