@@ -29,7 +29,9 @@ namespace Blog.Core.Repositories
 
         List<UserProfile> GetAllUserProfiles();
 
-        UserProfile GetUserProfile(int id);
+        UserProfile GetUserProfileById(int id);
+
+        UserProfile GetUserProfileByUsername( string username );
 
         bool EmailExists(string email);
 

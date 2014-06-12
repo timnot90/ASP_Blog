@@ -92,9 +92,15 @@ namespace Blog.Core.Repositories
             return BlogDataContext.Current.UserProfiles.OrderBy( u => u.UserName ).ToList();
         }
 
-        public UserProfile GetUserProfile( int id )
+        public UserProfile GetUserProfileById( int id )
         {
             return BlogDataContext.Current.UserProfiles.FirstOrDefault( u => u.ID == id );
+        }
+        
+        public UserProfile GetUserProfileByUsername(string username)
+        {
+            string userNameLowercase = username.ToLower();
+            return BlogDataContext.Current.UserProfiles.FirstOrDefault(u => u.UserNameLowercase == userNameLowercase);
         }
 
         public bool EmailExists( string email )

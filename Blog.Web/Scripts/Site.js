@@ -32,14 +32,6 @@ $(document).ready(function () {
     });
 });
 
-function roleChanged(id, newRole, added) {
-    $.ajax("/Administration/Administration/ChangeRole?id=" + id + "&newRole=" + newRole + "&added=" + added);
-}
-function setUserLockedState(id, state) {
-    console.log("set" + id + " to " + state);
-    $.ajax("/Administration/Administration/SetUserLockedState?id=" + id + "&state=" + state);
-}
-
 function BlogentryPagination() {
     $(".pagination-wrapper").show();
     var allEntries = $(".blogentry");

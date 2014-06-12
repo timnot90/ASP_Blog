@@ -6,6 +6,7 @@
 @{
     ViewBag.Title = Model.Header;
 }
+@Scripts.Render("~/bundles/jqueryval")
 <div class="row" id="blogentryDetail">
     <div class="col-lg-8">
         @if (WebSecurity.CurrentUserId == Model.Creator.Id)

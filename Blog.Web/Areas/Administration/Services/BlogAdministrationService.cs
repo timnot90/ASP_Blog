@@ -45,7 +45,7 @@ namespace Blog.Web.Areas.Administration.Services
         {
             try
             {
-                string username = _repository.GetUserProfile( id ).UserName;
+                string username = _repository.GetUserProfileById( id ).UserName;
                 if (added)
                 {
                     Roles.AddUserToRole( username, newRole );

@@ -22,8 +22,6 @@ namespace Blog.Web
             
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "ID", "UserName", true);
 
-
-
             MvcHandler.DisableMvcResponseHeader = true;
         }
     }

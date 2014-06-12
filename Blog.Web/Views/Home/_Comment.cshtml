@@ -6,7 +6,7 @@
     @Html.HiddenFor(m => m.BlogentryId)
     @Model.Header
     <small>@Model.CreationDateString, by <span class="section-colored">@Model.Creator.UserName</span></small>
-    @if (Roles.IsUserInRole(CustomRoles.Administrator))
+    @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
     {
         <a href="@Url.Action("DeleteComment", new {commentId = Model.Id})" class="btn btn-danger pull-right">
             <i class="glyphicon glyphicon-trash"></i>

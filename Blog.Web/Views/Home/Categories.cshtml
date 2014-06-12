@@ -10,7 +10,7 @@
     <div class="col-lg-8">
         <table class="table table-hover table-striped table-bordered">
             <tr>
-                @if (Roles.IsUserInRole(CustomRoles.Administrator))
+                @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                 {
                     <th>Name</th>
                     <th>Creation Date</th>
@@ -24,7 +24,7 @@
                     <td>
                         @Html.ActionLink(category.Name + " (" + category.NumberOfPosts + ")", "Index", "Home", new {categoryId = category.Id}, null)
                     </td>
-                    @if (Roles.IsUserInRole(CustomRoles.Administrator))
+                    @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                     {
                         <td>
                             @category.CreationDateString
@@ -51,7 +51,7 @@
                 </tr>
             }
         </table>
-        @if (Roles.IsUserInRole(CustomRoles.Administrator))
+        @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
         {
             Html.Action("AddCategory", "Home");
         }

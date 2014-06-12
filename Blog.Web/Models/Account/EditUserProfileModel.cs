@@ -60,9 +60,9 @@ namespace Blog.Web.Models.Account
 
         public void UpdateSource(UserProfile source)
         {
-            source.UserName = UserName;
             source.DisplayName = DisplayName;
             source.Email = Email;
+            source.EmailLowercase = Email.ToLower();
             source.Street = Street;
             source.HouseNumber = HouseNumber;
             source.Town = Town;
