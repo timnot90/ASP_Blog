@@ -65,7 +65,11 @@ namespace Blog.Web
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
             SmtpClient.Host = blogSettings.SmtpServerAddress;
-            SmtpClient.Credentials = new NetworkCredential(blogSettings.SmtpServerUsername, blogSettings.SmtpServerPassword);
+            if (blogSettings.SmtpIsPasswordMandatoryForLogin)
+            {
+                SmtpClient.Credentials = new NetworkCredential( blogSettings.SmtpServerUsername,
+                    blogSettings.SmtpServerPassword );
+            }
 
             var mail = new MailMessage();
             mail.To.Add( new MailAddress( recipient ) );

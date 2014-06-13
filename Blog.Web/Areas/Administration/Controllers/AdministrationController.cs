@@ -5,6 +5,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Blog.Core.Exceptions;
 using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Areas.Administration.Services;
 using Blog.Web.Services;
@@ -49,9 +50,12 @@ namespace Blog.Web.Areas.Administration.Controllers
                     model.SuccessfullySaved = true;
                     return View( model );
                 }
-                catch (SmtpException)
+                catch (SmtpInvalidException ex)
                 {
-                    ModelState.AddModelError( "SmtpInvalid", "The given smtp settings are invalid." );
+                    foreach (KeyValuePair<string, string> error in ex.Errors)
+                    {
+                        ModelState.AddModelError(error.Key, error.Value);
+                    }
                 }
             }
             model.SuccessfullySaved = false;

@@ -69,11 +69,9 @@ namespace Blog.Web.Areas.Administration.Models
         public string SmtpServerAddress { get; set; }
 
         [DisplayName("Username")]
-        [Required(ErrorMessage = "The username for the SMTP-server  cannot be empty.")]
         public string SmtpServerUsername { get; set; }
 
         [DisplayName("Password")]
-        [Required(ErrorMessage = "The password for the SMTP-Server cannot be empty.")]
         public string SmtpServerPassword { get; set; }
 
         [DisplayName("Password is Mandatory for Login")]

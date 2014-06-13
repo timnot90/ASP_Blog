@@ -1,8 +1,8 @@
 ﻿"use strict";
-var userSettings;
+var blogSettings;
 $(document).ready(function () {
-    userSettings = new UserSettingsScript();
-    userSettings.initialize();
+    blogSettings = new UserSettingsScript();
+    blogSettings.initialize();
 });
 
 function UserSettingsScript() {

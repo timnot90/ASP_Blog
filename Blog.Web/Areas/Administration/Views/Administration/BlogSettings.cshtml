@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Settings";
 }
+@Scripts.Render("~/bundles/blog-settings");
 <div class="row">
     <div class="col-lg-12">
         @using (Html.BeginForm( "BlogSettings", "Administration", new {area = "Administration"}, FormMethod.Post, new {@class = "form-horizontal"} ))
@@ -111,20 +112,23 @@
                     @Html.LabelFor( m => m.SmtpServerAddress )
                     @Html.TextBoxFor( m => m.SmtpServerAddress, new {@class = "form-control"} )
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor( m => m.SmtpServerUsername )
-                    @Html.TextBoxFor( m => m.SmtpServerUsername, new {@class = "form-control"} )
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor( m => m.SmtpServerPassword )
-                    @Html.PasswordFor( m => m.SmtpServerPassword, new {@class = "form-control"} )
-                </div>
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBoxFor( m => m.SmtpIsPasswordMandatoryForLogin, new {@class = ""} )
-                        @Html.DisplayNameFor( m => m.SmtpIsPasswordMandatoryForLogin )
+                        @Html.CheckBoxFor(m => m.SmtpIsPasswordMandatoryForLogin, new { @class = "", id="cb-smtp-are-credentials-mandatory" })
+                        @Html.DisplayNameFor(m => m.SmtpIsPasswordMandatoryForLogin)
                     </label>
                 </div>
+                <div id="smtp-user-credentials">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SmtpServerUsername)
+                        @Html.TextBoxFor(m => m.SmtpServerUsername, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SmtpServerPassword)
+                        @Html.PasswordFor(m => m.SmtpServerPassword, new { @class = "form-control" })
+                    </div>
+                </div>
+
             </fieldset>
             
             <div class="">

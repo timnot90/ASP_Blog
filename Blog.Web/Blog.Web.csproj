@@ -307,8 +307,8 @@
     <Content Include="Areas\Administration\Views\Administration\Users.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
     <Content Include="Areas\Administration\Views\Administration\BlogSettings.cshtml" />
-    <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\custom\blog-settings.js" />
     <Content Include="Scripts\custom\general.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\jquery\jquery-2.1.0.js" />
@@ -374,7 +374,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
