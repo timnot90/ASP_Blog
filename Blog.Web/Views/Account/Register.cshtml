@@ -11,8 +11,8 @@
                 <div class="form-group">
                     @Html.UserProfileTextBoxFor(m => m.UserName, true)
                     @Html.UserProfileTextBoxFor(m => m.DisplayName, true)
-                    @Html.UserProfileTextBoxFor(m => m.Password, true, true)
-                    @Html.UserProfileTextBoxFor(m => m.PasswordConfirmed, true, true)
+                    @Html.UserProfilePasswordFor(m => m.Password)
+                    @Html.UserProfilePasswordFor(m => m.PasswordConfirmed)
                     @Html.UserProfileTextBoxFor(m => m.Email, true)
                 </div>
                 <div class="form-group">

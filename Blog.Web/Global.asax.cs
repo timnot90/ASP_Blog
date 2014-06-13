@@ -2,6 +2,10 @@
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.Security;
+using Blog.Web.Areas.Administration.Services;
+using Blog.Web.Services.Account;
+using Blog.Web.Services.Shared;
 using WebMatrix.WebData;
 
 namespace Blog.Web
@@ -22,6 +26,21 @@ namespace Blog.Web
             
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "ID", "UserName", true);
 
+            if (new BlogSharedService().GetNumberOfUsers() == 0)
+            {
+                WebSecurity.CreateUserAndAccount("admin", "1",
+                    new
+                    {
+                        UserNameLowercase = "admin",
+                        DisplayName = "admin",
+                        EMail = "timonotheisen@googlemail.com",
+                        EmailLowercase = "timonotheisen@googlemail.com",
+                        IsLocked = false
+                    });
+                Roles.CreateRole(CustomRoles.Administrator);
+                Roles.CreateRole(CustomRoles.User);
+                Roles.AddUserToRole("admin", CustomRoles.Administrator);
+            }
             MvcHandler.DisableMvcResponseHeader = true;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Security.Policy;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
@@ -7,53 +8,39 @@ namespace Blog.Core.Extensions
 {
     public static class HtmlHelperExtensions
     {
-        public static MvcHtmlString UserProfileTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, bool isRequired = false, bool isPassword = false)
+        private const string UserProfileTextBoxBaseString =
+            "<div class='form-group'>" +
+            "<label class='required' for='{0}'>{1}</label>" +
+            "<div>{2}</div>" +
+            "</div>";
+
+        private const string UserProfilePasswordBaseString =
+            "<div class='form-group'>" +
+            "<label class='required' for='{0}'>{1}</label>" +
+            "<div>{2}</div>" +
+            "</div>";
+
+
+        public static MvcHtmlString UserProfileTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> expression, bool isRequired = false)
         {
-            TagBuilder outerTag = CreateOuterTag();
+            var returnValue = new MvcHtmlString(string.Format(UserProfileTextBoxBaseString,
+                helper.IdFor(expression),
+                helper.DisplayNameFor(expression),
+                helper.TextBoxFor(expression, new { @class = "form-control" + (isRequired ? " required" : ""), placeholder = helper.DisplayNameFor(expression) })));
 
-            string innerHtml = string.Empty;
-            innerHtml += helper.CreateLabel(expression);
-
-            TagBuilder textBoxEnvelope = CreateInputEnvelope();
-            if (!isPassword)
-            {
-                textBoxEnvelope.InnerHtml += helper.TextBoxFor(expression,
-                    new { @class = "form-control required", @placeholder = helper.DisplayNameFor(expression) });
-            }
-            else
-            {
-                textBoxEnvelope.InnerHtml += helper.PasswordFor(expression,
-                       new { @class = "form-control required", @placeholder = helper.DisplayNameFor(expression) });
-            }
-            innerHtml += textBoxEnvelope.ToString();
-
-            outerTag.InnerHtml += innerHtml;
-
-            return new MvcHtmlString(outerTag.ToString());
+            return returnValue;
         }
 
-        public static string BlogEntryListItemBodyShort(this HtmlHelper helper, string text)
+        public static MvcHtmlString UserProfilePasswordFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+            Expression<Func<TModel, TProperty>> expression)
         {
-            return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
-        }
+            var returnValue = new MvcHtmlString(string.Format(UserProfilePasswordBaseString,
+                helper.IdFor(expression),
+                helper.DisplayNameFor(expression),
+                helper.PasswordFor(expression, new { @class = "form-control required", placeholder = helper.DisplayNameFor(expression) })));
 
-        private static MvcHtmlString CreateLabel<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
-        {
-            return helper.LabelFor(expression, new { @class = "required" });
-        }
-
-        private static TagBuilder CreateOuterTag()
-        {
-            TagBuilder outerTag = new TagBuilder("div");
-            outerTag.MergeAttribute("class", "form-group");
-            return outerTag;
-        }
-
-        private static TagBuilder CreateInputEnvelope()
-        {
-            TagBuilder inputEnvelope = new TagBuilder("div");
-//            inputEnvelope.MergeAttribute("class", "col-lg-10");
-            return inputEnvelope;
+            return returnValue;
         }
     }
 }

@@ -33,5 +33,10 @@ namespace Blog.Web.Services.Shared
         }
 
         #endregion
+
+        public int GetNumberOfUsers()
+        {
+            return _repository.GetAllUserProfiles().Count;
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace Blog.Web.Controllers
             {
                 try
                 {
-                    Service.RegisterUser( model );
+                    Service.RegisterUser(model);
                     return View( "Created", model );
                 }
                 catch (DisplayNameAlreadyExistsException)

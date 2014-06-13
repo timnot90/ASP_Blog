@@ -12,120 +12,58 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink( Model.SiteName, "Index", "Home", htmlAttributes: new {@class = "navbar-brand"}, routeValues: new {area = ""} )
+            @Html.ActionLink(Model.SiteName, "Index", "Home", htmlAttributes: new {@class = "navbar-brand"}, routeValues: new {area = ""})
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Blog <b class="caret"></b></a>
+                    @Url.NavigationbarDropdownLink("Blog", "glyphicon-list")
                     <ul class="dropdown-menu">
-                        <li>
-                            <a href="@Url.Action( "Index", "Home", new {area = ""} )">
-                                <i class="glyphicon glyphicon-list"></i> View Posts
-                            </a>
-                        </li>
-                        <li>
-                            <a href="@Url.Action( "Categories", "Home", new {area = ""} )">
-                                <i class="glyphicon glyphicon-inbox"></i> Categories
-                            </a>
-                        </li>
-                        @try
+                        @Url.NavigationbarLink("Index", "Home", "View Posts", "glyphicon-list")                       
+                        @Url.NavigationbarLink("Categories", "Home", "Categories", "glyphicon-inbox")
+                        @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                         {
-                            if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
-                            {
-                                <li>
-                                    <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
-                                        <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
-                                    </a>
-                                </li>
-                            }
-                        }
-                        catch (InvalidOperationException)
-                        {
-                            WebSecurity.Logout();
+                            @Url.NavigationbarLink("AddBlogentry", "Home", "Add Entry", "glyphicon-plus-sign")
                         }
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-user"></i>
-                        @if (WebSecurity.IsAuthenticated)
-                        {
-                            @:@WebSecurity.CurrentUserName
-                        }
-                        else
-                        {
-                            @:My Profile
-                        }<b class="caret"></b>
+                    @Url.NavigationbarDropdownLink(WebSecurity.IsAuthenticated ? WebSecurity.CurrentUserName : "My Profile", "glyphicon-user")
 
-                    </a>
                     <ul class="dropdown-menu">
                         @if (WebSecurity.IsAuthenticated)
                         {
-                            <li>
-                                <a href="@Url.Action( "EditProfile", "Account", new {area = ""} )">
-                                    <i class="glyphicon glyphicon-cog"></i> Edit Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
-                                    <i class="glyphicon glyphicon-log-out"></i> Logout
-                                </a>
-                            </li>
+                            @Url.NavigationbarLink("EditProfile", "Account", "Edit Profile", "glyphicon-cog")
+                            @Url.NavigationbarLink("Logout", "Account", "Logout", "glyphicon-log-out")
                         }
                         else
                         {
-                            <li>
-                                <a href="@Url.Action( "Register", "Account", new {area = ""} )">
-                                    <i class="glyphicon glyphicon-edit"></i> Register
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action( "Login", "Account", new {area = ""} )">
-                                    <i class="glyphicon glyphicon-log-in"></i> Login
-                                </a>
-                            </li>
+                            @Url.NavigationbarLink("Register", "Account", "Register", "glyphicon-edit")
+                            @Url.NavigationbarLink("Login", "Account", "Login", "glyphicon-log-in")
                         }
                     </ul>
                 </li>
-                <li>
-                    <a href="@Url.Action( "Index", "About", new {area = ""} )">
-                        <i class="glyphicon glyphicon-info-sign"></i> About
-                    </a>
-                </li>
-                @if (CustomRoles.IsUserInRole( CustomRoles.Administrator ))
+                @Url.NavigationbarLink("Index", "About", "About", "glyphicon-info-sign")
+                @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                 {
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-signal"></i> Administration <b class="caret"></b></a>
+                        @Url.NavigationbarDropdownLink("Administration", "glyphicon-signal")
                         <ul class="dropdown-menu">
-                            <li>
-                                <a href="@Url.Action( "Users", "Administration", new {area = "Administration"} )">
-                                    <i class="glyphicon glyphicon-eye-open"></i> Users
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action( "BlogSettings", "Administration", new {area = "Administration"} )">
-                                    <i class="glyphicon glyphicon-eye-open"></i> Settings
-                                </a>
-                            </li>
-                            <li>
+                            @Url.NavigationbarLink("Users", "Administration", "Users", "glyphicon-eye-open", "Administration")
+                            @Url.NavigationbarLink("BlogSettings", "Administration", "Settings", "glyphicon-eye-open", "Administration")
                         </ul>
                     </li>
                 }
                 <li>
                     @if (WebSecurity.IsAuthenticated)
                     {
-                        <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
-                            <i class="glyphicon glyphicon-log-out"></i> Logout
-                        </a>
+                        @Url.NavigationbarLink("Logout", "Account", "Logout", "glyphicon-log-out")
                     }
                     else
                     {
-                        <a href="@Url.Action( "Login", "Account", new {area = ""} )">
-                            <i class="glyphicon glyphicon-log-in"></i> Login
-                        </a>
+                        @Url.NavigationbarLink("Login", "Account", "Login", "glyphicon-log-in")
                     }
                 </li>
             </ul>
@@ -143,79 +81,41 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink( Model.SiteName, "Index", "Home", htmlAttributes: new {@class = "navbar-brand"}, routeValues: new {area = ""} )
+            @Html.ActionLink(Model.SiteName, "Index", "Home", htmlAttributes: new {@class = "navbar-brand"}, routeValues: new {area = ""})
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="@Url.Action( "Index", "Home", new {area = ""} )">
-                        <i class="glyphicon glyphicon-list"></i> View Posts
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action( "Categories", "Home", new {area = ""} )">
-                        <i class="glyphicon glyphicon-inbox"></i> Categories
-                    </a>
-                </li>
+            <ul class="nav navbar-nav navbar-right">                ,
+                @Url.NavigationbarLink("Index", "Home", "View Posts", "glyphicon-list")
+                @Url.NavigationbarLink("Categories", "Home", "Categories", "glyphicon-inbox")
                 @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                 {
-                    <li>
-                        <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
-                            <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
-                        </a>
-                    </li>
+                    @Url.NavigationbarLink("AddBlogentry", "Home", "Add Entry", "glyphicon-plus-sign")
                 }
 
                 @if (WebSecurity.IsAuthenticated)
                 {
-                    <li>
-                        <a href="@Url.Action( "EditProfile", "Account", new {area = ""} )">
-                            <i class="glyphicon glyphicon-cog"></i> Edit Profile
-                        </a>
-                    </li>
+                    @Url.NavigationbarLink("EditProfile", "Account", "Edit Profile", "glyphicon-cog")
                 }
                 else
                 {
-                    <li>
-                        <a href="@Url.Action( "Register", "Account", new {area = ""} )">
-                            <i class="glyphicon glyphicon-edit"></i> Register
-                        </a>
-                    </li>
+                    @Url.NavigationbarLink("Register", "Account", "Register", "glyphicon-edit")
                 }
-                <li>
-                    <a href="@Url.Action( "Index", "About", new {area = ""} )">
-                        <i class="glyphicon glyphicon-info-sign"></i> About
-                    </a>
-                </li>
+                @Url.NavigationbarLink("Index", "About", "About", "glyphicon-info-sign")
                 @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                 {
-                    <li>
-                        <a href="@Url.Action( "Users", "Administration", new {area = "Administration"} )">
-                            <i class="glyphicon glyphicon-eye-open"></i> Users
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action( "BlogSettings", "Administration", new {area = "Administration"} )">
-                            <i class="glyphicon glyphicon-eye-open"></i> Settings
-                        </a>
-                    </li>
+                    @Url.NavigationbarLink("Users", "Administration", "Users", "glyphicon-eye-open", "Administration")
+                    @Url.NavigationbarLink("BlogSettings", "Administration", "Settings", "glyphicon-eye-open", "Administration")
                 }
-                <li>
-                    @if (WebSecurity.IsAuthenticated)
-                    {
-                        <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
-                            <i class="glyphicon glyphicon-log-out"></i> Logout
-                        </a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action( "Login", "Account", new {area = ""} )">
-                            <i class="glyphicon glyphicon-log-in"></i> Login
-                        </a>
-                    }
-                </li>
+                @if (WebSecurity.IsAuthenticated)
+                {
+                    @Url.NavigationbarLink("Logout", "Account", "Logout", "glyphicon-log-out")
+                }
+                else
+                {
+                    @Url.NavigationbarLink("Login", "Account", "Login", "glyphicon-log-in")
+                }
             </ul>
         </div>
 
