@@ -91,10 +91,10 @@ namespace Blog.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                _service.StoreComment( comment );
-                return RedirectToAction( "Blogentry", new {id = comment.BlogentryId} );
+                int newCommentId = _service.StoreComment( comment );
+                return PartialView("_Comment", _service.GetComment(newCommentId)); //RedirectToAction( "Blogentry", new {id = comment.BlogentryId} );
             }
-            return View();
+            return PartialView();
         }
 
         [HttpGet]

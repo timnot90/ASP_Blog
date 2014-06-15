@@ -4,7 +4,7 @@
 
 <div class="well">
     <h4>Leave a Comment:</h4>
-    @using (Html.BeginForm("_LeaveComment", "Home", FormMethod.Post, new { @class = "" }))
+    @using (Ajax.BeginForm("_LeaveComment", "Home", new AjaxOptions{HttpMethod = "POST", OnSuccess = "LeaveCommentSuccess"}))
     {
         <div class="form-group">
             @Html.ValidationSummary()

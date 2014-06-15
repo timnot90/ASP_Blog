@@ -17,6 +17,9 @@ namespace Blog.Web
             bundles.Add(new ScriptBundle("~/bundles/blog-settings").Include(
                 "~/Scripts/custom/blog-settings.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/blogentry").Include(
+                "~/Scripts/custom/blogentry.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/general").Include(
                 "~/Scripts/bootstrap/*.js",
                 "~/Scripts/bootstrap/extras/*.js",
