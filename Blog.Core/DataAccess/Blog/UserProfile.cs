@@ -24,6 +24,7 @@ namespace Blog.Core.DataAccess.Blog
         public int ID { get; set; }
         public string UserName { get; set; }
         public string UserNameLowercase { get; set; }
+        public string DisplayName { get; set; }
         public string Email { get; set; }
         public string EmailLowercase { get; set; }
         public string Street { get; set; }
@@ -34,7 +35,6 @@ namespace Blog.Core.DataAccess.Blog
         public string Forename { get; set; }
         public string Gender { get; set; }
         public string Country { get; set; }
-        public string DisplayName { get; set; }
         public bool IsLocked { get; set; }
     
         public virtual ICollection<Blogentry> Blogentries { get; set; }

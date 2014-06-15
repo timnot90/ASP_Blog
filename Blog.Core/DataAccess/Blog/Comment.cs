@@ -19,7 +19,7 @@ namespace Blog.Core.DataAccess.Blog
         public string Header { get; set; }
         public string Body { get; set; }
         public int BlogentryID { get; set; }
-        public int CreatorID { get; set; }
+        public Nullable<int> CreatorID { get; set; }
     
         public virtual Blogentry Blogentry { get; set; }
         public virtual UserProfile UserProfile { get; set; }

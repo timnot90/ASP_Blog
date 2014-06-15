@@ -6,12 +6,18 @@ namespace Blog.Web.Models.Home
 {
     public class AddBlogentryModel
     {
+        private List<CategoryModel> _categories = new List<CategoryModel>();
         public int Id { get; set; }
         [Required]
         public string Header { get; set; }
         [Required]
         public string Body { get; set; }
-        public List<CategoryModel> Categories { get; set; }
+
+        public List<CategoryModel> Categories
+        {
+            get { return _categories ?? (_categories = new List<CategoryModel>()); }
+            set { _categories = value; }
+        }
 
         public AddBlogentryModel()
         {

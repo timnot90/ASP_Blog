@@ -21,8 +21,8 @@ namespace Blog.Core.DataAccess.Blog
     
         public int ID { get; set; }
         public string Name { get; set; }
-        public int CreatorID { get; set; }
         public System.DateTime CreationDate { get; set; }
+        public int CreatorID { get; set; }
     
         public virtual UserProfile UserProfile { get; set; }
         public virtual ICollection<Blogentry> Blogentries { get; set; }

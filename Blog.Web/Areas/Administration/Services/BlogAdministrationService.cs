@@ -83,18 +83,13 @@ namespace Blog.Web.Areas.Administration.Services
         {
             bool isSmtpServerAddressValid = ValidSMTP( model.SmtpServerAddress );
             // TODO: check for password and username is wrong.
-            bool isSmtpPasswordValid = model.SmtpIsPasswordMandatoryForLogin && String.IsNullOrEmpty( model.SmtpServerPassword) ;
-            bool isSmtpUsernameValid = model.SmtpIsPasswordMandatoryForLogin && String.IsNullOrEmpty( model.SmtpServerUsername);
+            bool isSmtpUsernameValid = model.SmtpIsPasswordMandatoryForLogin && !String.IsNullOrEmpty(model.SmtpServerUsername) || !model.SmtpIsPasswordMandatoryForLogin;
 
             var errors = new Dictionary<string, string>();
 
             if (!isSmtpServerAddressValid)
             {
                 errors.Add( "InvalidSmtpAddress", "The smtp-server address is not valid." );
-            }
-            if (!isSmtpPasswordValid)
-            {
-                errors.Add( "InvalidSmtpPassword", "The smtp-server password is not valid." );
             }
             if (!isSmtpUsernameValid)
             {

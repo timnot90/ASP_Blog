@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Settings";
 }
-@Scripts.Render("~/bundles/blog-settings");
+@Scripts.Render("~/bundles/blog-settings")
 <div class="row">
     <div class="col-lg-12">
         @using (Html.BeginForm( "BlogSettings", "Administration", new {area = "Administration"}, FormMethod.Post, new {@class = "form-horizontal"} ))

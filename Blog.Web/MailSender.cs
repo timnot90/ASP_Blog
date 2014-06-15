@@ -4,6 +4,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using Blog.Core;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Repositories;
 
@@ -14,7 +15,7 @@ namespace Blog.Web
         private static readonly BlogRepository BlogRepository = new BlogRepository();
         private static readonly SmtpClient SmtpClient = new SmtpClient();
 
-        public static void SendRegistrationToken( string token, string recipient )
+        public static void SendRegistrationToken( string token, string recipient, string username )
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
             string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port +
@@ -23,26 +24,14 @@ namespace Blog.Web
             linkTag.Attributes.Add("href", linkText);
             linkTag.InnerHtml += linkText;
 
-            SendMail(blogSettings.RegistrationMailSender, recipient, blogSettings.RegistrationMailSubject, String.Format( blogSettings.RegistrationMailBody, linkTag.ToString() ));
+            string mailBody =
+                blogSettings.RegistrationMailBody.Replace(GlobalValues.RegistrationMailPlaceholderActivationLink,
+                    linkTag.ToString()).Replace(GlobalValues.RegistrationMailPlaceholderUsername, username);
 
-//            StringBuilder mailBody = new StringBuilder();
-//            mailBody.AppendLine( "<html>" );
-//            mailBody.AppendLine( "<head>" );
-//            mailBody.AppendLine( "</head>" );
-//            mailBody.AppendLine( "<body>" );
-//            //mailBody.AppendLine("Click on the following link or copy it into the address bar of your browser in order to reset your password:<br/>");
-//            mailBody.AppendLine( String.Format( blogSettings.RegistrationMailBody, linkTag ) );
-//            mailBody.AppendLine( "</body>" );
-//            mailBody.AppendLine( "</html>" );
-
-//            mail.IsBodyHtml = true;
-//            mail.Body = mailBody.ToString();
-//            mail.Subject = "Subject";
-
-//            Smtp.Send( mail );
+            SendMail(blogSettings.RegistrationMailSender, recipient, blogSettings.RegistrationMailSubject, mailBody);
         }
 
-        public static void SendPasswordResetToken( string token, string recipient )
+        public static void SendPasswordResetToken( string token, string recipient, string username )
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
             string linkText = HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port +
@@ -51,20 +40,28 @@ namespace Blog.Web
             link.Attributes.Add("href", linkText);
             link.InnerHtml = linkText;
 
-            SendMail(blogSettings.PasswordChangeMailSender, recipient, blogSettings.PasswordChangeMailSubject, String.Format(blogSettings.PasswordChangeMailBody, linkText));
+            string mailBody =
+                blogSettings.PasswordChangeMailBody.Replace(GlobalValues.PasswordChangeMailPlaceholderSecondStepLink,
+                    link.ToString()).Replace(GlobalValues.PasswordChangeMailPlaceholderUsername, username);
+
+            SendMail(blogSettings.PasswordChangeMailSender, recipient, blogSettings.PasswordChangeMailSubject, mailBody);
         }
 
-        public static void SendWelcomeMail( string recipient )
+        public static void SendWelcomeMail( string recipient, string username )
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
 
-            SendMail(blogSettings.WelcomeMailSender, recipient, blogSettings.WelcomeMailSubject, blogSettings.WelcomeMailBody);
+            string mailBody = blogSettings.WelcomeMailBody.Replace(GlobalValues.WelcomeMailPlaceholderUsername, username);
+
+            SendMail(blogSettings.WelcomeMailSender, recipient, blogSettings.WelcomeMailSubject, mailBody);
         }
 
         private static void SendMail( string sender, string recipient, string subject, string body )
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
             SmtpClient.Host = blogSettings.SmtpServerAddress;
+            SmtpClient.Port = 587;
+            SmtpClient.EnableSsl = true;
             if (blogSettings.SmtpIsPasswordMandatoryForLogin)
             {
                 SmtpClient.Credentials = new NetworkCredential( blogSettings.SmtpServerUsername,
@@ -74,6 +71,7 @@ namespace Blog.Web
             var mail = new MailMessage();
             mail.To.Add( new MailAddress( recipient ) );
             mail.Sender = new MailAddress( sender );
+            mail.From = new MailAddress(sender);
             mail.Priority = MailPriority.High;
 
             var mailBody = new StringBuilder();

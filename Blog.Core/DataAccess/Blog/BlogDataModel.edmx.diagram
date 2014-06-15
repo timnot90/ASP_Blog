@@ -5,22 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0b4e738088ed47b4bffc620475431589" Name="Diagram1">
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Blogentry" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Category" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Comment" Width="1.5" PointX="8.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Oppinion" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.UserProfile" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_Membership" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_OAuthMembership" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_Roles" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_UsersInRoles" Width="1.5" PointX="3" PointY="6.875" IsExpanded="true" />
-        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Blogentries_UserProfiles" ManuallyRouted="false" />
-        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries" ManuallyRouted="false" />
-        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Categories_UserProfiles" ManuallyRouted="false" />
-        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles" ManuallyRouted="false" />
-        <AssociationConnector Association="Blog.Core.DataAccess.Blog.fk_RoleId" ManuallyRouted="false" />
-        <AssociationConnector Association="Blog.Core.DataAccess.Blog.CategoriesToEntries" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Setting" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Blogentry" Width="1.5" PointX="3" PointY="2.5" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Category" Width="1.5" PointX="8.25" PointY="2.75" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Comment" Width="1.5" PointX="5.25" PointY="2.5" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Oppinion" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.Setting" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.UserProfile" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_Membership" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_OAuthMembership" Width="1.5" PointX="2.75" PointY="9.75" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_Roles" Width="1.5" PointX="2.75" PointY="6.875" />
+        <EntityTypeShape EntityType="Blog.Core.DataAccess.Blog.webpages_UsersInRoles" Width="1.5" PointX="5" PointY="6.875" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Blogentries_UserProfiles" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Categories_UserProfiles" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.fk_RoleId" />
+        <AssociationConnector Association="Blog.Core.DataAccess.Blog.CategoriesToEntries" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

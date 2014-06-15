@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Blog.Core.Extensions;
 using Blog.Web.Models.Home;
 using Blog.Web.Services.Home;
 using Recaptcha;
@@ -67,7 +68,6 @@ namespace Blog.Web.Controllers
             return View( blogentry );
         }
 
-        [HttpPost]
         [Authorize( Roles = CustomRoles.Administrator )]
         public ActionResult DeleteCategory( int categoryid )
         {
@@ -80,13 +80,14 @@ namespace Blog.Web.Controllers
         #region partial views
 
         [HttpPost]
-        [RecaptchaControlMvc.CaptchaValidatorAttribute]
+//        [RecaptchaControlMvc.CaptchaValidatorAttribute]
         [AllowAnonymous]
-        public ActionResult _LeaveComment( LeaveCommentModel comment, bool captchaValid, string captchaErrorMessage )
+        public ActionResult _LeaveComment( LeaveCommentModel comment/*, bool captchaValid, string captchaErrorMessage */)
         {
+            bool captchaValid = CaptchaHelper.ValidateCaptchaResult(comment.CaptchaResult);
             if (!WebSecurity.IsAuthenticated && !captchaValid)
             {
-                ModelState.AddModelError( "captcha", captchaErrorMessage );
+                ModelState.AddModelError( "captcha", "Your input for the captcha result was wrong." );
             }
             if (ModelState.IsValid)
             {
@@ -152,9 +153,8 @@ namespace Blog.Web.Controllers
 
         [HttpGet] // I would rather use POST, but I didn't find a nice way to make a POST-Request with a link (a href)
         [Authorize( Roles = CustomRoles.Administrator )]
-        public ActionResult DeleteComment( int commentId )
+        public ActionResult DeleteComment( int commentId, int blogentryId )
         {
-            int blogentryId = _service.GetComment( commentId ).BlogentryId;
             _service.DeleteComment( commentId );
             return RedirectToAction( "Blogentry", new {id = blogentryId} );
         }

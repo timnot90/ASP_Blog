@@ -42,7 +42,7 @@
           <Property Name="Header" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
           <Property Name="BlogentryID" Type="int" Nullable="false" />
-          <Property Name="CreatorID" Type="int" Nullable="false" />
+          <Property Name="CreatorID" Type="int" />
         </EntityType>
         <EntityType Name="Oppinions">
           <Key>
@@ -203,7 +203,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_UserProfiles">
-          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="1" />
+          <End Role="UserProfiles" Type="Self.UserProfiles" Multiplicity="0..1" />
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserProfiles">
@@ -271,30 +271,66 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Blog.Core.DataAccess.Blog" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BlogDataContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Blogentries" EntityType="Blog.Core.DataAccess.Blog.Blogentry" />
+          <EntitySet Name="Categories" EntityType="Blog.Core.DataAccess.Blog.Category" />
+          <EntitySet Name="Comments" EntityType="Blog.Core.DataAccess.Blog.Comment" />
+          <EntitySet Name="Oppinions" EntityType="Blog.Core.DataAccess.Blog.Oppinion" />
+          <EntitySet Name="Settings" EntityType="Blog.Core.DataAccess.Blog.Setting" />
+          <EntitySet Name="UserProfiles" EntityType="Blog.Core.DataAccess.Blog.UserProfile" />
+          <EntitySet Name="webpages_Membership" EntityType="Blog.Core.DataAccess.Blog.webpages_Membership" />
+          <EntitySet Name="webpages_OAuthMembership" EntityType="Blog.Core.DataAccess.Blog.webpages_OAuthMembership" />
+          <EntitySet Name="webpages_Roles" EntityType="Blog.Core.DataAccess.Blog.webpages_Roles" />
+          <EntitySet Name="webpages_UsersInRoles" EntityType="Blog.Core.DataAccess.Blog.webpages_UsersInRoles" />
+          <AssociationSet Name="FK_Blogentries_UserProfiles" Association="Blog.Core.DataAccess.Blog.FK_Blogentries_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Blogentry" EntitySet="Blogentries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_Blogentries" Association="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries">
+            <End Role="Blogentry" EntitySet="Blogentries" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Categories_UserProfiles" Association="Blog.Core.DataAccess.Blog.FK_Categories_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comments_UserProfiles" Association="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles">
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_RoleId" Association="Blog.Core.DataAccess.Blog.fk_RoleId">
+            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
+            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriesToEntries" Association="Blog.Core.DataAccess.Blog.CategoriesToEntries">
+            <End Role="Blogentry" EntitySet="Blogentries" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Blogentry">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Header" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreatorID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK_Blogentries_UserProfiles" FromRole="Blogentries" ToRole="UserProfiles" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_Blogentries" FromRole="Blogentries" ToRole="Comments" />
-          <NavigationProperty Name="Categories" Relationship="Self.CategoriesToEntries" FromRole="Blogentries" ToRole="Categories" />
+          <Property Name="Header" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Lead" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="Blog.Core.DataAccess.Blog.FK_Blogentries_UserProfiles" FromRole="Blogentry" ToRole="UserProfile" />
+          <NavigationProperty Name="Comments" Relationship="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries" FromRole="Blogentry" ToRole="Comment" />
+          <NavigationProperty Name="Categories" Relationship="Blog.Core.DataAccess.Blog.CategoriesToEntries" FromRole="Blogentry" ToRole="Category" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatorID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK_Categories_UserProfiles" FromRole="Categories" ToRole="UserProfiles" />
-          <NavigationProperty Name="Blogentries" Relationship="Self.CategoriesToEntries" FromRole="Categories" ToRole="Blogentries" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="CreatorID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserProfile" Relationship="Blog.Core.DataAccess.Blog.FK_Categories_UserProfiles" FromRole="Category" ToRole="UserProfile" />
+          <NavigationProperty Name="Blogentries" Relationship="Blog.Core.DataAccess.Blog.CategoriesToEntries" FromRole="Category" ToRole="Blogentry" />
         </EntityType>
         <EntityType Name="Comment">
           <Key>
@@ -302,12 +338,12 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Header" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Header" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BlogentryID" Type="Int32" Nullable="false" />
-          <Property Name="CreatorID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Blogentry" Relationship="Self.FK_Comments_Blogentries" FromRole="Comments" ToRole="Blogentries" />
-          <NavigationProperty Name="UserProfile" Relationship="Self.FK_Comments_UserProfiles" FromRole="Comments" ToRole="UserProfiles" />
+          <Property Name="CreatorID" Type="Int32" />
+          <NavigationProperty Name="Blogentry" Relationship="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries" FromRole="Comment" ToRole="Blogentry" />
+          <NavigationProperty Name="UserProfile" Relationship="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles" FromRole="Comment" ToRole="UserProfile" />
         </EntityType>
         <EntityType Name="Oppinion">
           <Key>
@@ -315,176 +351,11 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Header" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Body" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Header" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Likes" Type="Int32" Nullable="false" />
           <Property Name="Dislikes" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="UserProfile">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserNameLowercase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="EmailLowercase" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="HouseNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Town" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ZIP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Forename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Blogentries" Relationship="Self.FK_Blogentries_UserProfiles" FromRole="UserProfiles" ToRole="Blogentries" />
-          <NavigationProperty Name="Categories" Relationship="Self.FK_Categories_UserProfiles" FromRole="UserProfiles" ToRole="Categories" />
-          <NavigationProperty Name="Comments" Relationship="Self.FK_Comments_UserProfiles" FromRole="UserProfiles" ToRole="Comments" />
-          <Property Name="DisplayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="webpages_Membership">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IsConfirmed" Type="Boolean" />
-          <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
-          <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
-          <Property Name="PasswordSalt" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="webpages_OAuthMembership">
-          <Key>
-            <PropertyRef Name="Provider" />
-            <PropertyRef Name="ProviderUserId" />
-          </Key>
-          <Property Name="Provider" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderUserId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="webpages_Roles">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="webpages_UsersInRoles" Relationship="Self.fk_RoleId" FromRole="webpages_Roles" ToRole="webpages_UsersInRoles" />
-        </EntityType>
-        <EntityType Name="webpages_UsersInRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="RoleId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="webpages_Roles" Relationship="Self.fk_RoleId" FromRole="webpages_UsersInRoles" ToRole="webpages_Roles" />
-        </EntityType>
-        <Association Name="FK_Blogentries_UserProfiles">
-          <End Role="UserProfiles" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="Blogentries" Type="Self.Blogentry" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfiles">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Blogentries">
-              <PropertyRef Name="CreatorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_Blogentries">
-          <End Role="Blogentries" Type="Self.Blogentry" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Blogentries">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="BlogentryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Categories_UserProfiles">
-          <End Role="UserProfiles" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="Categories" Type="Self.Category" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfiles">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Categories">
-              <PropertyRef Name="CreatorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Comments_UserProfiles">
-          <End Role="UserProfiles" Type="Self.UserProfile" Multiplicity="1" />
-          <End Role="Comments" Type="Self.Comment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserProfiles">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Comments">
-              <PropertyRef Name="CreatorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_RoleId">
-          <End Role="webpages_Roles" Type="Self.webpages_Roles" Multiplicity="1" />
-          <End Role="webpages_UsersInRoles" Type="Self.webpages_UsersInRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="webpages_Roles">
-              <PropertyRef Name="RoleId" />
-            </Principal>
-            <Dependent Role="webpages_UsersInRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CategoriesToEntries">
-          <End Role="Blogentries" Type="Self.Blogentry" Multiplicity="*" />
-          <End Role="Categories" Type="Self.Category" Multiplicity="*" />
-        </Association>
-        <EntityContainer Name="BlogDataContext" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Blogentries" EntityType="Self.Blogentry" />
-          <EntitySet Name="Categories" EntityType="Self.Category" />
-          <EntitySet Name="Comments" EntityType="Self.Comment" />
-          <EntitySet Name="Oppinions" EntityType="Self.Oppinion" />
-          <EntitySet Name="UserProfiles" EntityType="Self.UserProfile" />
-          <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" />
-          <EntitySet Name="webpages_OAuthMembership" EntityType="Self.webpages_OAuthMembership" />
-          <EntitySet Name="webpages_Roles" EntityType="Self.webpages_Roles" />
-          <EntitySet Name="webpages_UsersInRoles" EntityType="Self.webpages_UsersInRoles" />
-          <AssociationSet Name="FK_Blogentries_UserProfiles" Association="Self.FK_Blogentries_UserProfiles">
-            <End Role="UserProfiles" EntitySet="UserProfiles" />
-            <End Role="Blogentries" EntitySet="Blogentries" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_Blogentries" Association="Self.FK_Comments_Blogentries">
-            <End Role="Blogentries" EntitySet="Blogentries" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Categories_UserProfiles" Association="Self.FK_Categories_UserProfiles">
-            <End Role="UserProfiles" EntitySet="UserProfiles" />
-            <End Role="Categories" EntitySet="Categories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comments_UserProfiles" Association="Self.FK_Comments_UserProfiles">
-            <End Role="UserProfiles" EntitySet="UserProfiles" />
-            <End Role="Comments" EntitySet="Comments" />
-          </AssociationSet>
-          <AssociationSet Name="fk_RoleId" Association="Self.fk_RoleId">
-            <End Role="webpages_Roles" EntitySet="webpages_Roles" />
-            <End Role="webpages_UsersInRoles" EntitySet="webpages_UsersInRoles" />
-          </AssociationSet>
-          <AssociationSet Name="CategoriesToEntries" Association="Self.CategoriesToEntries">
-            <End Role="Blogentries" EntitySet="Blogentries" />
-            <End Role="Categories" EntitySet="Categories" />
-          </AssociationSet>
-          <EntitySet Name="Settings" EntityType="Blog.Core.DataAccess.Blog.Setting" />
-        </EntityContainer>
         <EntityType Name="Setting">
           <Key>
             <PropertyRef Name="ID" />
@@ -510,6 +381,135 @@
           <Property Name="CommentsActivated" Type="Boolean" Nullable="false" />
           <Property Name="Keywords" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserNameLowercase" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmailLowercase" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="HouseNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Town" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ZIP" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Forename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsLocked" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Blogentries" Relationship="Blog.Core.DataAccess.Blog.FK_Blogentries_UserProfiles" FromRole="UserProfile" ToRole="Blogentry" />
+          <NavigationProperty Name="Categories" Relationship="Blog.Core.DataAccess.Blog.FK_Categories_UserProfiles" FromRole="UserProfile" ToRole="Category" />
+          <NavigationProperty Name="Comments" Relationship="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles" FromRole="UserProfile" ToRole="Comment" />
+        </EntityType>
+        <EntityType Name="webpages_Membership">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ConfirmationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IsConfirmed" Type="Boolean" />
+          <Property Name="LastPasswordFailureDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordFailuresSinceLastSuccess" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordChangedDate" Type="DateTime" Precision="3" />
+          <Property Name="PasswordSalt" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationToken" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordVerificationTokenExpirationDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="webpages_OAuthMembership">
+          <Key>
+            <PropertyRef Name="Provider" />
+            <PropertyRef Name="ProviderUserId" />
+          </Key>
+          <Property Name="Provider" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderUserId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="webpages_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="webpages_UsersInRoles" Relationship="Blog.Core.DataAccess.Blog.fk_RoleId" FromRole="webpages_Roles" ToRole="webpages_UsersInRoles" />
+        </EntityType>
+        <EntityType Name="webpages_UsersInRoles">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="webpages_Roles" Relationship="Blog.Core.DataAccess.Blog.fk_RoleId" FromRole="webpages_UsersInRoles" ToRole="webpages_Roles" />
+        </EntityType>
+        <Association Name="FK_Blogentries_UserProfiles">
+          <End Type="Blog.Core.DataAccess.Blog.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="Blog.Core.DataAccess.Blog.Blogentry" Role="Blogentry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Blogentry">
+              <PropertyRef Name="CreatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_Blogentries">
+          <End Type="Blog.Core.DataAccess.Blog.Blogentry" Role="Blogentry" Multiplicity="1" />
+          <End Type="Blog.Core.DataAccess.Blog.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Blogentry">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="BlogentryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Categories_UserProfiles">
+          <End Type="Blog.Core.DataAccess.Blog.UserProfile" Role="UserProfile" Multiplicity="1" />
+          <End Type="Blog.Core.DataAccess.Blog.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="CreatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comments_UserProfiles">
+          <End Type="Blog.Core.DataAccess.Blog.UserProfile" Role="UserProfile" Multiplicity="0..1" />
+          <End Type="Blog.Core.DataAccess.Blog.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserProfile">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="CreatorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_RoleId">
+          <End Type="Blog.Core.DataAccess.Blog.webpages_Roles" Role="webpages_Roles" Multiplicity="1" />
+          <End Type="Blog.Core.DataAccess.Blog.webpages_UsersInRoles" Role="webpages_UsersInRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="webpages_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="webpages_UsersInRoles">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CategoriesToEntries">
+          <End Type="Blog.Core.DataAccess.Blog.Blogentry" Role="Blogentry" Multiplicity="*" />
+          <End Type="Blog.Core.DataAccess.Blog.Category" Role="Category" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -519,120 +519,49 @@
           <EntitySetMapping Name="Blogentries">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Blogentry">
               <MappingFragment StoreEntitySet="Blogentries">
-                <ScalarProperty Name="Lead" ColumnName="Lead" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="Header" ColumnName="Header" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Lead" ColumnName="Lead" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Category">
               <MappingFragment StoreEntitySet="Categories">
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comments">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Comment">
               <MappingFragment StoreEntitySet="Comments">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="Header" ColumnName="Header" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="BlogentryID" ColumnName="BlogentryID" />
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
+                <ScalarProperty Name="BlogentryID" ColumnName="BlogentryID" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Oppinions">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Oppinion">
               <MappingFragment StoreEntitySet="Oppinions">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="Header" ColumnName="Header" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="Likes" ColumnName="Likes" />
                 <ScalarProperty Name="Dislikes" ColumnName="Dislikes" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserProfiles">
-            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.UserProfile">
-              <MappingFragment StoreEntitySet="UserProfiles">
-                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="Likes" ColumnName="Likes" />
+                <ScalarProperty Name="Body" ColumnName="Body" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="UserNameLowercase" ColumnName="UserNameLowercase" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailLowercase" ColumnName="EmailLowercase" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
-                <ScalarProperty Name="Town" ColumnName="Town" />
-                <ScalarProperty Name="ZIP" ColumnName="ZIP" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Forename" ColumnName="Forename" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="webpages_Membership">
-            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_Membership">
-              <MappingFragment StoreEntitySet="webpages_Membership">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
-                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
-                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
-                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
-                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
-                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
-                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="webpages_OAuthMembership">
-            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_OAuthMembership">
-              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
-                <ScalarProperty Name="Provider" ColumnName="Provider" />
-                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="webpages_Roles">
-            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_Roles">
-              <MappingFragment StoreEntitySet="webpages_Roles">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="webpages_UsersInRoles">
-            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_UsersInRoles">
-              <MappingFragment StoreEntitySet="webpages_UsersInRoles">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="CategoriesToEntries" TypeName="Blog.Core.DataAccess.Blog.CategoriesToEntries" StoreEntitySet="CategoriesToEntries">
-            <EndProperty Name="Blogentries">
-              <ScalarProperty Name="ID" ColumnName="BlogentryID" />
-            </EndProperty>
-            <EndProperty Name="Categories">
-              <ScalarProperty Name="ID" ColumnName="CategoryID" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Setting">
               <MappingFragment StoreEntitySet="Settings">
@@ -659,6 +588,77 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="UserProfiles">
+            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.UserProfile">
+              <MappingFragment StoreEntitySet="UserProfiles">
+                <ScalarProperty Name="IsLocked" ColumnName="IsLocked" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Forename" ColumnName="Forename" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="ZIP" ColumnName="ZIP" />
+                <ScalarProperty Name="Town" ColumnName="Town" />
+                <ScalarProperty Name="HouseNumber" ColumnName="HouseNumber" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="EmailLowercase" ColumnName="EmailLowercase" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+                <ScalarProperty Name="UserNameLowercase" ColumnName="UserNameLowercase" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Membership">
+            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_Membership">
+              <MappingFragment StoreEntitySet="webpages_Membership">
+                <ScalarProperty Name="PasswordVerificationTokenExpirationDate" ColumnName="PasswordVerificationTokenExpirationDate" />
+                <ScalarProperty Name="PasswordVerificationToken" ColumnName="PasswordVerificationToken" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="PasswordChangedDate" ColumnName="PasswordChangedDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PasswordFailuresSinceLastSuccess" ColumnName="PasswordFailuresSinceLastSuccess" />
+                <ScalarProperty Name="LastPasswordFailureDate" ColumnName="LastPasswordFailureDate" />
+                <ScalarProperty Name="IsConfirmed" ColumnName="IsConfirmed" />
+                <ScalarProperty Name="ConfirmationToken" ColumnName="ConfirmationToken" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_OAuthMembership">
+            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_OAuthMembership">
+              <MappingFragment StoreEntitySet="webpages_OAuthMembership">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ProviderUserId" ColumnName="ProviderUserId" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_Roles">
+            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_Roles">
+              <MappingFragment StoreEntitySet="webpages_Roles">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="webpages_UsersInRoles">
+            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.webpages_UsersInRoles">
+              <MappingFragment StoreEntitySet="webpages_UsersInRoles">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CategoriesToEntries" TypeName="Blog.Core.DataAccess.Blog.CategoriesToEntries" StoreEntitySet="CategoriesToEntries">
+            <EndProperty Name="Category">
+              <ScalarProperty Name="ID" ColumnName="CategoryID" />
+            </EndProperty>
+            <EndProperty Name="Blogentry">
+              <ScalarProperty Name="ID" ColumnName="BlogentryID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

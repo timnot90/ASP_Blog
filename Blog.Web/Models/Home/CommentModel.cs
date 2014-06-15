@@ -10,7 +10,7 @@ namespace Blog.Web.Models.Home
         public int BlogentryId { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
-        public UserProfileModel Creator { get; set; }
+        public CommentCreatorModel Creator { get; set; }
         public DateTime CreationDate { get; set; }
         public string CreationDateString
         {
@@ -35,7 +35,7 @@ namespace Blog.Web.Models.Home
             BlogentryId = source.BlogentryID;
             Header = source.Header;
             Body = source.Body;
-            Creator = new UserProfileModel(source.UserProfile);
+            Creator = new CommentCreatorModel(source.UserProfile);
             CreationDate = source.CreationDate;
         }
     }

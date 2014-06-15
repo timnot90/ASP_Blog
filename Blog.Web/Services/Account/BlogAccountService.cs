@@ -58,7 +58,7 @@ namespace Blog.Web.Services.Account
                     IsLocked = false
                 }, true);
 
-            MailSender.SendRegistrationToken(token, model.Email);
+            MailSender.SendRegistrationToken(token, model.Email, model.UserName);
 
             var newProfile = new UserProfile();
             model.UpdateSource(newProfile);
@@ -83,7 +83,7 @@ namespace Blog.Web.Services.Account
                 UserProfile correspondingUser = _repository.GetUserByRegistrationToken( token );
                 if (correspondingUser == null) return false;
 
-                MailSender.SendWelcomeMail( correspondingUser.Email );
+                MailSender.SendWelcomeMail( correspondingUser.Email, correspondingUser.UserName );
                 return WebSecurity.ConfirmAccount( token );
             }
             catch (InvalidOperationException)
@@ -101,7 +101,7 @@ namespace Blog.Web.Services.Account
                 if (userProfile != null)
                 {
                     string passwordResetToken = WebSecurity.GeneratePasswordResetToken(userProfile.UserName);
-                    MailSender.SendRegistrationToken(passwordResetToken, model.Email);
+                    MailSender.SendRegistrationToken(passwordResetToken, model.Email, model.Username);
                 }
             }
             catch (InvalidOperationException)

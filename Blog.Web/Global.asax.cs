@@ -40,6 +40,19 @@ namespace Blog.Web
                 Roles.CreateRole(CustomRoles.Administrator);
                 Roles.CreateRole(CustomRoles.User);
                 Roles.AddUserToRole("admin", CustomRoles.Administrator);
+
+
+                WebSecurity.CreateUserAndAccount("Anonymous", "efamna+324#zasdhr+2asd3rfws=+",
+                    new
+                    {
+                        UserNameLowercase = "Anonymous",
+                        DisplayName = "Anonymous",
+                        EMail = "anonymous@blog.de",
+                        EmailLowercase = "anonymous@blog.de",
+                        IsLocked = false
+                    });
+                Roles.CreateRole(CustomRoles.Administrator);
+                Roles.CreateRole(CustomRoles.User);
             }
             MvcHandler.DisableMvcResponseHeader = true;
         }

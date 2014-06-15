@@ -1,13 +1,20 @@
-﻿using Blog.Core.DataAccess.Blog;
+﻿using System.ComponentModel.DataAnnotations;
+using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Web.Models.Home
 {
     public class LeaveCommentModel
     {
+        [Required]
         public int Id { get; set; }
+        [Required]
         public int BlogentryId { get; set; }
         public string Header { get; set; }
+
+        [Required(ErrorMessage = "Your comment needs a body.")]
         public string Body { get; set; }
+
+        public string CaptchaResult { get; set; }
 
         public LeaveCommentModel()
         {

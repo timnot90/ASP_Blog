@@ -36,6 +36,7 @@ namespace Blog.Web.Services.Home
         {
             var entry = new Blogentry();
             entryModel.UpdateSource(entry);
+
             entry.CreatorID = WebSecurity.CurrentUserId;
             foreach (CategoryModel categoryModel in entryModel.Categories.Where( categoryModel => categoryModel.IsSelected ))
             {
@@ -206,7 +207,7 @@ namespace Blog.Web.Services.Home
             bool isNewComment = commentModel.Id == 0;
             Comment comment = isNewComment ? new Comment() : _repository.GetComment(commentModel.Id);
             commentModel.UpdateSource(comment);
-            comment.CreatorID = WebSecurity.CurrentUserId;
+            comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?)null : WebSecurity.CurrentUserId;
             comment.CreationDate = DateTime.Now;
             return _repository.SaveComment(comment, isNewComment);
         }

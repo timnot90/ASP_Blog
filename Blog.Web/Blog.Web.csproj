@@ -163,6 +163,7 @@
     <Compile Include="Models\Account\ResetPasswordModel.cs" />
     <Compile Include="Models\Account\ResetPasswordSecondStepModel.cs" />
     <Compile Include="Models\Home\BlogentryListModel.cs" />
+    <Compile Include="Models\Home\CommentCreatorModel.cs" />
     <Compile Include="Models\Home\EditBlogentryModel.cs" />
     <Compile Include="Models\Shared\BreadcrumbModel.cs" />
     <Compile Include="Models\Home\AddBlogentryModel.cs" />
