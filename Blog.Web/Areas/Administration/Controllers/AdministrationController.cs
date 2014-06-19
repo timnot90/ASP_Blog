@@ -8,6 +8,7 @@ using System.Web.Security;
 using Blog.Core.Exceptions;
 using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Areas.Administration.Services;
+using Blog.Web.Models.Shared;
 using Blog.Web.Services;
 
 namespace Blog.Web.Areas.Administration.Controllers

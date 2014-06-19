@@ -25,8 +25,8 @@ namespace Blog.Web
             linkTag.InnerHtml += linkText;
 
             string mailBody =
-                blogSettings.RegistrationMailBody.Replace(GlobalValues.RegistrationMailPlaceholderActivationLink,
-                    linkTag.ToString()).Replace(GlobalValues.RegistrationMailPlaceholderUsername, username);
+                blogSettings.RegistrationMailBody.Replace(EmailPlaceholders.RegistrationMailPlaceholderActivationLink,
+                    linkTag.ToString()).Replace(EmailPlaceholders.RegistrationMailPlaceholderUsername, username);
 
             SendMail(blogSettings.RegistrationMailSender, recipient, blogSettings.RegistrationMailSubject, mailBody);
         }
@@ -41,8 +41,8 @@ namespace Blog.Web
             link.InnerHtml = linkText;
 
             string mailBody =
-                blogSettings.PasswordChangeMailBody.Replace(GlobalValues.PasswordChangeMailPlaceholderSecondStepLink,
-                    link.ToString()).Replace(GlobalValues.PasswordChangeMailPlaceholderUsername, username);
+                blogSettings.PasswordChangeMailBody.Replace(EmailPlaceholders.PasswordChangeMailPlaceholderSecondStepLink,
+                    link.ToString()).Replace(EmailPlaceholders.PasswordChangeMailPlaceholderUsername, username);
 
             SendMail(blogSettings.PasswordChangeMailSender, recipient, blogSettings.PasswordChangeMailSubject, mailBody);
         }
@@ -51,7 +51,7 @@ namespace Blog.Web
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
 
-            string mailBody = blogSettings.WelcomeMailBody.Replace(GlobalValues.WelcomeMailPlaceholderUsername, username);
+            string mailBody = blogSettings.WelcomeMailBody.Replace(EmailPlaceholders.WelcomeMailPlaceholderUsername, username);
 
             SendMail(blogSettings.WelcomeMailSender, recipient, blogSettings.WelcomeMailSubject, mailBody);
         }

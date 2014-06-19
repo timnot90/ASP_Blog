@@ -1,6 +1,6 @@
 ﻿@using Blog.Web.Models.Home
 @model BlogentryListModel
-@*@model List<Blog.Web.Models.Home.BlogEntryListItemModel>*@
+@*@model List<Blog.Web.Models.Home.BlogentryListItemModel>*@
 @{
     ViewBag.Title = "Blog";
     ViewBag.Breadcrumbs = null;
@@ -11,7 +11,7 @@
         <div>
             @if (Model.Blogentries.Count > 0)
             {
-                foreach (BlogEntryListItemModel blogEntry in Model.Blogentries)
+                foreach (BlogentryListItemModel blogEntry in Model.Blogentries)
                 {
                     @Html.Partial( "_BlogPostListItem", blogEntry )
                 }

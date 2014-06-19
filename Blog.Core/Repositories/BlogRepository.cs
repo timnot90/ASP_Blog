@@ -34,6 +34,16 @@ namespace Blog.Core.Repositories
             return BlogDataContext.Current.Blogentries.FirstOrDefault(e => e.ID == id);
         }
 
+        public void DeleteBlogentry(int id)
+        {
+            Blogentry entryToDelete = BlogDataContext.Current.Blogentries.FirstOrDefault(b => b.ID == id);
+            if (entryToDelete != null)
+            {
+                BlogDataContext.Current.Blogentries.Remove(entryToDelete);
+                BlogDataContext.Current.SaveChanges();
+            }
+        }
+
         #endregion
 
         #region Category
@@ -51,10 +61,10 @@ namespace Blog.Core.Repositories
 
         public void DeleteCategory(int categoryid)
         {
-            Category categoryToRemove = BlogDataContext.Current.Categories.FirstOrDefault(c => c.ID == categoryid);
-            if (categoryToRemove != null)
+            Category categoryToDelete = BlogDataContext.Current.Categories.FirstOrDefault(c => c.ID == categoryid);
+            if (categoryToDelete != null)
             {
-                BlogDataContext.Current.Categories.Remove(categoryToRemove);
+                BlogDataContext.Current.Categories.Remove(categoryToDelete);
                 BlogDataContext.Current.SaveChanges();
             }
         }
@@ -64,9 +74,13 @@ namespace Blog.Core.Repositories
             return BlogDataContext.Current.Categories.OrderBy(c => c.Name).ToList();
         }
 
-        public Category GetCategory(int id)
+        public Category GetCategoryById(int id)
         {
             return BlogDataContext.Current.Categories.FirstOrDefault(c => c.ID == id);
+        }
+        public Category GetCategoryByName(string name)
+        {
+            return BlogDataContext.Current.Categories.FirstOrDefault(c => c.Name == name);
         }
 
         #endregion
@@ -164,9 +178,12 @@ namespace Blog.Core.Repositories
 
         public void DeleteComment(int commentId)
         {
-            BlogDataContext.Current.Comments.Remove(
-                BlogDataContext.Current.Comments.FirstOrDefault(c => c.ID == commentId));
-            BlogDataContext.Current.SaveChanges();
+            Comment commentToDelete = BlogDataContext.Current.Comments.FirstOrDefault(c => c.ID == commentId);
+            if (commentToDelete != null)
+            {
+                BlogDataContext.Current.Comments.Remove(commentToDelete);
+                BlogDataContext.Current.SaveChanges();
+            }
         }
 
         #endregion
@@ -187,17 +204,17 @@ namespace Blog.Core.Repositories
 
                 blogSetting.RegistrationMailSubject = "Registration Confirmation";
                 blogSetting.RegistrationMailBody =
-                    "Hello " + GlobalValues.RegistrationMailPlaceholderUsername + ",<br/>You are successfully registered for Blog. Please click on the link below in order to activate your account.</br>" + GlobalValues.RegistrationMailPlaceholderActivationLink;
+                    "Hello " + EmailPlaceholders.RegistrationMailPlaceholderUsername + ",<br/>You are successfully registered for Blog. Please click on the link below in order to activate your account.</br>" + EmailPlaceholders.RegistrationMailPlaceholderActivationLink;
                 blogSetting.RegistrationMailSender = "default_registration@blog.com";
 
                 blogSetting.WelcomeMailSubject = "Welcome to Blog.";
                 blogSetting.WelcomeMailBody =
-                    "Hello " + GlobalValues.WelcomeMailPlaceholderUsername + "Welcome to Blog. Have Fun!";
+                    "Hello " + EmailPlaceholders.WelcomeMailPlaceholderUsername + "Welcome to Blog. Have Fun!";
                 blogSetting.WelcomeMailSender = "default_welcome@blog.com";
 
                 blogSetting.PasswordChangeMailSubject = "Password Change Confirmation";
                 blogSetting.PasswordChangeMailBody =
-                    "Hello " + GlobalValues.PasswordChangeMailPlaceholderUsername + ",<br/>To complete your password change, click on the link below.<br/>" + GlobalValues.PasswordChangeMailPlaceholderSecondStepLink;
+                    "Hello " + EmailPlaceholders.PasswordChangeMailPlaceholderUsername + ",<br/>To complete your password change, click on the link below.<br/>" + EmailPlaceholders.PasswordChangeMailPlaceholderSecondStepLink;
                 blogSetting.PasswordChangeMailSender = "default_password_change@blog.com";
 
                 blogSetting.SmtpServerAddress = "smtp.blog.com";

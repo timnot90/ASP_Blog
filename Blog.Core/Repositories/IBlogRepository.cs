@@ -8,20 +8,17 @@ namespace Blog.Core.Repositories
     {
         #region Blogentry
         int SaveBlogentry(Blogentry entry, bool isNewEntry = false);
-
         List<Blogentry> GetAllBlogentries();
-
         Blogentry GetBlogentry(int id);
+        void DeleteBlogentry(int id);
         #endregion
 
         #region Category
         int SaveCategory(Category category, bool isNewEntry = false);
-
         List<Category> GetAllCategories();
-
-        Category GetCategory(int id);
-
+        Category GetCategoryById(int id);
         void DeleteCategory(int categoryid);
+        Category GetCategoryByName(string name);
         #endregion
 
         #region UserProfile

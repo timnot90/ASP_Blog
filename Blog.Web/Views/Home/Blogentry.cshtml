@@ -16,18 +16,24 @@
         {
             <div class="text-left">
                 <button class="btn btn-default" data-toggle="modal" data-target="#editBlogentryModal"><i class="glyphicon glyphicon-pencil"></i></button>
-                <button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                <a class="btn btn-danger" href="@Url.Action("DeleteBlogentry", "Home", new{area="", id=Model.Id})"><i class="glyphicon glyphicon-trash"></i></a>
             </div>
         }
         <hr>
         <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString by <a href="#">@Model.Creator.DisplayName</a></p>
         <hr>
         <p id="blogentryBody">@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
-        @if (Model.CommentsActivated)
-        {
-            <div id="commentStuff">
-                <hr>
-                @Html.Partial( "_LeaveComment", new LeaveCommentModel {BlogentryId = Model.Id} )
+        <div id="commentStuff">
+            <hr>
+            @if (Model.CommentsActivated)
+            {
+                @Html.Partial("_LeaveComment", new LeaveCommentModel {BlogentryId = Model.Id})
+            }
+            else
+            {
+                @Html.Panel("panel-info", "Comments disabled", "Leaving comments is disabled by the administrator.")
+            }
+            </div>  
                 <hr>
                 <h2>Comments</h2>
                 <table class="table table-hover table-responsive table-striped">
@@ -38,10 +44,8 @@
                         }
                     </tbody>
 
-                </table>
-            </div>
-        }      
-        @Html.Action("_EditBlogentry", "Home", new {area="", blogentryId = Model.Id})
+                </table>   
+        @Html.Action("_EditBlogentry", "Home", new { area = "", blogentryId = Model.Id })
     </div>
     @Html.Action("_BlogSidebar")
 </div>

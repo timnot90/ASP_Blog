@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Blog.Core.DataAccess.Blog;
+using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
 using Blog.Web.Models.Home;
-using Microsoft.Ajax.Utilities;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Services.Home
@@ -12,40 +14,61 @@ namespace Blog.Web.Services.Home
     public class BlogHomeService : IBlogHomeService
     {
         #region variables
-        private static readonly List<string> Months = new List<string>(new[]
-        {
-            "01",
-            "02",
-            "03",
-            "04",
-            "05",
-            "06",
-            "07",
-            "08",
-            "09",
-            "10",
-            "11",
-            "12"
-        });
+
+//        private static readonly List<string> Months = new List<string>(new[]
+//        {
+//            "01",
+//            "02",
+//            "03",
+//            "04",
+//            "05",
+//            "06",
+//            "07",
+//            "08",
+//            "09",
+//            "10",
+//            "11",
+//            "12"
+//        });
+
+        private static readonly Dictionary<int, string> Months
+            = new Dictionary<int, string>
+            {
+                {1, "Jan"},
+                {2, "Feb"},
+                {3, "Mar"},
+                {4, "Apr"},
+                {5, "May"},
+                {6, "Jun"},
+                {7, "Jul"},
+                {8, "Aug"},
+                {9, "Sep"},
+                {10, "Okt"},
+                {11, "Nov"},
+                {12, "Dec"}
+            };
+
         private readonly IBlogRepository _repository = new BlogRepository();
+
         #endregion
 
         #region Blogentry
 
         public int CreateNewBlogentry(AddBlogentryModel entryModel)
         {
-            var entry = new Blogentry();
+            Blogentry entry = new Blogentry();
             entryModel.UpdateSource(entry);
 
             entry.CreatorID = WebSecurity.CurrentUserId;
-            foreach (CategoryModel categoryModel in entryModel.Categories.Where( categoryModel => categoryModel.IsSelected ))
+            foreach (
+                CategoryModel categoryModel in entryModel.Categories.Where(categoryModel => categoryModel.IsSelected))
             {
-                entry.Categories.Add(_repository.GetCategory(categoryModel.Id));
+                entry.Categories.Add(_repository.GetCategoryById(categoryModel.Id));
             }
             return _repository.SaveBlogentry(entry, true);
         }
 
-        public int SaveBlogentryChanges( EditBlogentryModel model )
+        public int SaveBlogentryChanges(EditBlogentryModel model)
         {
             Blogentry entry = _repository.GetBlogentry(model.Id);
             model.UpdateSource(entry);
@@ -53,12 +76,17 @@ namespace Blog.Web.Services.Home
             {
                 entry.Categories.Clear();
                 foreach (
-                    CategoryModel categoryModel in model.Categories.Where( categoryModel => categoryModel.IsSelected ))
+                    CategoryModel categoryModel in model.Categories.Where(categoryModel => categoryModel.IsSelected))
                 {
-                    entry.Categories.Add( _repository.GetCategory( categoryModel.Id ) );
+                    entry.Categories.Add(_repository.GetCategoryById(categoryModel.Id));
                 }
             }
             return _repository.SaveBlogentry(entry);
+        }
+
+        public void DeleteBlogentry(int id)
+        {
+            _repository.DeleteBlogentry(id);
         }
 
         public BlogentryListModel GetBlogentryListModel()
@@ -69,7 +97,7 @@ namespace Blog.Web.Services.Home
                 Blogentries = _repository.GetAllBlogentries().OrderByDescending(b => b.CreationDate).Select(
                     b =>
                     {
-                        BlogEntryListItemModel entryModel = new BlogEntryListItemModel(b);
+                        BlogentryListItemModel entryModel = new BlogentryListItemModel(b);
                         if (!isFirst)
                         {
                             entryModel.Body = ShortenText(entryModel.Body);
@@ -93,7 +121,7 @@ namespace Blog.Web.Services.Home
             return entryModel;
         }
 
-        public BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear, string searchText)
+        public BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear)
         {
             int month = 0;
             int year = 0;
@@ -109,26 +137,36 @@ namespace Blog.Web.Services.Home
                 monthAndYearIsValid = false;
             }
             BlogentryListModel model = GetBlogentryListModel();
-            model.Blogentries.RemoveAll(e =>
+
+            model.Blogentries = _repository.GetAllBlogentries().Where(e =>
             {
-                bool categoryFits = categoryId == 0 || e.Categories.Any(c => c.Id == categoryId);
+                bool categoryFits = categoryId == 0 || e.Categories.Any(c => c.ID == categoryId);
                 bool monthAndYearFits = !monthAndYearIsValid ||
                                         (e.CreationDate.Month == month && e.CreationDate.Year == year);
-                bool searchTextFits = string.IsNullOrEmpty(searchText) || e.Body.Contains(searchText);
-                return !(categoryFits && monthAndYearFits && searchTextFits);
-            });
+                return categoryFits && monthAndYearFits;
+            }).Select(e =>
+            {
+                BlogentryListItemModel listItemModel = new BlogentryListItemModel(e);
+                listItemModel.Body = ShortenText(e.Body);
+                return listItemModel;
+            }).ToList();
+
             return model;
         }
 
         public BlogSidebarModel GetBlogSidebarModel()
         {
-            var model = new BlogSidebarModel
+            List<Blogentry> allBlogentries = _repository.GetAllBlogentries();
+            BlogSidebarModel model = new BlogSidebarModel
             {
-                AvailableYears = _repository.GetAllBlogentries()
+                AvailableYears = allBlogentries
                     .GroupBy(m => m.CreationDate.Year)
-                    .Select(m => m.Key.ToString())
+                    .Select(m => m.Key.ToString(CultureInfo.InvariantCulture))
                     .ToList(),
-                AvailableMonths = Months,
+                AvailableMonths = allBlogentries
+                    .GroupBy(m => m.CreationDate.Month)
+                    .Select(m => Months[m.Key])//.ToString(CultureInfo.InvariantCulture))
+                    .ToList(),
                 Categories = GetAllCategoryModels()
             };
             return model;
@@ -136,7 +174,7 @@ namespace Blog.Web.Services.Home
 
         public AddBlogentryModel GetAddBlogentryModel()
         {
-            var model = new AddBlogentryModel
+            AddBlogentryModel model = new AddBlogentryModel
             {
                 Categories = GetAllCategoryModels()
             };
@@ -149,26 +187,32 @@ namespace Blog.Web.Services.Home
             EditBlogentryModel model = entry == null ? null : new EditBlogentryModel(entry);
             if (model != null)
             {
-                model.Categories = _repository.GetAllCategories().Select( c => new CategoryModel( c ) ).ToList();
-                foreach (CategoryModel category in model.Categories.Where( category => entry.Categories.Any( c => c.ID == category.Id ) ))
+                model.Categories = _repository.GetAllCategories().Select(c => new CategoryModel(c)).ToList();
+                foreach (CategoryModel category in
+                    model.Categories.Where(category => entry.Categories.Any(c => c.ID == category.Id)))
                 {
                     category.IsSelected = true;
                 }
+                model.Body = ReplaceBrWithNewlines(model.Body);
             }
             return model;
         }
+
         #endregion
 
         #region Category
 
-        public int StoreCategory(CategoryModel categoryModel)
+        public int CreateCategory(CategoryModel categoryModel)
         {
-            bool isNewEntry = categoryModel.Id == 0;
-            Category category = isNewEntry ? new Category() : _repository.GetCategory(categoryModel.Id);
+            if (_repository.GetCategoryByName(categoryModel.Name) != null)
+            {
+                throw new CategoryAlreadyExistsException();
+            }
+            Category category = new Category();
             categoryModel.UpdateSource(category);
             category.CreationDate = DateTime.Now;
             category.CreatorID = WebSecurity.CurrentUserId;
-            return _repository.SaveCategory(category, isNewEntry);
+            return _repository.SaveCategory(category, true);
         }
 
         public void DeleteCategory(int categoryid)
@@ -178,7 +222,7 @@ namespace Blog.Web.Services.Home
 
         public CategoryListModel GetCategoryListModel()
         {
-            var model = new CategoryListModel
+            CategoryListModel model = new CategoryListModel
             {
                 Categories = GetAllCategoryModels()
             };
@@ -187,7 +231,7 @@ namespace Blog.Web.Services.Home
 
         public CategoryModel GetCategory(int id)
         {
-            Category category = _repository.GetCategory(id);
+            Category category = _repository.GetCategoryById(id);
             CategoryModel categoryModel = category == null ? null : new CategoryModel(category);
             return categoryModel;
         }
@@ -207,7 +251,7 @@ namespace Blog.Web.Services.Home
             bool isNewComment = commentModel.Id == 0;
             Comment comment = isNewComment ? new Comment() : _repository.GetComment(commentModel.Id);
             commentModel.UpdateSource(comment);
-            comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?)null : WebSecurity.CurrentUserId;
+            comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?) null : WebSecurity.CurrentUserId;
             comment.CreationDate = DateTime.Now;
             return _repository.SaveComment(comment, isNewComment);
         }
@@ -231,6 +275,12 @@ namespace Blog.Web.Services.Home
         private static string ShortenText(string text)
         {
             return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
+        }
+
+        private static string ReplaceBrWithNewlines(string text)
+        {
+            Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
+            return replaceBrWithNewline.Replace(text, "\r\n");
         }
 
         #endregion

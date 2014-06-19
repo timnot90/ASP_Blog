@@ -143,7 +143,7 @@
     <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
     <Compile Include="Areas\Administration\Models\UserListModel.cs" />
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
-    <Compile Include="Areas\Administration\Models\BlogSettingsModel.cs" />
+    <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
     <Compile Include="Areas\Administration\Services\BlogAdministrationService.cs" />
     <Compile Include="Areas\Administration\Services\IBlogAdministrationService.cs" />
@@ -311,6 +311,7 @@
     <None Include="Scripts\jquery\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\custom\blog-settings.js" />
     <Content Include="Scripts\custom\blogentry.js" />
+    <Content Include="Scripts\custom\categories.js" />
     <Content Include="Scripts\custom\general.js" />
     <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\jquery\jquery-2.1.0.js" />
@@ -373,6 +374,7 @@
     <Content Include="Views\Account\ResetPasswordFirstStepCompleted.cshtml" />
     <Content Include="Views\Home\_EditBlogentry.cshtml" />
     <Content Include="Views\Shared\_Keywords.cshtml" />
+    <Content Include="Views\Home\_Category.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -4,56 +4,34 @@
 @model Blog.Web.Models.Home.CategoryListModel
 @{
     ViewBag.Title = "Categories";
-    ViewBag.Breadcrumbs = new List<BreadcrumbModel>(new[] {new BreadcrumbModel("Blog", "Index", "Home")});
 }
+@Scripts.Render("~/bundles/categories")
+@Scripts.Render("~/bundles/jqueryval")
 <div class="row">
     <div class="col-lg-8">
         <table class="table table-hover table-striped table-bordered">
-            <tr>
-                @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
-                {
-                    <th>Name</th>
-                    <th>Creation Date</th>
-                    <th>Created By</th>
-                    <th></th>
-                }
-            </tr>
-            @foreach (CategoryModel category in Model.Categories)
-            {
+            <thead>
                 <tr>
-                    <td>
-                        @Html.ActionLink(category.Name + " (" + category.NumberOfPosts + ")", "Index", "Home", new {categoryId = category.Id}, null)
-                    </td>
                     @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                     {
-                        <td>
-                            @category.CreationDateString
-                        </td>
-                        <td>
-                            @{ string username = category.Creator != null ? category.Creator.UserName : string.Empty; }
-                            @{ string name = category.Creator != null ? category.Creator.Forename + " " + category.Creator.LastName : string.Empty; }
-
-                            @*write "username (name)"*@
-                            @username @{
-                                          if (!string.IsNullOrEmpty(name))
-                                          {
-                                              <span> (@name)</span>
-                                          }
-                                      }
-                        </td>
-                        <td>
-                            <a href="@Url.Action("DeleteCategory", new {categoryId = category.Id})" class="btn btn-danger">
-                                <i class="glyphicon glyphicon-trash"></i>
-                                Delete
-                            </a>
-                        </td>
+                        <th>Name</th>
+                        <th>Creation Date</th>
+                        <th>Created By</th>
+                        <th></th>
                     }
                 </tr>
-            }
+            </thead>
+            <tbody id="categoryList">
+                @foreach (CategoryModel category in Model.Categories)
+                {
+                    @Html.Partial("_Category", category)
+                }
+            </tbody>
+
         </table>
         @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
         {
-            Html.RenderAction("AddCategory", "Home");
+            Html.RenderPartial("AddCategory", new CategoryModel());
         }
     </div>
     @Html.Action("_BlogSidebar")

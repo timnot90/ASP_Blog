@@ -10,6 +10,7 @@ using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
 using Blog.Web.Areas.Administration.Models;
+using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Services
 {

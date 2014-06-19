@@ -8,5 +8,6 @@ namespace Blog.Web.Services.Shared
         PageHeaderModel GetPageHeaderModel(string title);
         NavigationBarModel GetNavigationBarModel();
         KeywordsModel GetKeywordsModel();
+        BlogSettingsModel GetBlogSettings();
     }
 }

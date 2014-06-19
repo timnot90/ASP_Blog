@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Account;
 
@@ -9,6 +10,8 @@ namespace Blog.Web.Models.Home
         public int Id { get; set; }
         public int BlogentryId { get; set; }
         public string Header { get; set; }
+
+        [AllowHtml]
         public string Body { get; set; }
         public CommentCreatorModel Creator { get; set; }
         public DateTime CreationDate { get; set; }

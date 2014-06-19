@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Blog.Core
 {
-    public class GlobalValues
+    public class EmailPlaceholders
     {
         public const string RegistrationMailPlaceholderUsername = "#UserName#";
         public const string RegistrationMailPlaceholderActivationLink = "#ActivationLink#";

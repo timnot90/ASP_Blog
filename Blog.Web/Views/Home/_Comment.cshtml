@@ -16,6 +16,6 @@
                 </a>
             }
         </h4>
-        <p>@Model.Body</p>
+        <p id="blogentryBody">@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
     </td>
 </tr>

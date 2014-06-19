@@ -1,4 +1,5 @@
 ﻿using Blog.Web.Areas.Administration.Models;
+using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Services
 {

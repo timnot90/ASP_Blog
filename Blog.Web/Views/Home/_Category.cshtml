@@ -1,0 +1,27 @@
+﻿@using Blog.Web
+@model Blog.Web.Models.Home.CategoryModel
+<tr>
+    <td>
+        @Html.ActionLink(Model.Name + " (" + Model.NumberOfPosts + ")", "Index", "Home", new { categoryId = Model.Id }, null)
+    </td>
+    @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
+    {
+        <td>
+            @Model.CreationDateString
+        </td>
+        <td>
+            @{
+        string username = Model.Creator != null ? Model.Creator.UserName : string.Empty;
+        string creatorFullName = Model.Creator != null ? Model.Creator.Forename + " " + Model.Creator.LastName : string.Empty;
+            }
+
+            @username @(string.IsNullOrEmpty(creatorFullName) ? string.Empty : "(" + creatorFullName + ")")
+        </td>
+        <td>
+            <a href="@Url.Action("DeleteCategory", new { categoryId = Model.Id })" class="btn btn-danger">
+                <i class="glyphicon glyphicon-trash"></i>
+                Delete
+            </a>
+        </td>
+    }
+</tr>

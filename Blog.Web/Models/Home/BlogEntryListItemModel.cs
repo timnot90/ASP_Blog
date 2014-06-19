@@ -6,7 +6,7 @@ using Blog.Web.Models.Account;
 
 namespace Blog.Web.Models.Home
 {
-    public class BlogEntryListItemModel
+    public class BlogentryListItemModel
     {
         public int Id { get; set; }
         public string Header { get; set; }
@@ -22,11 +22,11 @@ namespace Blog.Web.Models.Home
         }
         public UserProfileModel Creator { get; set; }
 
-        public BlogEntryListItemModel()
+        public BlogentryListItemModel()
         {
         }
 
-        public BlogEntryListItemModel(Blogentry blogentry)
+        public BlogentryListItemModel(Blogentry blogentry)
         {
             UpdateModel(blogentry);
         }

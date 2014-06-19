@@ -7,7 +7,7 @@ namespace Blog.Web.Models.Home
 {
     public class BlogentryListModel
     {
-        public List<BlogEntryListItemModel> Blogentries { get; set; }
+        public List<BlogentryListItemModel> Blogentries { get; set; }
         public int NumberOfBlogentriesPerPage { get; set; }
     }
 }

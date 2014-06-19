@@ -155,3 +155,8 @@ legend.scheduler-border {
 .blog-navbar-nojs {
     display: block;
 }
+
+
+#editBlogentryTextarea {
+    height: 210px
+}

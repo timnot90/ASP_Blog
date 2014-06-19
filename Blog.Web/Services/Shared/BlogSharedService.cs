@@ -32,11 +32,16 @@ namespace Blog.Web.Services.Shared
             return new KeywordsModel(_repository.GetBlogSettings());
         }
 
-        #endregion
-
         public int GetNumberOfUsers()
         {
             return _repository.GetAllUserProfiles().Count;
         }
+
+        public BlogSettingsModel GetBlogSettings()
+        {
+            return new BlogSettingsModel(_repository.GetBlogSettings());
+        }
+
+        #endregion
     }
 }

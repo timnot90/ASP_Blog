@@ -21,6 +21,8 @@ namespace Blog.Core.Extensions
             "<div>{2}</div>" +
             "</div>";
 
+        private const string PanelBaseString = "<div class='panel {0}'><div class='panel-heading'>{1}</div><div class='panel-body'>{2}</div></div>";
+
         public static MvcHtmlString UserProfileTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression, bool isRequired = false)
         {
@@ -39,6 +41,13 @@ namespace Blog.Core.Extensions
                 helper.IdFor(expression),
                 helper.DisplayNameFor(expression),
                 helper.PasswordFor(expression, new { @class = "form-control required", placeholder = helper.DisplayNameFor(expression) })));
+
+            return returnValue;
+        }
+
+        public static MvcHtmlString Panel(this HtmlHelper helper, string panelClass, string heading, string body)
+        {
+            var returnValue = new MvcHtmlString(string.Format(PanelBaseString, panelClass, heading, body));
 
             return returnValue;
         }

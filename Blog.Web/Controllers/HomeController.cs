@@ -1,7 +1,9 @@
 ﻿using System.Web.Mvc;
+using Blog.Core.Exceptions;
 using Blog.Core.Extensions;
 using Blog.Web.Models.Home;
 using Blog.Web.Services.Home;
+using Blog.Web.Services.Shared;
 using Recaptcha;
 using WebMatrix.WebData;
 
@@ -12,23 +14,24 @@ namespace Blog.Web.Controllers
         #region variables
 
         private readonly IBlogHomeService _service = new BlogHomeService();
+        private readonly IBlogSharedService _sharedService = new BlogSharedService();
 
         #endregion
 
         #region views
 
         [AllowAnonymous]
-        public ActionResult Index( int? categoryId, string monthAndYear, string searchText )
+        public ActionResult Index( int? categoryId, string monthAndYear)
         {
             if (!categoryId.HasValue)
             {
                 categoryId = 0;
             }
-//            if (categoryId == 0 && string.IsNullOrEmpty( monthAndYear ))
-//            {
-//                return View( _service.GetBlogentryListModel() );
-//            }
-            return View( _service.GetBlogentryListModel( (int) categoryId, monthAndYear, searchText ) );
+            if (categoryId == 0 && string.IsNullOrEmpty( monthAndYear ))
+            {
+                return View( _service.GetBlogentryListModel() );
+            }
+            return View( _service.GetBlogentryListModel( (int) categoryId, monthAndYear) );
         }
 
         [AllowAnonymous]
@@ -57,7 +60,6 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [Authorize( Roles = CustomRoles.Administrator )]
-        [ValidateInput( false )]
         public ActionResult AddBlogentry( AddBlogentryModel blogentry )
         {
             if (ModelState.IsValid)
@@ -84,31 +86,30 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult _LeaveComment( LeaveCommentModel comment/*, bool captchaValid, string captchaErrorMessage */)
         {
-            bool captchaValid = CaptchaHelper.ValidateCaptchaResult(comment.CaptchaResult);
-            if (!WebSecurity.IsAuthenticated && !captchaValid)
+            if (_sharedService.GetBlogSettings().CommentsActivated)
             {
-                ModelState.AddModelError( "captcha", "Your input for the captcha result was wrong." );
+                bool captchaValid = CaptchaHelper.ValidateCaptchaResult(comment.CaptchaResult);
+                if (!WebSecurity.IsAuthenticated && !captchaValid)
+                {
+                    ModelState.AddModelError("captcha", "Your input for the captcha result was wrong.");
+                }
+                if (ModelState.IsValid)
+                {
+                    int newCommentId = _service.StoreComment(comment);
+                    return PartialView("_Comment", _service.GetComment(newCommentId));
+                }
             }
-            if (ModelState.IsValid)
+            else
             {
-                int newCommentId = _service.StoreComment( comment );
-                return PartialView("_Comment", _service.GetComment(newCommentId)); //RedirectToAction( "Blogentry", new {id = comment.BlogentryId} );
+                ModelState.AddModelError("CommentsDeactivated", "The comments are disabled by the administrator.");
             }
             return PartialView();
         }
 
-        [HttpGet]
         [AllowAnonymous]
         public PartialViewResult _BlogSidebar()
         {
             return PartialView( _service.GetBlogSidebarModel() );
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        public ActionResult _BlogSidebar( string searchText )
-        {
-            return Index( null, null, searchText );
         }
 
         [HttpGet]
@@ -120,15 +121,23 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [Authorize( Roles = CustomRoles.Administrator )]
-        public ActionResult AddCategory( CategoryModel model )
+        public ActionResult AddCategoryPost( CategoryModel model )
         {
             if (ModelState.IsValid)
             {
-                _service.StoreCategory( model );
-                return RedirectToAction( "Categories" );
+                try
+                {
+                    int newCategoryId = _service.CreateCategory(model);
+                    model.Id = newCategoryId;
+//                    return View("Categories", _service.GetCategoryListModel());
+//                    return PartialView("_Category", model);
+                }
+                catch (CategoryAlreadyExistsException)
+                {
+                    ModelState.AddModelError("CategoryAlreadyExists", "A category with the entered name already exists.");
+                }
             }
-            //TODO: add and show error when model state is not valid
-            return RedirectToAction( "Categories", model );
+            return View("Categories", _service.GetCategoryListModel());
         }
 
         [HttpGet]
@@ -157,6 +166,13 @@ namespace Blog.Web.Controllers
         {
             _service.DeleteComment( commentId );
             return RedirectToAction( "Blogentry", new {id = blogentryId} );
+        }
+
+        [Authorize(Roles = CustomRoles.Administrator)]
+        public ActionResult DeleteBlogentry(int id)
+        {
+            _service.DeleteBlogentry(id);
+            return RedirectToAction("Index", "Home", new {area = ""});
         }
     }
 }

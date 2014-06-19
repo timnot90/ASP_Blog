@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Web.Models.Home
@@ -10,6 +11,8 @@ namespace Blog.Web.Models.Home
         public int Id { get; set; }
         [Required]
         public string Header { get; set; }
+
+        [AllowHtml]
         [Required]
         public string Body { get; set; }
 

@@ -1,14 +1,35 @@
 ﻿@model Blog.Web.Models.Home.CategoryModel
-@using (Html.BeginForm("AddCategory", "Home", FormMethod.Post, new { @class = "form-inline" }))
+@using (Html.BeginForm("AddCategoryPost", "Home", FormMethod.Post, new { @class = "form-inline" }))
 {
     @Html.ValidationSummary("", new { @class = "validation-summary-errors" })
     <div class="container">
         <div class="row">
             <div class="form-group">
                 @Html.LabelFor(c => c.Name, new { @class = "" })
-                @Html.TextBoxFor(c => c.Name, new { @class = "form-control", @autofocus = true, @required="true" })
+                @Html.TextBoxFor(c => c.Name, new { @class = "form-control", @autofocus = true, @required = "true" })
             </div>
             <button class="btn btn-primary">Create</button>
         </div>
     </div>
 }
+
+
+
+
+
+
+@*@model Blog.Web.Models.Home.CategoryModel*@
+@*<div id="add-category-partial-view">*@
+@*$1$    @using (Html.BeginForm("AddCategory", "Home", FormMethod.Post, new {@class = "form-inline"}))#1#*@
+@*        @using (Ajax.BeginForm("AddCategory", "Home", new AjaxOptions {HttpMethod = "POST", OnSuccess = "addCategorySuccess"}, new {@class = "form-inline"}))*@
+@*    {*@
+@*        @Html.ValidationSummary()*@
+@*        <div class="row">*@
+@*            <div class="form-group">*@
+@*                @Html.LabelFor(c => c.Name, new {@class = ""})*@
+@*                @Html.TextBoxFor(c => c.Name, new {@class = "form-control", autofocus = true, required = "true"})*@
+@*            </div>*@
+@*            <button class="btn btn-primary">Create</button>*@
+@*        </div>*@
+@*    }*@
+@*</div>*@
