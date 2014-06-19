@@ -9,11 +9,11 @@
             @Html.ValidationSummary()
             <fieldset>
                 <div class="form-group">
-                    @Html.UserProfileTextBoxFor(m => m.UserName, true)
-                    @Html.UserProfileTextBoxFor(m => m.DisplayName, true)
-                    @Html.UserProfilePasswordFor(m => m.Password)
-                    @Html.UserProfilePasswordFor(m => m.PasswordConfirmed)
-                    @Html.UserProfileTextBoxFor(m => m.Email, true)
+                    @Html.TextBoxWithLabelFor(m => m.UserName, true)
+                    @Html.TextBoxWithLabelFor(m => m.DisplayName, true)
+                    @Html.PasswordWithLabelFor(m => m.Password)
+                    @Html.PasswordWithLabelFor(m => m.PasswordConfirmed)
+                    @Html.TextBoxWithLabelFor(m => m.Email, true)
                 </div>
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">

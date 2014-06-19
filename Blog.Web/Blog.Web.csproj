@@ -141,8 +141,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
+    <Compile Include="Areas\Administration\Models\ChangeSmtpPasswordModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListModel.cs" />
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
+    <Compile Include="Controllers\ChangeSmtpPasswordController.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
     <Compile Include="Areas\Administration\Services\BlogAdministrationService.cs" />
@@ -308,6 +310,7 @@
     <Content Include="Areas\Administration\Views\Administration\Users.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
     <Content Include="Areas\Administration\Views\Administration\BlogSettings.cshtml" />
+    <Content Include="Areas\Administration\Views\Administration\ChangeSmtpPassword.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\custom\blog-settings.js" />
     <Content Include="Scripts\custom\blogentry.js" />

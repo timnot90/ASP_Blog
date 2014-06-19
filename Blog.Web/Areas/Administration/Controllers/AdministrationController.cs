@@ -67,5 +67,36 @@ namespace Blog.Web.Areas.Administration.Controllers
         {
             _service.SetUserLockedState( id, state );
         }
+
+        [HttpGet]
+        public ActionResult ChangeSmtpPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeSmtpPassword(ChangeSmtpPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _service.ChangeSmtpPassword(model);
+                }
+                catch (NewPasswordInvalidException)
+                {
+                    ModelState.AddModelError("NewPasswordInvalid", "The new passwords do not match.");
+                }
+                catch (CurrentPasswordInvalidException)
+                {
+                    ModelState.AddModelError("CurrentPasswordInvalid", "The current password is wrong.");
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("BlogSettings", "Administration", new {area = "Administration"});
+            }
+            return View(model);
+        }
     }
 }

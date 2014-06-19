@@ -67,11 +67,8 @@ namespace Blog.Web.Models.Shared
         [DisplayName("Username")]
         public string SmtpServerUsername { get; set; }
 
-        [DisplayName("Password")]
-        public string SmtpServerPassword { get; set; }
-
-        [DisplayName("Password is Mandatory for Login")]
-        public bool SmtpIsPasswordMandatoryForLogin { get; set; }
+        [DisplayName("User Credentials Mandatory for Login")]
+        public bool SmtpAreUsercredentialsMandatoryForLogin { get; set; }
 
         [DisplayName("Activate Comments")]
         public bool CommentsActivated { get; set; }
@@ -102,8 +99,7 @@ namespace Blog.Web.Models.Shared
             source.FooterText = FooterText;
             source.SmtpServerAddress = SmtpServerAddress;
             source.SmtpServerUsername = SmtpServerUsername;
-            source.SmtpServerPassword = SmtpServerPassword;
-            source.SmtpIsPasswordMandatoryForLogin = SmtpIsPasswordMandatoryForLogin;
+            source.SmtpIsPasswordMandatoryForLogin = SmtpAreUsercredentialsMandatoryForLogin;
             source.CommentsActivated = CommentsActivated;
         }
 
@@ -124,8 +120,7 @@ namespace Blog.Web.Models.Shared
             FooterText = source.FooterText;
             SmtpServerAddress = source.SmtpServerAddress;
             SmtpServerUsername = source.SmtpServerUsername;
-            SmtpServerPassword = source.SmtpServerPassword;
-            SmtpIsPasswordMandatoryForLogin = source.SmtpIsPasswordMandatoryForLogin;
+            SmtpAreUsercredentialsMandatoryForLogin = source.SmtpIsPasswordMandatoryForLogin;
             CommentsActivated = source.CommentsActivated;
         }
     }

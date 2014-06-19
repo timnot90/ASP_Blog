@@ -191,7 +191,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comments_Blogentries">
-          <End Role="Blogentries" Type="Self.Blogentries" Multiplicity="1" />
+          <End Role="Blogentries" Type="Self.Blogentries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Comments" Type="Self.Comments" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Blogentries">
@@ -375,8 +377,8 @@
           <Property Name="WelcomeMailSender" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="FooterText" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="SmtpServerAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SmtpServerUsername" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="SmtpServerPassword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SmtpServerUsername" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SmtpServerPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SmtpIsPasswordMandatoryForLogin" Type="Boolean" Nullable="false" />
           <Property Name="CommentsActivated" Type="Boolean" Nullable="false" />
           <Property Name="Keywords" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />

@@ -83,8 +83,7 @@ namespace Blog.Web.Areas.Administration.Services
         public void StoreSettings( BlogSettingsModel model )
         {
             bool isSmtpServerAddressValid = ValidSMTP( model.SmtpServerAddress );
-            // TODO: check for password and username is wrong.
-            bool isSmtpUsernameValid = model.SmtpIsPasswordMandatoryForLogin && !String.IsNullOrEmpty(model.SmtpServerUsername) || !model.SmtpIsPasswordMandatoryForLogin;
+            bool isSmtpUsernameValid = model.SmtpAreUsercredentialsMandatoryForLogin && !String.IsNullOrEmpty(model.SmtpServerUsername) || !model.SmtpAreUsercredentialsMandatoryForLogin;
 
             var errors = new Dictionary<string, string>();
 
@@ -106,6 +105,27 @@ namespace Blog.Web.Areas.Administration.Services
             else
             {
                 throw new SmtpInvalidException( errors );
+            }
+        }
+
+        public void ChangeSmtpPassword(ChangeSmtpPasswordModel model)
+        {
+            if (model.NewPassword.Equals(model.NewPasswordConfirmed))
+            {
+                Setting blogSettings = _repository.GetBlogSettings();
+                if (blogSettings.SmtpServerPassword == null || blogSettings.SmtpServerPassword.Equals(model.CurrentPassword))
+                {
+                    blogSettings.SmtpServerPassword = model.NewPassword;
+                    _repository.StoreSettings(blogSettings);
+                }
+                else
+                {
+                    throw new CurrentPasswordInvalidException();
+                }
+            }
+            else
+            {
+                throw new NewPasswordInvalidException();
             }
         }
 

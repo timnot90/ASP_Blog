@@ -4,6 +4,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Blog.Core.DataAccess.Blog;
+using Blog.Core.Exceptions;
 
 namespace Blog.Core.Repositories
 {
@@ -230,7 +231,16 @@ namespace Blog.Core.Repositories
 
         public void StoreSettings(Setting settings)
         {
-            BlogDataContext.Current.SaveChanges();
+            try
+            {
+                settings.SmtpServerUsername = settings.SmtpServerUsername ?? "";
+                settings.SmtpServerPassword = settings.SmtpServerPassword ?? "";
+                BlogDataContext.Current.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new BlogDbException(ex.Message);
+            }
         }
 
         #endregion

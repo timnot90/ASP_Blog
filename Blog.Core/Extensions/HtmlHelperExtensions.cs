@@ -23,24 +23,24 @@ namespace Blog.Core.Extensions
 
         private const string PanelBaseString = "<div class='panel {0}'><div class='panel-heading'>{1}</div><div class='panel-body'>{2}</div></div>";
 
-        public static MvcHtmlString UserProfileTextBoxFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+        public static MvcHtmlString TextBoxWithLabelFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression, bool isRequired = false)
         {
             var returnValue = new MvcHtmlString(string.Format(UserProfileTextBoxBaseString,
                 helper.IdFor(expression),
                 helper.DisplayNameFor(expression),
-                helper.TextBoxFor(expression, new { @class = "form-control" + (isRequired ? " required" : ""), placeholder = helper.DisplayNameFor(expression) })));
+                helper.TextBoxFor(expression, new { @class = "form-control" + (isRequired ? " required" : ""), placeholder = helper.DisplayNameFor(expression), required = isRequired })));
 
             return returnValue;
         }
 
-        public static MvcHtmlString UserProfilePasswordFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
+        public static MvcHtmlString PasswordWithLabelFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
             Expression<Func<TModel, TProperty>> expression)
         {
             var returnValue = new MvcHtmlString(string.Format(UserProfilePasswordBaseString,
                 helper.IdFor(expression),
                 helper.DisplayNameFor(expression),
-                helper.PasswordFor(expression, new { @class = "form-control required", placeholder = helper.DisplayNameFor(expression) })));
+                helper.PasswordFor(expression, new { @class = "form-control required", placeholder = helper.DisplayNameFor(expression) , required = true})));
 
             return returnValue;
         }

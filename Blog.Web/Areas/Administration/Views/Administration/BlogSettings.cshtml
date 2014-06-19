@@ -1,4 +1,5 @@
-﻿@model Blog.Web.Models.Shared.BlogSettingsModel
+﻿@using Blog.Core.Extensions
+@model Blog.Web.Models.Shared.BlogSettingsModel
 
 @{
     ViewBag.Title = "Settings";
@@ -12,10 +13,7 @@
             {
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-success">
-                            <div class="panel-heading">Success</div>
-                            <div class="panel-body">Your Settings were successfully saved.</div>
-                        </div>
+                        @Html.Panel("panel-success", "Success", "Your Settings were successfully saved.")
                     </div>
                 </div>
             }
@@ -23,39 +21,35 @@
             {
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">Error</div>                            
-                            @Html.ValidationSummary()
-                        </div>
+                        @Html.Panel("panel-danger", "Error", @Html.ValidationSummary().ToHtmlString())
                     </div>
                 </div>
             }
             
             <fieldset class="scheduler-border">
                 <legend class="scheduler-border">General</legend>
-                <div class="form-group">
-                    @Html.LabelFor( m => m.SiteName, new {@class = ""} )
-                    @Html.TextBoxFor( m => m.SiteName, new {@class = "form-control"} )
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor( m => m.FooterText )
-                    @Html.TextAreaFor( m => m.FooterText, new {@class = "form-control"} )
-                </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor( m => m.CommentsActivated, new {@class = ""} )
-                        @Html.DisplayNameFor( m => m.CommentsActivated )
-                    </label>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor( m => m.NumberOfEntriesPerPage )
-                    @Html.TextBoxFor( m => m.NumberOfEntriesPerPage, new {@class = "form-control"} )
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Keywords)
-                    @Html.TextBoxFor(m => m.Keywords, new { @class = "form-control" })
-                </div>
-
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.SiteName, new { @class = "" })
+                        @Html.TextBoxFor(m => m.SiteName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.FooterText)
+                        @Html.TextAreaFor(m => m.FooterText, new { @class = "form-control" })
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(m => m.CommentsActivated, new { @class = "" })
+                            @Html.DisplayNameFor(m => m.CommentsActivated)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.NumberOfEntriesPerPage)
+                        @Html.TextBoxFor(m => m.NumberOfEntriesPerPage, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Keywords)
+                        @Html.TextBoxFor(m => m.Keywords, new { @class = "form-control" })
+                    </div>
             </fieldset>
 
             <fieldset class="scheduler-border">
@@ -114,8 +108,8 @@
                 </div>
                 <div class="checkbox">
                     <label>
-                        @Html.CheckBoxFor(m => m.SmtpIsPasswordMandatoryForLogin, new { @class = "", id="cb-smtp-are-credentials-mandatory" })
-                        @Html.DisplayNameFor(m => m.SmtpIsPasswordMandatoryForLogin)
+                        @Html.CheckBoxFor(m => m.SmtpAreUsercredentialsMandatoryForLogin, new { @class = "", id="cb-smtp-are-credentials-mandatory", @checked=Model.SmtpAreUsercredentialsMandatoryForLogin })
+                        @Html.DisplayNameFor(m => m.SmtpAreUsercredentialsMandatoryForLogin)
                     </label>
                 </div>
                 <div id="smtp-user-credentials">
@@ -123,10 +117,7 @@
                         @Html.LabelFor(m => m.SmtpServerUsername)
                         @Html.TextBoxFor(m => m.SmtpServerUsername, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.SmtpServerPassword)
-                        @Html.PasswordFor(m => m.SmtpServerPassword, new { @class = "form-control" })
-                    </div>
+                    @Html.ActionLink("Change Password", "ChangeSmtpPassword", "Administration", new { area = "Administration" }, null)
                 </div>
 
             </fieldset>

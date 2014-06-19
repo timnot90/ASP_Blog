@@ -127,8 +127,11 @@
       <DependentUpon>BlogDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Exceptions\CategoryAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\CurrentPasswordInvalidException.cs" />
+    <Compile Include="Exceptions\BlogDBException.cs" />
     <Compile Include="Exceptions\DisplayNameAlreadyExistsException.cs" />
     <Compile Include="Exceptions\EmailAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\NewPasswordInvalidException.cs" />
     <Compile Include="Exceptions\SmtpInvalidException.cs" />
     <Compile Include="Extensions\CaptchaHelper.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
