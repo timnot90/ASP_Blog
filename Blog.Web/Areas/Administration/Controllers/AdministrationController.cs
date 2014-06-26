@@ -40,7 +40,6 @@ namespace Blog.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        [ValidateInput(false)]
         public ActionResult BlogSettings(BlogSettingsModel model)
         {
             if (ModelState.IsValid)

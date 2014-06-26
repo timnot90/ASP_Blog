@@ -47,7 +47,7 @@ namespace Blog.Web.Controllers
                 {
                     ModelState.AddModelError( "MembershipCreateUserException", GetErrorString( ex.StatusCode ) );
                 }
-                catch (SmtpException)
+                catch (SmtpException ex)
                 {
                     ModelState.AddModelError("SmtpError", "There was an error while sending your registration mail. Please contact the administrator.");
                 }
@@ -88,10 +88,11 @@ namespace Blog.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult Logout()
+        public ActionResult Logout(string returnUrl)
         {
             WebSecurity.Logout();
-            return RedirectToAction( "Index", "Home" );
+            return RedirectToLocal( returnUrl );
+            //return RedirectToAction( "Index", "Home" );
         }
 
         [HttpGet]

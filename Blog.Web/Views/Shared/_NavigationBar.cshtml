@@ -31,20 +31,13 @@
                                 <i class="glyphicon glyphicon-inbox"></i> Categories
                             </a>
                         </li>
-                        @try
+                        @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                         {
-                            if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
-                            {
-                                <li>
-                                    <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
-                                        <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
-                                    </a>
-                                </li>
-                            }
-                        }
-                        catch (InvalidOperationException)
-                        {
-                            WebSecurity.Logout();
+                            <li>
+                                <a href="@Url.Action( "AddBlogentry", "Home", new {area = ""} )">
+                                    <i class="glyphicon glyphicon-plus-sign"></i> Add Entry
+                                </a>
+                            </li>
                         }
                     </ul>
                 </li>
@@ -70,7 +63,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
+                                <a href="@Url.Action( "Logout", "Account", new {area = "", returnUrl = HttpContext.Current.Request.Url.AbsolutePath} )">
                                     <i class="glyphicon glyphicon-log-out"></i> Logout
                                 </a>
                             </li>
@@ -117,7 +110,7 @@
                 <li>
                     @if (WebSecurity.IsAuthenticated)
                     {
-                        <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
+                        <a href="@Url.Action( "Logout", "Account", new {area = "", returnUrl = HttpContext.Current.Request.Url.AbsolutePath} )">
                             <i class="glyphicon glyphicon-log-out"></i> Logout
                         </a>
                     }
@@ -205,7 +198,7 @@
                 <li>
                     @if (WebSecurity.IsAuthenticated)
                     {
-                        <a href="@Url.Action( "Logout", "Account", new {area = ""} )">
+                        <a href="@Url.Action( "Logout", "Account", new {area = "", returnUrl = HttpContext.Current.Request.Url.AbsolutePath} )">
                             <i class="glyphicon glyphicon-log-out"></i> Logout
                         </a>
                     }

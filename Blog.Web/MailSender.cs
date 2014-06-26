@@ -60,7 +60,7 @@ namespace Blog.Web
         {
             Setting blogSettings = BlogRepository.GetBlogSettings();
             SmtpClient.Host = blogSettings.SmtpServerAddress;
-            SmtpClient.Port = 587;
+            SmtpClient.Port = blogSettings.SmtpServerPort;
             SmtpClient.EnableSsl = true;
             if (blogSettings.SmtpIsPasswordMandatoryForLogin)
             {
@@ -72,7 +72,8 @@ namespace Blog.Web
             mail.To.Add( new MailAddress( recipient ) );
             mail.Sender = new MailAddress( sender );
             mail.From = new MailAddress(sender);
-            mail.Priority = MailPriority.High;
+
+            mail.IsBodyHtml = true;
 
             var mailBody = new StringBuilder();
             mailBody.AppendLine( "<html>" );
@@ -83,7 +84,6 @@ namespace Blog.Web
             mailBody.AppendLine( "</body>" );
             mailBody.AppendLine( "</html>" );
 
-            mail.IsBodyHtml = true;
             mail.Body = mailBody.ToString();
             mail.Subject = subject;
 

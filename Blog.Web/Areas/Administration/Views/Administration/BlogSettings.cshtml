@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.FooterText)
-                        @Html.TextAreaFor(m => m.FooterText, new { @class = "form-control" })
+                        @Html.TextAreaFor(m => m.FooterText, new { @class = "form-control", rows=10 })
                     </div>
                     <div class="checkbox">
                         <label>
@@ -103,8 +103,12 @@
             <fieldset class="scheduler-border">
                 <legend class="scheduler-border">Smtp Server</legend>
                 <div class="form-group">
-                    @Html.LabelFor( m => m.SmtpServerAddress )
-                    @Html.TextBoxFor( m => m.SmtpServerAddress, new {@class = "form-control"} )
+                    @Html.LabelFor(m => m.SmtpServerUrl)
+                    @Html.TextBoxFor(m => m.SmtpServerUrl, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.SmtpServerPort)
+                    @Html.TextBoxFor(m => m.SmtpServerPort, new { @class = "form-control" })
                 </div>
                 <div class="checkbox">
                     <label>
@@ -116,8 +120,9 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.SmtpServerUsername)
                         @Html.TextBoxFor(m => m.SmtpServerUsername, new { @class = "form-control" })
+                        @Html.LabelFor(m => m.SmtpServerPassword)
+                        @Html.PasswordFor(m => m.SmtpServerPassword, new { @class = "form-control", value=Model.SmtpServerPassword })
                     </div>
-                    @Html.ActionLink("Change Password", "ChangeSmtpPassword", "Administration", new { area = "Administration" }, null)
                 </div>
 
             </fieldset>

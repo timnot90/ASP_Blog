@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Web.Models.Shared
@@ -26,6 +27,7 @@ namespace Blog.Web.Models.Shared
 
         [DisplayName("Body")]
         [Required(ErrorMessage = "You have to specify the body of the registration mails.")]
+        [AllowHtml]
         public string RegistrationMailBody { get; set; }
 
         [DisplayName("Sender")]
@@ -38,6 +40,7 @@ namespace Blog.Web.Models.Shared
 
         [DisplayName("Body")]
         [Required(ErrorMessage = "You have to specify the body of the password change mails.")]
+        [AllowHtml]
         public string PasswordChangeMailBody { get; set; }
 
         [DisplayName("Sender")]
@@ -50,6 +53,7 @@ namespace Blog.Web.Models.Shared
 
         [DisplayName("Body")]
         [Required(ErrorMessage = "You have to specify the body of the welcome mails.")]
+        [AllowHtml]
         public string WelcomeMailBody { get; set; }
 
         [DisplayName("Sender")]
@@ -58,14 +62,22 @@ namespace Blog.Web.Models.Shared
 
         [DisplayName("Footer Text")]
         [Required(ErrorMessage = "The Footer Text cannot be empty.")]
+        [AllowHtml]
         public string FooterText { get; set; }
 
-        [DisplayName("Address")]
+        [DisplayName("Url")]
         [Required(ErrorMessage = "The SMTP-Server Address cannot be empty.")]
-        public string SmtpServerAddress { get; set; }
+        public string SmtpServerUrl { get; set; }
+
+        [DisplayName("Port")]
+        [Required(ErrorMessage = "The SMTP-Port cannot be empty.")]
+        public int SmtpServerPort { get; set; }
 
         [DisplayName("Username")]
         public string SmtpServerUsername { get; set; }
+
+        [DisplayName("Password")]
+        public string SmtpServerPassword{ get; set; }
 
         [DisplayName("User Credentials Mandatory for Login")]
         public bool SmtpAreUsercredentialsMandatoryForLogin { get; set; }
@@ -97,8 +109,10 @@ namespace Blog.Web.Models.Shared
             source.WelcomeMailBody = WelcomeMailBody;
             source.WelcomeMailSender = WelcomeMailSender;
             source.FooterText = FooterText;
-            source.SmtpServerAddress = SmtpServerAddress;
+            source.SmtpServerAddress = SmtpServerUrl;
+            source.SmtpServerPort= SmtpServerPort;
             source.SmtpServerUsername = SmtpServerUsername;
+            source.SmtpServerPassword = SmtpServerPassword;
             source.SmtpIsPasswordMandatoryForLogin = SmtpAreUsercredentialsMandatoryForLogin;
             source.CommentsActivated = CommentsActivated;
         }
@@ -118,8 +132,10 @@ namespace Blog.Web.Models.Shared
             WelcomeMailBody = source.WelcomeMailBody;
             WelcomeMailSender = source.WelcomeMailSender;
             FooterText = source.FooterText;
-            SmtpServerAddress = source.SmtpServerAddress;
+            SmtpServerUrl = source.SmtpServerAddress;
+            SmtpServerPort = source.SmtpServerPort;
             SmtpServerUsername = source.SmtpServerUsername;
+            SmtpServerPassword = source.SmtpServerPassword;
             SmtpAreUsercredentialsMandatoryForLogin = source.SmtpIsPasswordMandatoryForLogin;
             CommentsActivated = source.CommentsActivated;
         }

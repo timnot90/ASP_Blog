@@ -82,8 +82,9 @@ namespace Blog.Web.Areas.Administration.Services
 
         public void StoreSettings( BlogSettingsModel model )
         {
-            bool isSmtpServerAddressValid = ValidSMTP( model.SmtpServerAddress );
+            bool isSmtpServerAddressValid = ValidSMTP( model.SmtpServerUrl, model.SmtpServerPort );
             bool isSmtpUsernameValid = model.SmtpAreUsercredentialsMandatoryForLogin && !String.IsNullOrEmpty(model.SmtpServerUsername) || !model.SmtpAreUsercredentialsMandatoryForLogin;
+            bool isSmtpPasswordValid = model.SmtpAreUsercredentialsMandatoryForLogin && !String.IsNullOrEmpty(model.SmtpServerPassword) || !model.SmtpAreUsercredentialsMandatoryForLogin;
 
             var errors = new Dictionary<string, string>();
 
@@ -93,7 +94,11 @@ namespace Blog.Web.Areas.Administration.Services
             }
             if (!isSmtpUsernameValid)
             {
-                errors.Add( "InvalidSmtpUsername", "The smtp-server username is not valid.");
+                errors.Add("InvalidSmtpUsername", "The smtp-server username is not valid.");
+            }
+            if (!isSmtpPasswordValid)
+            {
+                errors.Add("InvalidSmtpPassword", "The smtp-server password is not valid.");
             }
 
             if (errors.Count == 0)
@@ -129,28 +134,47 @@ namespace Blog.Web.Areas.Administration.Services
             }
         }
 
-        private bool ValidSMTP( string hostName )
+        private bool ValidSMTP( string hostName, int port )
         {
             bool valid = false;
             try
             {
-                TcpClient smtpTest = new TcpClient();
-                smtpTest.Connect( hostName, 587 );
-                smtpTest.ReceiveTimeout = 500;
-                if (smtpTest.Connected)
+
+                using (TcpClient smtpTest = new TcpClient())
                 {
-                    NetworkStream ns = smtpTest.GetStream();
-                    StreamReader sr = new StreamReader( ns );
-                    if (sr.ReadLine().Contains( "220" ))
+                    smtpTest.ReceiveTimeout = 500;
+                    IAsyncResult ar = smtpTest.BeginConnect(hostName, port, null, null);
+                    System.Threading.WaitHandle wh = ar.AsyncWaitHandle;
+                    try
                     {
-                        valid = true;
+                        if (!ar.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(5), false))
+                        {
+                            smtpTest.Close();
+                            throw new TimeoutException();
+                        }
+
+                        smtpTest.EndConnect(ar);
+
+                        if (smtpTest.Connected)
+                        {
+                            NetworkStream ns = smtpTest.GetStream();
+                            StreamReader sr = new StreamReader(ns);
+                            if (sr.ReadLine().Contains("220"))
+                            {
+                                valid = true;
+                            }
+                            smtpTest.Close();
+                        }
                     }
-                    smtpTest.Close();
+                    finally
+                    {
+                        wh.Close();
+                    }
                 }
             }
-            catch
-            {
-            }
+            // suppress any errors
+            catch (Exception) { }
+
             return valid;
         }
 

@@ -195,13 +195,18 @@ namespace Blog.Core.Repositories
                 blogSetting = new Setting();
                 blogSetting.UNIQUE_ID = Guid.Empty;
                 blogSetting.SiteName = "Blog";
-                blogSetting.FooterText = "Your Footer Text. Go to the settings to change it.";
+                blogSetting.FooterText = "<h3 id='footer'>Your HTML Footer Text. Go to the settings to change it.</h1>" + 
+                                            "\r\n<style>" + 
+                                            "#footer {" +
+                                            "\r\ncolor: grey" + 
+                                            "\r\n}" + 
+                                            "\r\n</style>";
                 blogSetting.CommentsActivated = true;
                 blogSetting.NumberOfEntriesPerPage = 10;
 
                 blogSetting.RegistrationMailSubject = "Registration Confirmation";
                 blogSetting.RegistrationMailBody =
-                    "Hello " + EmailPlaceholders.RegistrationMailPlaceholderUsername + ",<br/>You are successfully registered for Blog. Please click on the link below in order to activate your account.</br>" + EmailPlaceholders.RegistrationMailPlaceholderActivationLink;
+                    "Hello " + EmailPlaceholders.RegistrationMailPlaceholderUsername + ",<br/>You are successfully registered for Blog. Please click on the link below in order to activate your account.<br/>" + EmailPlaceholders.RegistrationMailPlaceholderActivationLink;
                 blogSetting.RegistrationMailSender = "default_registration@blog.com";
 
                 blogSetting.WelcomeMailSubject = "Welcome to Blog.";
