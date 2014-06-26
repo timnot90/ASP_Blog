@@ -14,8 +14,6 @@ namespace Blog.Core.Repositories
 
         public int SaveBlogentry(Blogentry entry, bool isNewEntry = false)
         {
-            entry.Header = FilterHtmlTags(entry.Header);
-            entry.Body = FilterHtmlTags(entry.Body);
             if (isNewEntry)
             {
                 entry.CreationDate = DateTime.Now;
@@ -157,8 +155,6 @@ namespace Blog.Core.Repositories
 
         public int SaveComment(Comment comment, bool isNewComment = false)
         {
-            comment.Header = FilterHtmlTags(comment.Header);
-            comment.Body = FilterHtmlTags(comment.Body);
             if (isNewComment)
             {
                 BlogDataContext.Current.Comments.Add(comment);
@@ -244,14 +240,5 @@ namespace Blog.Core.Repositories
         }
 
         #endregion
-
-        private string FilterHtmlTags(string text)
-        {
-            Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
-            Regex removeHtml = new Regex(@"<[^>]*>");
-            Regex replaceNewlineWithBr = new Regex(@"(\r\n)|\r|\n");
-            return replaceNewlineWithBr.Replace(
-                removeHtml.Replace(replaceBrWithNewline.Replace(text, "\r\n"), ""), "<br/>");
-        }
     }
 }

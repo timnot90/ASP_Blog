@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -26,33 +27,29 @@ namespace Blog.Web
             
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "ID", "UserName", true);
 
-            if (new BlogSharedService().GetNumberOfUsers() == 0)
+            // when the blog is started for the first time, the roles and the admin are created 
+            if (new BlogSharedService().GetNumberOfAdministrators() == 0)
             {
-                WebSecurity.CreateUserAndAccount("admin", "1",
-                    new
-                    {
-                        UserNameLowercase = "admin",
-                        DisplayName = "admin",
-                        EMail = "timonotheisen@googlemail.com",
-                        EmailLowercase = "timonotheisen@googlemail.com",
-                        IsLocked = false
-                    });
-                Roles.CreateRole(CustomRoles.Administrator);
-                Roles.CreateRole(CustomRoles.User);
-                Roles.AddUserToRole("admin", CustomRoles.Administrator);
+                try
+                {
+                    Roles.CreateRole( CustomRoles.Administrator );
+                    Roles.CreateRole( CustomRoles.User );
 
-
-                WebSecurity.CreateUserAndAccount("Anonymous", "efamna+324#zasdhr+2asd3rfws=+",
-                    new
-                    {
-                        UserNameLowercase = "Anonymous",
-                        DisplayName = "Anonymous",
-                        EMail = "anonymous@blog.de",
-                        EmailLowercase = "anonymous@blog.de",
-                        IsLocked = false
-                    });
-                Roles.CreateRole(CustomRoles.Administrator);
-                Roles.CreateRole(CustomRoles.User);
+                    WebSecurity.CreateUserAndAccount( "admin", "1",
+                        new
+                        {
+                            UserNameLowercase = "admin",
+                            DisplayName = "admin",
+                            EMail = "timonotheisen@googlemail.com",
+                            EmailLowercase = "timonotheisen@googlemail.com",
+                            IsLocked = false
+                        } );
+                    Roles.AddUserToRole( "admin", CustomRoles.Administrator );
+                }
+                catch (Exception)
+                {
+                    // ignore all exceptions
+                }
             }
             MvcHandler.DisableMvcResponseHeader = true;
         }

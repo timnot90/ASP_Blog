@@ -1,5 +1,7 @@
 ﻿function handleLeaveCommentSuccess(data) {
     $("#comments").append(data);
+    $("#leave-comment-header").val("");
+    $("#leave-comment-body").val("");
 }
 
 function handleEditBlogentrySuccess(ajaxContext) {

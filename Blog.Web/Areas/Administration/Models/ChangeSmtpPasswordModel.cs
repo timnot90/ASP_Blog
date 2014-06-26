@@ -6,7 +6,6 @@ namespace Blog.Web.Areas.Administration.Models
     public class ChangeSmtpPasswordModel
     {
         [DisplayName("Current Password")]
-        [Required]
         public string CurrentPassword { get; set; }
 
         [DisplayName("New Password")]

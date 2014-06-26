@@ -1,5 +1,7 @@
-﻿using Blog.Core.Repositories;
+﻿using System.Web.Security;
+using Blog.Core.Repositories;
 using Blog.Web.Models.Shared;
+using System.Linq;
 
 namespace Blog.Web.Services.Shared
 {
@@ -32,9 +34,9 @@ namespace Blog.Web.Services.Shared
             return new KeywordsModel(_repository.GetBlogSettings());
         }
 
-        public int GetNumberOfUsers()
+        public int GetNumberOfAdministrators()
         {
-            return _repository.GetAllUserProfiles().Count;
+            return _repository.GetAllUserProfiles().Count(u => Roles.IsUserInRole( u.UserName, CustomRoles.Administrator ));
         }
 
         public BlogSettingsModel GetBlogSettings()

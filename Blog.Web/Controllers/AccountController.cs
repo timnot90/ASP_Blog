@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Mail;
 using System.Web.Mvc;
 using System.Web.Security;
 using Blog.Core.Exceptions;
@@ -31,7 +32,7 @@ namespace Blog.Web.Controllers
             {
                 try
                 {
-                    Service.RegisterUser(model);
+                    Service.RegisterUser( model );
                     return View( "Created", model );
                 }
                 catch (DisplayNameAlreadyExistsException)
@@ -45,6 +46,10 @@ namespace Blog.Web.Controllers
                 catch (MembershipCreateUserException ex)
                 {
                     ModelState.AddModelError( "MembershipCreateUserException", GetErrorString( ex.StatusCode ) );
+                }
+                catch (SmtpException)
+                {
+                    ModelState.AddModelError("SmtpError", "There was an error while sending your registration mail. Please contact the administrator.");
                 }
             }
             return View( model );
@@ -156,9 +161,17 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult ValidateRegistrationToken( string token )
         {
-            if (Service.ValidateRegistrationToken( token ))
+            try
             {
-                return View( "AccountActivated" );
+                if (Service.ValidateRegistrationToken( token ))
+                {
+                    return View( "AccountActivated" );
+                }
+            }
+            catch (SmtpException)
+            {
+                ModelState.AddModelError("SmtpError", "There was an error while sending your registration mail. Please contact the administrator.");
+                return View(new RegistrationValidationModel {Success=false});
             }
             return RedirectToAction( "Index", "Home" );
         }
@@ -176,8 +189,15 @@ namespace Blog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Service.SendPasswordResetToken( model );
-                return View();
+                try
+                {
+                    Service.SendPasswordResetToken( model );
+                    return View();
+                }
+                catch (SmtpException)
+                {
+                    ModelState.AddModelError("SmtpError", "There was an error while sending your password reset mail. Please contact the administrator.");
+                }
             }
             return View( "ResetPasswordFirstStepCompleted" );
         }

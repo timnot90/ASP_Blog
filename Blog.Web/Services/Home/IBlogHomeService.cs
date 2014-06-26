@@ -23,7 +23,7 @@ namespace Blog.Web.Services.Home
         #endregion
 
         #region Comment
-        int StoreComment(LeaveCommentModel commentModel);
+        int CreateComment(LeaveCommentModel commentModel);
         void DeleteComment(int commentId);
         CommentModel GetComment(int id);
         #endregion

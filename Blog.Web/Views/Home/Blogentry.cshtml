@@ -22,7 +22,7 @@
         <hr>
         <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString by <a href="#">@Model.Creator.DisplayName</a></p>
         <hr>
-        <p id="blogentryBody">@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
+        <p id="blogentryBody">@Html.Raw(Model.Body)</p>
         <div id="commentStuff">
             <hr>
             @if (Model.CommentsActivated)

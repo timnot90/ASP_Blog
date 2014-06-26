@@ -1,5 +1,4 @@
-﻿@using Blog.Web
-@using Blog.Web.Models.Home
+﻿@using Blog.Web.Models.Home
 @model BlogentryListItemModel
 
 @{
@@ -24,6 +23,6 @@
     <hr />
     <p><i class="fa fa-clock-o"></i> Posted on @Model.CreationDateString</p>
     <hr>
-    <p>@Html.Raw(HttpUtility.HtmlDecode(@Model.Body))</p>
+    <p>@Html.Raw(Model.Body)</p>
     <a class="btn btn-primary" href="@Url.Action("Blogentry", "Home", new {id = Model.Id})">Read More <i class="fa fa-angle-right"></i></a>
 </div>

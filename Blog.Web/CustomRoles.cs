@@ -13,15 +13,14 @@ namespace Blog.Web
         public const string Administrator = "Administrator";
         public const string User = "User";
 
-        public static bool IsUserInRole( string role )
+        public static bool IsUserInRole( string roleName  )
         {
             try
             {
-                return Roles.IsUserInRole( role );
+                return Roles.IsUserInRole(roleName);
             }
             catch (Exception)
             {
-                WebSecurity.Logout();
                 return false;
             }
         }

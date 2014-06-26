@@ -58,6 +58,8 @@ namespace Blog.Web.Services.Home
         {
             Blogentry entry = new Blogentry();
             entryModel.UpdateSource(entry);
+            entry.Header = FilterHtmlTags(entry.Header);
+            entry.Body = FilterHtmlTags(entry.Body);
 
             entry.CreatorID = WebSecurity.CurrentUserId;
             foreach (
@@ -81,6 +83,8 @@ namespace Blog.Web.Services.Home
                     entry.Categories.Add(_repository.GetCategoryById(categoryModel.Id));
                 }
             }
+            entry.Header = FilterHtmlTags(entry.Header);
+            entry.Body = FilterHtmlTags(entry.Body);
             return _repository.SaveBlogentry(entry);
         }
 
@@ -246,13 +250,15 @@ namespace Blog.Web.Services.Home
 
         #region Comment
 
-        public int StoreComment(LeaveCommentModel commentModel)
+        public int CreateComment(LeaveCommentModel commentModel)
         {
             bool isNewComment = commentModel.Id == 0;
             Comment comment = isNewComment ? new Comment() : _repository.GetComment(commentModel.Id);
             commentModel.UpdateSource(comment);
             comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?) null : WebSecurity.CurrentUserId;
             comment.CreationDate = DateTime.Now;
+            comment.Header = FilterHtmlTags(comment.Header);
+            comment.Body = FilterHtmlTags(comment.Body);
             return _repository.SaveComment(comment, isNewComment);
         }
 
@@ -282,7 +288,16 @@ namespace Blog.Web.Services.Home
             Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
             return replaceBrWithNewline.Replace(text, "\r\n");
         }
+        private string FilterHtmlTags(string text)
+        {
+            if (text == null) return null;
 
+            Regex replaceBrWithNewline = new Regex( @"<br[\s]*/?>" );
+            Regex removeHtml = new Regex( @"<[^>]*>" );
+            Regex replaceNewlineWithBr = new Regex( @"(\r\n)|\r|\n" );
+            return replaceNewlineWithBr.Replace(
+                removeHtml.Replace( replaceBrWithNewline.Replace( text, "\r\n" ), "" ), "<br/>" );
+        }
         #endregion
     }
 }

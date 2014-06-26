@@ -4,9 +4,9 @@
 }
 <div class="row">
     <div class="col-xs-11 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new {@class = "form-horizontal"}))
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
         {
-            @Html.ValidationSummary()
+            @Html.CustomValidationSummary()
             <fieldset>
                 <div class="form-group">
                     @Html.TextBoxWithLabelFor(m => m.UserName, true)

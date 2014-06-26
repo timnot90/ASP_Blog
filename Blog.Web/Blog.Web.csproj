@@ -145,6 +145,7 @@
     <Compile Include="Areas\Administration\Models\UserListModel.cs" />
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
     <Compile Include="Controllers\ChangeSmtpPasswordController.cs" />
+    <Compile Include="Models\Account\RegistrationValidationModel.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
     <Compile Include="Areas\Administration\Services\BlogAdministrationService.cs" />
@@ -378,6 +379,7 @@
     <Content Include="Views\Home\_EditBlogentry.cshtml" />
     <Content Include="Views\Shared\_Keywords.cshtml" />
     <Content Include="Views\Home\_Category.cshtml" />
+    <Content Include="Views\Account\ValidateRegistrationToken.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

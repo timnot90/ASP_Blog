@@ -9,30 +9,38 @@
 @Scripts.Render("~/bundles/jqueryval")
 <div class="row">
     <div class="col-lg-8">
-        <table class="table table-hover table-striped table-bordered">
-            <thead>
-                <tr>
-                    @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
-                    {
-                        <th>Name</th>
-                        <th>Creation Date</th>
-                        <th>Created By</th>
-                        <th></th>
-                    }
-                </tr>
-            </thead>
-            <tbody id="categoryList">
-                @foreach (CategoryModel category in Model.Categories)
-                {
-                    @Html.Partial("_Category", category)
-                }
-            </tbody>
-
-        </table>
-        @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
+        @if (Model.Categories.Count > 0)
         {
-            Html.RenderPartial("AddCategory", new CategoryModel());
+            <table class="table table-hover table-striped table-bordered">
+                <thead>
+                    <tr>
+                        @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
+                        {
+                            <th>Name</th>
+                            <th>Creation Date</th>
+                            <th>Created By</th>
+                            <th></th>
+                        }
+                    </tr>
+                </thead>
+                <tbody id="categoryList">
+                    @foreach (CategoryModel category in Model.Categories)
+                    {
+                        @Html.Partial("_Category", category)
+                    }
+                </tbody>
+
+            </table>
+            if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
+            {
+                Html.RenderPartial("AddCategory", new CategoryModel());
+            }
+        }
+        else
+        {
+            @:There are no categories.
         }
     </div>
+
     @Html.Action("_BlogSidebar")
 </div>

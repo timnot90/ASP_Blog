@@ -95,7 +95,7 @@ namespace Blog.Web.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    int newCommentId = _service.StoreComment(comment);
+                    int newCommentId = _service.CreateComment(comment);
                     return PartialView("_Comment", _service.GetComment(newCommentId));
                 }
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Mail;
 using System.Web.Security;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;
@@ -57,9 +58,7 @@ namespace Blog.Web.Services.Account
                     EmailLowercase = model.Email.ToLower(),
                     IsLocked = false
                 }, true);
-
-            MailSender.SendRegistrationToken(token, model.Email, model.UserName);
-
+            MailSender.SendRegistrationToken( token, model.Email, model.UserName );
             var newProfile = new UserProfile();
             model.UpdateSource(newProfile);
 

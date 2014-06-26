@@ -30,38 +30,41 @@
 @*$1$            </script>#1#*@
 @*        </div>*@
 @*        *@
-@*    </div>*@
-    <div class="well">
-        <h3>Filter</h3>
-        <div class="form-group">
-            <h4>Categories</h4>
-            @{ int i = 0; }
-            @foreach (CategoryModel category in Model.Categories)
-            {
-                <span>@Html.ActionLink( category.Name + " (" + @category.NumberOfPosts + ")", "Index", "Home", new {categoryId = category.Id}, null )  </span>
-                if (i != Model.Categories.Count - 1)
+    @*    </div>*@
+    @if (Model.AvailableYears.Count > 0 || Model.AvailableMonths.Count > 0 || Model.Categories.Count > 0)
+    {
+        <div class="well">
+            <h3>Filter</h3>
+            <div class="form-group">
+                <h4>Categories</h4>
+                @{ int i = 0; }
+                @foreach (CategoryModel category in Model.Categories)
                 {
-                    @:|
-                }
-                i++;
-            }
-        </div>
-        <div class="form-group">            
-            @foreach (string year in Model.AvailableYears)
-            {
-                <h4>@Html.ActionLink( year, "Index", "Home", new {monthAndYear = year}, null )</h4>
-                int j = 0;
-                foreach (string month in Model.AvailableMonths)
-                {
-                    <span>@Html.ActionLink( month, "Index", "Home", new {monthAndYear = month + year}, null ) </span>
-                    if (j != Model.AvailableMonths.Count - 1)
+                    <span>@Html.ActionLink( category.Name + " (" + @category.NumberOfPosts + ")", "Index", "Home", new {categoryId = category.Id}, null )  </span>
+                    if (i != Model.Categories.Count - 1)
                     {
                         @:|
                     }
-                    j++;
+                    i++;
                 }
-                <br/>
-            }
+            </div>
+            <div class="form-group">            
+                @foreach (string year in Model.AvailableYears)
+                {
+                    <h4>@Html.ActionLink( year, "Index", "Home", new {monthAndYear = year}, null )</h4>
+                    int j = 0;
+                    foreach (string month in Model.AvailableMonths)
+                    {
+                        <span>@Html.ActionLink( month, "Index", "Home", new {monthAndYear = month + year}, null ) </span>
+                        if (j != Model.AvailableMonths.Count - 1)
+                        {
+                            @:|
+                        }
+                        j++;
+                    }
+                    <br/>
+                }
+            </div>
         </div>
-    </div>
+    }
 </div>

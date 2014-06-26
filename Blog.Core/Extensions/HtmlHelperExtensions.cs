@@ -11,15 +11,22 @@ namespace Blog.Core.Extensions
     {
         private const string UserProfileTextBoxBaseString =
             "<div class='form-group'>" +
-            "<label class='required' for='{0}'>{1}</label>" +
+            "<label for='{0}'>{1}</label>" +
             "<div>{2}</div>" +
             "</div>";
 
         private const string UserProfilePasswordBaseString =
             "<div class='form-group'>" +
-            "<label class='required' for='{0}'>{1}</label>" +
+            "<label for='{0}'>{1}</label>" +
             "<div>{2}</div>" +
             "</div>";
+
+        private const string CustomValidationSummaryBaseString = "<div class='panel panel-danger'>" + 
+                "<div class='panel-heading'>Error</div>" + 
+                "<div class='panel-body'>" + 
+                "{0}" + 
+                "</div>" + 
+                "</div>";
 
         private const string PanelBaseString = "<div class='panel {0}'><div class='panel-heading'>{1}</div><div class='panel-body'>{2}</div></div>";
 
@@ -48,6 +55,13 @@ namespace Blog.Core.Extensions
         public static MvcHtmlString Panel(this HtmlHelper helper, string panelClass, string heading, string body)
         {
             var returnValue = new MvcHtmlString(string.Format(PanelBaseString, panelClass, heading, body));
+
+            return returnValue;
+        }
+
+        public static MvcHtmlString CustomValidationSummary(this HtmlHelper helper)
+        {
+            var returnValue = new MvcHtmlString(string.Format(CustomValidationSummaryBaseString, helper.ValidationSummary()));
 
             return returnValue;
         }

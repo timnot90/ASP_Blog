@@ -30,38 +30,10 @@ namespace Blog.Web.Controllers
             return PartialView( _service.GetFooterModel() );
         }
 
-//        [HttpPost]
-//        [AllowAnonymous]
-//        public PartialViewResult _PageHeader( PageHeaderModel model )
-//        {
-//            return PartialView(_service.GetPageHeaderModel(model.Title));
-//        }
-//
-//        [HttpPost]
-//        [AllowAnonymous]
-//        public PartialViewResult _NavigationBar(NavigationBarModel model)
-//        {
-//            return PartialView(_service.GetNavigationBarModel());
-//        }
-//
-//        [HttpPost]
-//        [AllowAnonymous]
-//        public PartialViewResult _Footer(FooterModel model)
-//        {
-//            return PartialView(_service.GetFooterModel());
-//        }
-
         [AllowAnonymous]
         public PartialViewResult _Keywords(NavigationBarModel model)
         {
             return PartialView(_service.GetKeywordsModel());
         }
-
-//        [HttpPost]
-//        [AllowAnonymous]
-//        public PartialViewResult _Keywords(FooterModel model)
-//        {
-//            return PartialView(_service.GetKeywordsModel());
-//        }
     }
 }

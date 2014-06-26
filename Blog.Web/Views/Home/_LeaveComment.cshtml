@@ -10,8 +10,8 @@
             @Html.ValidationSummary()
             @*            @Html.HiddenFor(m => m.Id)*@
             @Html.HiddenFor(m => m.BlogentryId)
-            @Html.TextBoxFor(m => m.Header, new { @class = "form-control", @placeholder = Html.DisplayNameFor(m => m.Header) })
-            @Html.TextAreaFor(m => m.Body, new { @class = "form-control", @rows = "3", @placeholder = Html.DisplayNameFor(m => m.Body) })
+            @Html.TextBoxFor(m => m.Header, new { id="leave-comment-header", @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Header) })
+            @Html.TextAreaFor(m => m.Body, new { id="leave-comment-body", @class = "form-control", rows = "5", placeholder = Html.DisplayNameFor(m => m.Body) })
         </div>
         if (!WebSecurity.IsAuthenticated)
         {
