@@ -146,6 +146,7 @@
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
     <Compile Include="Controllers\ChangeSmtpPasswordController.cs" />
     <Compile Include="Models\Account\RegistrationValidationModel.cs" />
+    <Compile Include="Models\Home\CategoryCreatorModel.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
     <Compile Include="Areas\Administration\Services\BlogAdministrationService.cs" />

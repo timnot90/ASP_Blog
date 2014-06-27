@@ -216,6 +216,7 @@ namespace Blog.Web.Services.Home
             categoryModel.UpdateSource(category);
             category.CreationDate = DateTime.Now;
             category.CreatorID = WebSecurity.CurrentUserId;
+            category.UserProfile = _repository.GetUserProfileById( category.CreatorID );
             return _repository.SaveCategory(category, true);
         }
 

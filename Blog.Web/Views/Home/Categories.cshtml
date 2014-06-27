@@ -29,16 +29,18 @@
                         @Html.Partial("_Category", category)
                     }
                 </tbody>
-
             </table>
-            if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
-            {
-                Html.RenderPartial("AddCategory", new CategoryModel());
-            }
         }
         else
         {
             @:There are no categories.
+                }
+    <br />
+        <br />
+        <br />
+        @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
+        {
+        Html.RenderPartial("AddCategory", new CategoryModel());
         }
     </div>
 

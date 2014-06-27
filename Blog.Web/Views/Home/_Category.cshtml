@@ -11,11 +11,10 @@
         </td>
         <td>
             @{
-        string username = Model.Creator != null ? Model.Creator.UserName : string.Empty;
-        string creatorFullName = Model.Creator != null ? Model.Creator.Forename + " " + Model.Creator.LastName : string.Empty;
+        string username = Model.Creator != null ? Model.Creator.DisplayName : string.Empty;
             }
 
-            @username @(string.IsNullOrEmpty(creatorFullName) ? string.Empty : "(" + creatorFullName + ")")
+            @username
         </td>
         <td>
             <a href="@Url.Action("DeleteCategory", new { categoryId = Model.Id })" class="btn btn-danger">

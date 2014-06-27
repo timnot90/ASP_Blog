@@ -121,16 +121,13 @@ namespace Blog.Web.Controllers
 
         [HttpPost]
         [Authorize( Roles = CustomRoles.Administrator )]
-        public ActionResult AddCategoryPost( CategoryModel model )
+        public ActionResult AddCategory( CategoryModel model )
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    int newCategoryId = _service.CreateCategory(model);
-                    model.Id = newCategoryId;
-//                    return View("Categories", _service.GetCategoryListModel());
-//                    return PartialView("_Category", model);
+                    _service.CreateCategory(model);
                 }
                 catch (CategoryAlreadyExistsException)
                 {

@@ -11,7 +11,7 @@ namespace Blog.Web.Models.Home
         [Required]
         public string Name { get; set; }
         public int NumberOfPosts { get; set; }
-        public UserProfileModel Creator { get; set; }
+        public CategoryCreatorModel Creator { get; set; }
         public DateTime CreationDate { get; private set; }
         public string CreationDateString
         {
@@ -38,7 +38,7 @@ namespace Blog.Web.Models.Home
             Name = source.Name;
             NumberOfPosts = source.Blogentries.Count;
             CreationDate = source.CreationDate;
-            Creator = new UserProfileModel(source.UserProfile);
+            Creator = new CategoryCreatorModel(source.UserProfile);
         }
 
         public void UpdateSource(Category source)
