@@ -318,7 +318,6 @@
     <Content Include="Scripts\custom\blogentry.js" />
     <Content Include="Scripts\custom\categories.js" />
     <Content Include="Scripts\custom\general.js" />
-    <Content Include="Scripts\Site.js" />
     <Content Include="Scripts\jquery\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery\jquery-2.1.0.min.map" />

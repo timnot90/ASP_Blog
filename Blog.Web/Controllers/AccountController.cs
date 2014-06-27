@@ -47,7 +47,7 @@ namespace Blog.Web.Controllers
                 {
                     ModelState.AddModelError( "MembershipCreateUserException", GetErrorString( ex.StatusCode ) );
                 }
-                catch (SmtpException ex)
+                catch (SmtpException)
                 {
                     ModelState.AddModelError("SmtpError", "There was an error while sending your registration mail. Please contact the administrator.");
                 }
