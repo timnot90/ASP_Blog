@@ -53,9 +53,9 @@
                 {
                     <h4>@Html.ActionLink( year, "Index", "Home", new {monthAndYear = year}, null )</h4>
                     int j = 0;
-                    foreach (string month in Model.AvailableMonths)
+                    foreach (KeyValuePair<string, string> month in Model.AvailableMonths)
                     {
-                        <span>@Html.ActionLink( month, "Index", "Home", new {monthAndYear = month + year}, null ) </span>
+                        <span>@Html.ActionLink( month.Value, "Index", "Home", new {monthAndYear = month.Key + year}, null ) </span>
                         if (j != Model.AvailableMonths.Count - 1)
                         {
                             @:|

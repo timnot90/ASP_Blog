@@ -168,9 +168,7 @@ namespace Blog.Web.Services.Home
                     .Select(m => m.Key.ToString(CultureInfo.InvariantCulture))
                     .ToList(),
                 AvailableMonths = allBlogentries
-                    .GroupBy(m => m.CreationDate.Month)
-                    .Select(m => Months[m.Key])//.ToString(CultureInfo.InvariantCulture))
-                    .ToList(),
+                    .GroupBy(m => m.CreationDate.Month).ToDictionary( m => m.Key.ToString("d2"), m => Months[m.Key]),
                 Categories = GetAllCategoryModels()
             };
             return model;

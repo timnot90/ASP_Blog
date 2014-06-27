@@ -7,17 +7,13 @@ namespace Blog.Web.Models.Home
     public class BlogSidebarModel
     {
         public List<CategoryModel> Categories { get; set; }
-        public string SelectedMonth { get; set; }
-        public string SelectedYear { get; set; }
-        public List<string> AvailableMonths { get; set; }
+        public Dictionary<string, string> AvailableMonths { get; set; }
         public List<string> AvailableYears { get; set; }
-        public string SearchText { get; set; }
+//        public string SearchText { get; set; }
 
         public BlogSidebarModel()
         {
-            SelectedMonth = DateTime.Now.Month.ToString("D2");
-            SelectedYear = DateTime.Now.Year.ToString("D4");
-            AvailableMonths = new List<string>();
+            AvailableMonths = new Dictionary<string, string>();
             AvailableYears = new List<string>();
         }
     }
