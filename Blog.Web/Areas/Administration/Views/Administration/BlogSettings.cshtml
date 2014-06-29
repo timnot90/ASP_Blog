@@ -19,11 +19,7 @@
             }
             else if (!Html.ViewData.ModelState.IsValid)
             {
-                <div class="row">
-                    <div class="col-lg-12">
-                        @Html.Panel("panel-danger", "Error", @Html.CustomValidationSummary().ToHtmlString())
-                    </div>
-                </div>
+                @Html.CustomValidationSummary()
             }
             
             <fieldset class="scheduler-border">

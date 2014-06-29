@@ -52,6 +52,7 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult EditProfile()
         {
             return View( Service.GetEditProfileModel( WebSecurity.CurrentUserId ) );
@@ -88,7 +89,6 @@ namespace Blog.Web.Controllers
         {
             WebSecurity.Logout();
             return RedirectToLocal( returnUrl );
-            //return RedirectToAction( "Index", "Home" );
         }
 
         [HttpGet]

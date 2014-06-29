@@ -20,8 +20,6 @@ namespace Blog.Web.Controllers
 
         #endregion
 
-        #region views
-
         [AllowAnonymous]
         public ActionResult Index( int? categoryId, string monthAndYear)
         {
@@ -75,13 +73,17 @@ namespace Blog.Web.Controllers
         [Authorize( Roles = CustomRoles.Administrator )]
         public ActionResult DeleteCategory( int categoryid )
         {
-            _service.DeleteCategory( categoryid );
+            try
+            {
+                _service.DeleteCategory( categoryid );
+            }
+            catch (BlogDbException)
+            {
+                // BlogDbException is occuring here, when you try to delete a category
+                // even though it is already deleted.
+            }
             return RedirectToAction( "Categories" );
         }
-
-        #endregion
-
-        #region partial views
 
         [HttpPost]
 //        [RecaptchaControlMvc.CaptchaValidatorAttribute]
@@ -137,12 +139,14 @@ namespace Blog.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = CustomRoles.Administrator)]
         public ActionResult _EditBlogentry(int blogentryId)
         {
             return PartialView(_service.GetEditBlogentryModel( blogentryId ));
         }
 
         [HttpPost]
+        [Authorize(Roles = CustomRoles.Administrator)]
         public ActionResult _EditBlogentry(EditBlogentryModel model)
         {
             if (ModelState.IsValid)
@@ -154,7 +158,6 @@ namespace Blog.Web.Controllers
 //            return Json(new { html = "", statusCode = 403 });
             return PartialView( model );
         }
-        #endregion
 
         [HttpGet] // I would rather use POST, but I didn't find a nice way to make a POST-Request with a link (a href)
         [Authorize( Roles = CustomRoles.Administrator )]

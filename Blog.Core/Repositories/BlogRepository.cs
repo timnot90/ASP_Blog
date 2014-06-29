@@ -60,11 +60,18 @@ namespace Blog.Core.Repositories
 
         public void DeleteCategory(int categoryid)
         {
-            Category categoryToDelete = BlogDataContext.Current.Categories.FirstOrDefault(c => c.ID == categoryid);
-            if (categoryToDelete != null)
+            try
             {
-                BlogDataContext.Current.Categories.Remove(categoryToDelete);
-                BlogDataContext.Current.SaveChanges();
+                Category categoryToDelete = BlogDataContext.Current.Categories.FirstOrDefault( c => c.ID == categoryid );
+                if (categoryToDelete != null)
+                {
+                    BlogDataContext.Current.Categories.Remove( categoryToDelete );
+                    BlogDataContext.Current.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BlogDbException(ex.Message);
             }
         }
 

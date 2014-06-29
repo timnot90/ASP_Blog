@@ -10,6 +10,5 @@ namespace Blog.Web.Areas.Administration.Services
         void SetUserLockedState( int userId, bool state );
         BlogSettingsModel GetBlogSettings();
         void StoreSettings(BlogSettingsModel model);
-        void ChangeSmtpPassword(ChangeSmtpPasswordModel model);
     }
 }

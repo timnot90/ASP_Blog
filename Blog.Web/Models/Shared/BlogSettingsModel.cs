@@ -2,75 +2,63 @@
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
+using Blog.Web.ModelValidators.Shared;
+using FluentValidation.Attributes;
 
 namespace Blog.Web.Models.Shared
 {
+    [Validator(typeof(BlogSettingsModelValidator))]
     public class BlogSettingsModel
     {
         public bool SuccessfullySaved { get; set; }
 
         [DisplayName("Site Name")]
-        [Required(ErrorMessage = "The Site Name cannot be empty.")]
         public string SiteName { get; set; }
 
         [DisplayName("Number Of Blogentries Per Page")]
-        [Required(ErrorMessage = "You have to specify the number of blogentries that should be displayed per page.")]
         public int NumberOfEntriesPerPage { get; set; }
 
-        [RegularExpression(@"[A-Za-z0-9]+(,[A-Za-z0-9\s]*)*[A-Za-z0-9]+", ErrorMessage = "The Keywords do not have a valid format.")]
         [DisplayName("Keywords (separated by ',')")]
         public string Keywords { get; set; }
 
         [DisplayName("Subject")]
-        [Required(ErrorMessage = "You have to specify the subject of the registration mails.")]
         public string RegistrationMailSubject { get; set; }
 
         [DisplayName("Body")]
-        [Required(ErrorMessage = "You have to specify the body of the registration mails.")]
         [AllowHtml]
         public string RegistrationMailBody { get; set; }
 
         [DisplayName("Sender")]
-        [Required(ErrorMessage = "You have to specify the sender of the registration mails.")]
         public string RegistrationMailSender { get; set; }
 
         [DisplayName("Subject")]
-        [Required(ErrorMessage = "You have to specify the subject of the password change mails.")]
         public string PasswordChangeMailSubject { get; set; }
 
         [DisplayName("Body")]
-        [Required(ErrorMessage = "You have to specify the body of the password change mails.")]
         [AllowHtml]
         public string PasswordChangeMailBody { get; set; }
 
         [DisplayName("Sender")]
-        [Required(ErrorMessage = "You have to specify the sender of the password change mails.")]
         public string PasswordChangeMailSender { get; set; }
 
         [DisplayName("Subject")]
-        [Required(ErrorMessage = "You have to specify the subject of the welcome mails.")]
         public string WelcomeMailSubject { get; set; }
 
         [DisplayName("Body")]
-        [Required(ErrorMessage = "You have to specify the body of the welcome mails.")]
         [AllowHtml]
         public string WelcomeMailBody { get; set; }
 
         [DisplayName("Sender")]
-        [Required(ErrorMessage = "You have to specify the sender of the welcome mails.")]
         public string WelcomeMailSender { get; set; }
 
         [DisplayName("Footer Text")]
-        [Required(ErrorMessage = "The Footer Text cannot be empty.")]
         [AllowHtml]
         public string FooterText { get; set; }
 
         [DisplayName("Url")]
-        [Required(ErrorMessage = "The SMTP-Server Address cannot be empty.")]
         public string SmtpServerUrl { get; set; }
 
         [DisplayName("Port")]
-        [Required(ErrorMessage = "The SMTP-Port cannot be empty.")]
         public int SmtpServerPort { get; set; }
 
         [DisplayName("Username")]

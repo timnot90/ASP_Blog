@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Security;
-using Blog.Core.Exceptions;
-using Blog.Web.Areas.Administration.Models;
+﻿using System.Web.Mvc;
 using Blog.Web.Areas.Administration.Services;
 using Blog.Web.Models.Shared;
-using Blog.Web.Services;
 
 namespace Blog.Web.Areas.Administration.Controllers
 {
@@ -44,19 +35,9 @@ namespace Blog.Web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _service.StoreSettings( model );
-                    model.SuccessfullySaved = true;
-                    return View( model );
-                }
-                catch (SmtpInvalidException ex)
-                {
-                    foreach (KeyValuePair<string, string> error in ex.Errors)
-                    {
-                        ModelState.AddModelError(error.Key, error.Value);
-                    }
-                }
+                _service.StoreSettings( model );
+                model.SuccessfullySaved = true;
+                return View( model );
             }
             model.SuccessfullySaved = false;
             return View(model);
@@ -65,37 +46,6 @@ namespace Blog.Web.Areas.Administration.Controllers
         public void SetUserLockedState(int id, bool state)
         {
             _service.SetUserLockedState( id, state );
-        }
-
-        [HttpGet]
-        public ActionResult ChangeSmtpPassword()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ChangeSmtpPassword(ChangeSmtpPasswordModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _service.ChangeSmtpPassword(model);
-                }
-                catch (NewPasswordInvalidException)
-                {
-                    ModelState.AddModelError("NewPasswordInvalid", "The new passwords do not match.");
-                }
-                catch (CurrentPasswordInvalidException)
-                {
-                    ModelState.AddModelError("CurrentPasswordInvalid", "The current password is wrong.");
-                }
-            }
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction("BlogSettings", "Administration", new {area = "Administration"});
-            }
-            return View(model);
         }
     }
 }

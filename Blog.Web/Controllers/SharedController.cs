@@ -31,7 +31,7 @@ namespace Blog.Web.Controllers
         }
 
         [AllowAnonymous]
-        public PartialViewResult _Keywords(NavigationBarModel model)
+        public PartialViewResult _Keywords()
         {
             return PartialView(_service.GetKeywordsModel());
         }
