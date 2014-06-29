@@ -1,4 +1,5 @@
-﻿@using Blog.Web.Areas.Administration.Models
+﻿@using Blog.Web
+@using Blog.Web.Areas.Administration.Models
 @model UserListItemModel
 <tr>
     <td>@Model.Id</td>
@@ -32,6 +33,6 @@
 @*            </div>*@
 @*        </div>*@
 
-        <input type="checkbox" class="lock-switch" checked="" data-size="small" data-user-id="@(Model.Id)" data-is-locked="@(Model.IsLocked)" data-on-text="1" data-off-text="0">
+        <input type="checkbox" class="lock-switch" data-size="small" data-user-id="@(Model.Id)" data-is-locked="@(Model.IsLocked)" data-on-text="1" data-off-text="0" disabled="@(Model.Roles.Any(r => r.RoleName.Equals(CustomRoles.Administrator) && r.IsActive) ? "disabled" : null)">
     </td>
 </tr>

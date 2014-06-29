@@ -7,6 +7,7 @@ using System.Web.Security;
 using Blog.Web.Areas.Administration.Services;
 using Blog.Web.Services.Account;
 using Blog.Web.Services.Shared;
+using FluentValidation.Mvc;
 using WebMatrix.WebData;
 
 namespace Blog.Web
@@ -26,6 +27,7 @@ namespace Blog.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             
             WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfiles", "ID", "UserName", true);
+            FluentValidationModelValidatorProvider.Configure();
 
             // when the blog is started for the first time, the roles and the admin are created 
             if (new BlogSharedService().GetNumberOfAdministrators() == 0)

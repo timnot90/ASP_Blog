@@ -1,17 +1,16 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using Blog.Web.ModelValidators.Account;
 
 namespace Blog.Web.Models.Account
 {
+    [FluentValidation.Attributes.Validator(typeof(ResetPasswordModelValidator))]
     public class ResetPasswordModel
     {
         [DisplayName("E-Mail")]
-        [EmailAddress(ErrorMessage = "The format of the entered email-address is not valid.")]
-        [Required(ErrorMessage = "Please enter your email-address")]
         public string Email { get; set; }
 
         [DisplayName("Username")]
-        [Required(ErrorMessage = "Please enter your username.")]
         public string Username { get; set; }
     }
 }

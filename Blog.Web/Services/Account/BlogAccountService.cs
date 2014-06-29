@@ -100,7 +100,7 @@ namespace Blog.Web.Services.Account
                 if (userProfile != null)
                 {
                     string passwordResetToken = WebSecurity.GeneratePasswordResetToken(userProfile.UserName);
-                    MailSender.SendRegistrationToken(passwordResetToken, model.Email, model.Username);
+                    MailSender.SendPasswordResetToken(passwordResetToken, model.Email, model.Username);
                 }
             }
             catch (InvalidOperationException)

@@ -24,10 +24,6 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register( RegisterModel model )
         {
-            if (model.Password != model.PasswordConfirmed)
-            {
-                ModelState.AddModelError( "DISSENTING_PASSWORD", "The given passwords do not correspond." );
-            }
             if (ModelState.IsValid)
             {
                 try
@@ -134,10 +130,6 @@ namespace Blog.Web.Controllers
         [Authorize]
         public ActionResult ChangePassword( ChangePasswordModel model )
         {
-            if (model.NewPassword != model.NewPasswordConfirmed)
-            {
-                ModelState.AddModelError( "DISSENTING_PASSWORD", "The given passwords do not correspond." );
-            }
             try
             {
                 if (ModelState.IsValid)

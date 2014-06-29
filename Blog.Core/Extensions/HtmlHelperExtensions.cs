@@ -47,7 +47,7 @@ namespace Blog.Core.Extensions
             var returnValue = new MvcHtmlString(string.Format(UserProfilePasswordBaseString,
                 helper.IdFor(expression),
                 helper.DisplayNameFor(expression),
-                helper.PasswordFor(expression, new { @class = "form-control required", placeholder = helper.DisplayNameFor(expression) , required = true})));
+                helper.PasswordFor(expression, new { @class = "form-control", placeholder = helper.DisplayNameFor(expression)})));
 
             return returnValue;
         }

@@ -1,17 +1,28 @@
 ﻿"use strict";
 var entryPagination;
 
-$(document).ready(function () {
+$(document).ready(function() {
     var paginationScript = new PaginationScript();
     paginationScript.initialize();
 });
 
 function PaginationScript() {
-    
+
     this.initialize = function() {
         entryPagination = new BlogentryPagination();
         entryPagination.goToPage(0);
-    }
+        $("#blogentries-pagination-prev").click(function() {
+            entryPagination.goToPreviousPage();
+        });
+        $("#blogentries-pagination-next").click(function() {
+            entryPagination.goToNextPage();
+        });
+        $(".pagination-item").each(function(index) {
+            $(this).click(function() {
+                entryPagination.goToPage(index);
+            });
+        });
+    };
 
     function BlogentryPagination() {
         $(".pagination-wrapper").show();
@@ -24,12 +35,12 @@ function PaginationScript() {
         var entryEndIndex = entriesPerPage - 1;
         var maxNumberOfPaginationItems = 5;
 
-        this.goToPage = function (pageIndex) {
+        this.goToPage = function(pageIndex) {
             if (allPaginationItems.length > 0) {
                 entryStartIndex = (pageIndex) * entriesPerPage;
                 entryEndIndex = (pageIndex + 1) * (entriesPerPage) - 1;
                 currentPageIndex = pageIndex;
-                allEntries.each(function (index) {
+                allEntries.each(function(index) {
                     if (index >= entryStartIndex && index <= entryEndIndex) {
                         $(this).css("display", "block");
                     } else {
@@ -37,7 +48,7 @@ function PaginationScript() {
                     }
                 });
 
-                allPaginationItems.each(function (index) {
+                allPaginationItems.each(function(index) {
                     if (index == currentPageIndex) {
                         $(this).addClass("active");
                     } else {
@@ -66,25 +77,20 @@ function PaginationScript() {
                     $("#blogentries-pagination-prev").removeClass("disabled");
                 }
             }
-        }
-
-        this.goToNextPage = function () {
-            console.log("goToNextPage");
+        };
+        this.goToNextPage = function() {
             if (currentPageIndex != lastPageIndex) {
                 this.goToPage(currentPageIndex + 1);
             } else {
                 return false;
             }
-        }
-
-        this.goToPreviousPage = function () {
-            console.log("goToPreviousPage");
+        };
+        this.goToPreviousPage = function() {
             if (currentPageIndex != 0) {
                 this.goToPage(currentPageIndex - 1);
             } else {
                 return false;
             }
-        }
+        };
     }
 }
-

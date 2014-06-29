@@ -32,16 +32,18 @@
                         @Html.LabelFor(m => m.SiteName, new { @class = "" })
                         @Html.TextBoxFor(m => m.SiteName, new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.FooterText)
-                        @Html.TextAreaFor(m => m.FooterText, new { @class = "form-control", rows=10 })
-                    </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FooterText)
+                    @Html.TextAreaFor(m => m.FooterText, new { @class = "form-control", rows=10 })
+                </div>
+                <div class="form-group">
                     <div class="checkbox">
                         <label>
                             @Html.CheckBoxFor(m => m.CommentsActivated, new { @class = "" })
                             @Html.DisplayNameFor(m => m.CommentsActivated)
                         </label>
                     </div>
+                </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.NumberOfEntriesPerPage)
                         @Html.TextBoxFor(m => m.NumberOfEntriesPerPage, new { @class = "form-control" })
@@ -110,18 +112,22 @@
                     @Html.LabelFor(m => m.SmtpServerPort)
                     @Html.TextBoxFor(m => m.SmtpServerPort, new { @class = "form-control" })
                 </div>
-                <div class="checkbox">
-                    <label>
-                        @Html.CheckBoxFor(m => m.SmtpAreUsercredentialsMandatoryForLogin, new { @class = "", id="cb-smtp-are-credentials-mandatory", @checked=Model.SmtpAreUsercredentialsMandatoryForLogin })
-                        @Html.DisplayNameFor(m => m.SmtpAreUsercredentialsMandatoryForLogin)
-                    </label>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(m => m.SmtpAreUsercredentialsMandatoryForLogin, new { @class = "", id = "cb-smtp-are-credentials-mandatory", @checked = Model.SmtpAreUsercredentialsMandatoryForLogin })
+                            @Html.DisplayNameFor(m => m.SmtpAreUsercredentialsMandatoryForLogin)
+                        </label>
+                    </div>
                 </div>
                 <div id="smtp-user-credentials">
                     <div class="form-group">
                         @Html.LabelFor(m => m.SmtpServerUsername)
                         @Html.TextBoxFor(m => m.SmtpServerUsername, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
                         @Html.LabelFor(m => m.SmtpServerPassword)
-                        @Html.PasswordFor(m => m.SmtpServerPassword, new { @class = "form-control", value=Model.SmtpServerPassword })
+                        @Html.PasswordFor(m => m.SmtpServerPassword, new { @class = "form-control", value = Model.SmtpServerPassword })
                     </div>
                 </div>
 

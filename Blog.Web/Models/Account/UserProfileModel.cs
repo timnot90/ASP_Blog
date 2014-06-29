@@ -9,16 +9,12 @@ namespace Blog.Web.Models.Account
         public int Id { get; set; }
 
         [DisplayName("Username")]
-        [Required(ErrorMessage = "The username must be declared.")]
         public string UserName { get; set; }
 
         [DisplayName("Display Name")]
-        [Required(ErrorMessage = "The Display Name must be declared.")]
         public string DisplayName { get; set; }
 
         [DisplayName("E-Mail")]
-        [RegularExpression(@"^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$", ErrorMessage = "The E-Mail Adress is not valid.")]
-        [Required(ErrorMessage = "An E-Mail adress must be declared.")]
         public string Email { get; set; }
 
         [DisplayName("Street")]
