@@ -154,6 +154,7 @@
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
     <Compile Include="Controllers\ChangeSmtpPasswordController.cs" />
     <Compile Include="Models\Account\RegistrationValidationModel.cs" />
+    <Compile Include="Models\Home\BlogentryCreatorModel.cs" />
     <Compile Include="Models\Home\CategoryCreatorModel.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
@@ -198,6 +199,9 @@
     <Compile Include="ModelValidators\Account\LoginModelValidator.cs" />
     <Compile Include="ModelValidators\Account\RegisterModelValidator.cs" />
     <Compile Include="ModelValidators\Account\ResetPasswordModelValidator.cs" />
+    <Compile Include="ModelValidators\Home\AddBlogentryModelValidator.cs" />
+    <Compile Include="ModelValidators\Home\EditBlogentryModelValidator.cs" />
+    <Compile Include="ModelValidators\Home\LeaveCommentModelValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Account\BlogAccountService.cs" />
     <Compile Include="Services\Home\BlogHomeService.cs" />
@@ -367,7 +371,7 @@
     <Content Include="Views\Account\Created.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Home\_BlogPostListItem.cshtml" />
+    <Content Include="Views\Home\_BlogentryListItem.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\AddBlogentry.cshtml" />
     <Content Include="Views\Home\Blogentry.cshtml" />

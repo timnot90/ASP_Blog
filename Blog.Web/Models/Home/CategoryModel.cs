@@ -22,7 +22,6 @@ namespace Blog.Web.Models.Home
         }
         public bool IsSelected { get; set; }
 
-
         public CategoryModel()
         {
         }

@@ -6,12 +6,12 @@
     <div class="col-lg-12">
         @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new {@class = ""}))
         {
-            @Html.ValidationSummary()
+            @Html.CustomValidationSummary()
             @Html.HiddenFor(m => m.Id)
             @Html.HiddenFor(m => m.UserName)
             @Html.TextBoxWithLabelFor(m => m.DisplayName)
             @Html.ActionLink("Change Password", "ChangePassword", "Account", new {area = ""}, new {@class = "form-group"})
-            @Html.TextBoxWithLabelFor(m => m.Email, true)
+            @Html.TextBoxWithLabelFor(m => m.Email)
             @Html.TextBoxWithLabelFor(m => m.Street)
             @Html.TextBoxWithLabelFor(m => m.HouseNumber)
             @Html.TextBoxWithLabelFor(m => m.Town)

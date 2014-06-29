@@ -10,11 +10,9 @@ namespace Blog.Web.Models.Account
     public class LoginModel
     {
         [DisplayName("Username")]
-        [Required]
         public string UserName { get; set; }
 
         [DisplayName("Password")]
-        [Required]
         public string Password { get; set; }
 
         [DisplayName("Stay signed in")]

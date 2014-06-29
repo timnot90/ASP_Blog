@@ -5,18 +5,18 @@ using System.Linq;
 using System.Web;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Models.Account;
+using Blog.Web.ModelValidators.Home;
+using FluentValidation.Attributes;
 
 namespace Blog.Web.Models.Home
 {
+    [Validator(typeof(EditBlogentryModelValidator))]
     public class EditBlogentryModel
     {
         public int Id { get; set; }
-        [Required(ErrorMessage="The header of your blogentry mustn't be empty.")]
         public string Header { get; set; }
-        [Required(ErrorMessage = "The body of your blogentry mustn't be empty.")]
         public string Body { get; set; }
         public List<CategoryModel> Categories { get; set; }
-        public bool SuccessfullySaved { get; set; }
 
         public EditBlogentryModel()
         {

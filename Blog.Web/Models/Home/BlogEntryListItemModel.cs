@@ -20,7 +20,7 @@ namespace Blog.Web.Models.Home
                 return string.Format("{0:D}, um {0:t} Uhr", CreationDate);
             }
         }
-        public UserProfileModel Creator { get; set; }
+        public BlogentryCreatorModel Creator { get; set; }
 
         public BlogentryListItemModel()
         {
@@ -38,14 +38,7 @@ namespace Blog.Web.Models.Home
             Body = source.Body;
             CreationDate = source.CreationDate;
             Categories = source.Categories.Select(c => new CategoryModel(c)).ToList();
-            this.Creator = new UserProfileModel(source.UserProfile);
-        }
-
-        public void UpdateSource(Blogentry source)
-        {
-            source.Header = Header;
-            source.Body = Body;
-            source.CreationDate = CreationDate;
+            Creator = new BlogentryCreatorModel(source.UserProfile);
         }
     }
 }

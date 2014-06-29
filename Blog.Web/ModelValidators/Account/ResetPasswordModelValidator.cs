@@ -14,7 +14,6 @@ namespace Blog.Web.ModelValidators.Account
             RuleFor( model => model.Email )
                 .NotEmpty().WithMessage( "Please enter your email-address" )
                 .EmailAddress().WithMessage( "The format of the entered email-address is not valid." );
-            RuleFor( model => model.Username ).NotEmpty().WithMessage( "Please enter your username." );
         }
     }
 }

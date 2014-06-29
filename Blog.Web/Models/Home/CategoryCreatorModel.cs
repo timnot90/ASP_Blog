@@ -17,11 +17,6 @@ namespace Blog.Web.Models.Home
             UpdateModel(userProfile);
         }
 
-        public void UpdateSource(UserProfile source)
-        {
-            source.DisplayName = DisplayName;
-        }
-
         public void UpdateModel(UserProfile source)
         {
             Id = source.ID;

@@ -42,11 +42,5 @@ namespace Blog.Web.Models.Home
             Creator = new UserProfileModel(source.UserProfile);
             Comments = source.Comments.Select(m => new CommentModel(m)).ToList();
         }
-
-        public void UpdateSource(Blogentry source)
-        {
-            source.Header = Header;
-            source.Body = Body;
-        }
     }
 }

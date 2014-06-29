@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Security.Policy;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 
@@ -21,7 +19,7 @@ namespace Blog.Core.Extensions
             "<div>{2}</div>" +
             "</div>";
 
-        private const string CustomValidationSummaryBaseString = "<div class='panel panel-danger'>" + 
+        private const string CustomValidationSummaryBaseString = "<div class='panel panel-danger validation-summary'>" + 
                 "<div class='panel-heading'>Error</div>" + 
                 "<div class='panel-body'>" + 
                 "{0}" + 
@@ -31,12 +29,12 @@ namespace Blog.Core.Extensions
         private const string PanelBaseString = "<div class='panel {0}'><div class='panel-heading'>{1}</div><div class='panel-body'>{2}</div></div>";
 
         public static MvcHtmlString TextBoxWithLabelFor<TModel, TProperty>(this HtmlHelper<TModel> helper,
-            Expression<Func<TModel, TProperty>> expression, bool isRequired = false)
+            Expression<Func<TModel, TProperty>> expression)
         {
             var returnValue = new MvcHtmlString(string.Format(UserProfileTextBoxBaseString,
                 helper.IdFor(expression),
                 helper.DisplayNameFor(expression),
-                helper.TextBoxFor(expression, new { @class = "form-control" + (isRequired ? " required" : ""), placeholder = helper.DisplayNameFor(expression), required = isRequired })));
+                helper.TextBoxFor(expression, new { @class = "form-control", placeholder = helper.DisplayNameFor(expression)})));
 
             return returnValue;
         }
@@ -61,8 +59,8 @@ namespace Blog.Core.Extensions
 
         public static MvcHtmlString CustomValidationSummary(this HtmlHelper helper)
         {
-            var returnValue = new MvcHtmlString(string.Format(CustomValidationSummaryBaseString, helper.ValidationSummary()));
-
+            var returnValue = helper.ViewData.ModelState.IsValid ? new MvcHtmlString( "" ) :
+                new MvcHtmlString(string.Format(CustomValidationSummaryBaseString, helper.ValidationSummary()));
             return returnValue;
         }
     }

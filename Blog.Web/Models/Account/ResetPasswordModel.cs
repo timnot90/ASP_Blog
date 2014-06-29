@@ -9,8 +9,5 @@ namespace Blog.Web.Models.Account
     {
         [DisplayName("E-Mail")]
         public string Email { get; set; }
-
-        [DisplayName("Username")]
-        public string Username { get; set; }
     }
 }

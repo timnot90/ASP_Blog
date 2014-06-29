@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.IO;
+using System.Web.Mvc;
 using Blog.Core.Exceptions;
 using Blog.Core.Extensions;
 using Blog.Web.Models.Home;
@@ -84,26 +86,23 @@ namespace Blog.Web.Controllers
         [HttpPost]
 //        [RecaptchaControlMvc.CaptchaValidatorAttribute]
         [AllowAnonymous]
-        public ActionResult _LeaveComment( LeaveCommentModel comment/*, bool captchaValid, string captchaErrorMessage */)
+        public ActionResult _LeaveComment( LeaveCommentModel model/*, bool captchaValid, string captchaErrorMessage */)
         {
             if (_sharedService.GetBlogSettings().CommentsActivated)
             {
-                bool captchaValid = CaptchaHelper.ValidateCaptchaResult(comment.CaptchaResult);
-                if (!WebSecurity.IsAuthenticated && !captchaValid)
-                {
-                    ModelState.AddModelError("captcha", "Your input for the captcha result was wrong.");
-                }
                 if (ModelState.IsValid)
                 {
-                    int newCommentId = _service.CreateComment(comment);
-                    return PartialView("_Comment", _service.GetComment(newCommentId));
+                    int newCommentId = _service.CreateComment(model);
+                    //return PartialView("_Comment", _service.GetComment(newCommentId));
+                    return Json( new {success=true, data = RenderPartialViewToString( "_Comment", _service.GetComment( newCommentId ) )} );
                 }
             }
             else
             {
                 ModelState.AddModelError("CommentsDeactivated", "The comments are disabled by the administrator.");
             }
-            return PartialView();
+            //return PartialView(model);
+            return Json(new { success = false, data = RenderPartialViewToString("_LeaveComment", model) });
         }
 
         [AllowAnonymous]
@@ -170,6 +169,26 @@ namespace Blog.Web.Controllers
         {
             _service.DeleteBlogentry(id);
             return RedirectToAction("Index", "Home", new {area = ""});
+        }
+
+        public string RenderPartialViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            try
+            {
+                using (StringWriter sw = new StringWriter())
+                {
+                    ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                    ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                    viewResult.View.Render(viewContext, sw);
+
+                    return sw.GetStringBuilder().ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();
+            }
         }
     }
 }

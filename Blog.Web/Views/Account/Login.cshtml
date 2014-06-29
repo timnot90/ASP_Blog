@@ -8,7 +8,7 @@
     {
         @Html.Hidden("ReturnUrl", Request.Params["ReturnUrl"])
         <h2 class="form-signin-heading">Please sign in</h2>
-        @Html.ValidationSummary()
+        @Html.CustomValidationSummary()
 
         <div class="">
             @Html.LabelFor(m => m.UserName, new {@class = "sr-only"})

@@ -1,7 +1,7 @@
 ﻿@model Blog.Web.Models.Home.CategoryModel
 @using (Html.BeginForm("AddCategory", "Home", FormMethod.Post, new { @class = "form-inline" }))
 {
-    @Html.ValidationSummary("", new { @class = "validation-summary-errors" })
+    @Html.CustomValidationSummary()
     <div class="container">
         <div class="row">
             <div class="form-group">

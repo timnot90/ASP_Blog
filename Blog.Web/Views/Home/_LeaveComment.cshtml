@@ -2,13 +2,12 @@
 @using WebMatrix.WebData
 @model Blog.Web.Models.Home.LeaveCommentModel
 
-<div class="well">
+<div id="leave-comment-wrapper" class="well">
     <h4>Leave a Comment:</h4>
     @using (Ajax.BeginForm("_LeaveComment", "Home", new AjaxOptions{HttpMethod = "POST", OnSuccess = "handleLeaveCommentSuccess"}))
     {
         <div class="form-group">
-            @Html.ValidationSummary()
-            @*            @Html.HiddenFor(m => m.Id)*@
+            @Html.CustomValidationSummary()
             @Html.HiddenFor(m => m.BlogentryId)
             @Html.TextBoxFor(m => m.Header, new { id="leave-comment-header", @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Header) })
             @Html.TextAreaFor(m => m.Body, new { id="leave-comment-body", @class = "form-control", rows = "5", placeholder = Html.DisplayNameFor(m => m.Body) })

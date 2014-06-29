@@ -184,15 +184,15 @@ namespace Blog.Web.Controllers
             {
                 try
                 {
-                    Service.SendPasswordResetToken( model );
-                    return View();
+                    Service.SendPasswordResetToken(model);
+                    return View("ResetPasswordFirstStepCompleted");
                 }
                 catch (SmtpException)
                 {
                     ModelState.AddModelError("SmtpError", "There was an error while sending your password reset mail. Please contact the administrator.");
                 }
             }
-            return View( "ResetPasswordFirstStepCompleted" );
+            return View();
         }
 
         [HttpGet]

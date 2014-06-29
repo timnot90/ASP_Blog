@@ -1,7 +1,12 @@
-﻿function handleLeaveCommentSuccess(data) {
-    $("#comments").append(data);
-    $("#leave-comment-header").val("");
-    $("#leave-comment-body").val("");
+﻿function handleLeaveCommentSuccess(data, status, xhr) {
+    if (data.success) {
+        $("#comments").append(data.data);
+        $("#leave-comment-header").val("");
+        $("#leave-comment-body").val("");
+        $(".validation-summary").remove();
+    } else {
+        $("#leave-comment-wrapper").replaceWith(data.data);
+    }
 }
 
 function handleEditBlogentrySuccess(ajaxContext) {

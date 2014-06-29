@@ -16,7 +16,6 @@
     <p>
         @foreach (CategoryModel category in Model.Categories)
         {
-            @*    @Html.ActionLink(, )*@
             <a class="btn btn-success" href="@Url.Action("Index", "Home", new {categoryId = category.Id, monthAndYear = ""})">@category.Name</a>
         }
     </p>

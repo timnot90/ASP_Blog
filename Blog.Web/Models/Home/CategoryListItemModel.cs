@@ -17,10 +17,5 @@ namespace Blog.Web.Models.Home
             Id = source.ID;
             Name = source.Name;
         }
-
-        public void UpdateSource(Category source)
-        {
-            source.Name = Name;
-        }
     }
 }

@@ -7,6 +7,7 @@ using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
 using Blog.Web.Models.Home;
+using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Services.Home
@@ -57,16 +58,13 @@ namespace Blog.Web.Services.Home
         public int CreateNewBlogentry(AddBlogentryModel entryModel)
         {
             Blogentry entry = new Blogentry();
-            entryModel.UpdateSource(entry);
-            entry.Header = FilterHtmlTags(entry.Header);
-            entry.Body = FilterHtmlTags(entry.Body);
+            entry.Header = FilterHtmlTags(entryModel.Header);
+            entry.Body = FilterHtmlTags(entryModel.Body);
 
             entry.CreatorID = WebSecurity.CurrentUserId;
-            foreach (
-                CategoryModel categoryModel in entryModel.Categories.Where(categoryModel => categoryModel.IsSelected))
-            {
-                entry.Categories.Add(_repository.GetCategoryById(categoryModel.Id));
-            }
+            entry.Categories = entryModel.Categories
+                .Where(categoryModel => categoryModel.IsSelected)
+                .Select( categoryModel => _repository.GetCategoryById(categoryModel.Id) ).ToList();
             return _repository.SaveBlogentry(entry, true);
         }
 
@@ -251,14 +249,14 @@ namespace Blog.Web.Services.Home
 
         public int CreateComment(LeaveCommentModel commentModel)
         {
-            bool isNewComment = commentModel.Id == 0;
-            Comment comment = isNewComment ? new Comment() : _repository.GetComment(commentModel.Id);
+            Comment comment = new Comment();
             commentModel.UpdateSource(comment);
             comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?) null : WebSecurity.CurrentUserId;
             comment.CreationDate = DateTime.Now;
             comment.Header = FilterHtmlTags(comment.Header);
             comment.Body = FilterHtmlTags(comment.Body);
-            return _repository.SaveComment(comment, isNewComment);
+            comment.Blogentry = _repository.GetBlogentry( commentModel.BlogentryId );
+            return _repository.SaveComment(comment, true);
         }
 
         public void DeleteComment(int commentId)
