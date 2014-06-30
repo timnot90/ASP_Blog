@@ -8,7 +8,6 @@
         {
             @Html.CustomValidationSummary()
             @Html.HiddenFor(m => m.Id)
-            @Html.HiddenFor(m => m.UserName)
             @Html.TextBoxWithLabelFor(m => m.DisplayName)
             @Html.ActionLink("Change Password", "ChangePassword", "Account", new {area = ""}, new {@class = "form-group"})
             @Html.TextBoxWithLabelFor(m => m.Email)

@@ -24,6 +24,10 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register( RegisterModel model )
         {
+            if (!model.Password.Equals( model.PasswordConfirmed ))
+            {
+                ModelState.AddModelError( "DissentingPasswords", "The entered passwords do not correspond." );
+            }
             if (ModelState.IsValid)
             {
                 try
@@ -130,6 +134,10 @@ namespace Blog.Web.Controllers
         [Authorize]
         public ActionResult ChangePassword( ChangePasswordModel model )
         {
+            if (!model.NewPassword.Equals( model.NewPasswordConfirmed ))
+            {
+                ModelState.AddModelError("NewPasswordsDissenting", "The new passwords do not correspond.");
+            }
             try
             {
                 if (ModelState.IsValid)
@@ -207,17 +215,14 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordSecondStep( ResetPasswordSecondStepModel model )
         {
+            if (!model.NewPassword.Equals( model.NewPasswordConfirmed ))
+            {
+                ModelState.AddModelError("DifferentPasswords", "Your passwords do not match.");
+            }
             if (ModelState.IsValid)
             {
-                if (model.NewPassword != model.NewPasswordConfirmed)
-                {
-                    ModelState.AddModelError( "DifferentPasswords", "Your confirmed password doesn't match." );
-                }
-                else
-                {
-                    Service.ResetPasswordSecondStep( model );
-                    return View( "ResetPasswordSecondStepCompleted" );
-                }
+                Service.ResetPasswordSecondStep( model );
+                return View( "ResetPasswordSecondStepCompleted" );
             }
             return View( model );
         }

@@ -236,6 +236,7 @@ namespace Blog.Core.Repositories
                                  "\r\n</style>",
                     CommentsActivated = true,
                     NumberOfEntriesPerPage = 5,
+                    Keywords = "Some, Keywords, Seperated, By, Comma",
                     RegistrationMailSubject = "Registration Confirmation",
                     RegistrationMailBody =
                         "Hello " + EmailPlaceholders.RegistrationMailPlaceholderUsername +
@@ -253,6 +254,7 @@ namespace Blog.Core.Repositories
                         EmailPlaceholders.PasswordChangeMailPlaceholderSecondStepLink,
                     PasswordChangeMailSender = "default_password_change@blog.com",
                     SmtpServerAddress = "smtp.blog.com",
+                    SmtpServerPort = 587,
                     SmtpServerUsername = "admin",
                     SmtpServerPassword = "password",
                     SmtpIsPasswordMandatoryForLogin = true

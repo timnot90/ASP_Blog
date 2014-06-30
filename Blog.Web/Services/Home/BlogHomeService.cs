@@ -148,6 +148,10 @@ namespace Blog.Web.Services.Home
             var comment = new Comment();
             commentModel.UpdateSource( comment );
             comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?) null : WebSecurity.CurrentUserId;
+            if (comment.CreatorID != null && comment.CreatorID != 0)
+            {
+                comment.UserProfile = _repository.GetUserProfileById( (int)comment.CreatorID );
+            }
             comment.CreationDate = DateTime.Now;
             comment.Blogentry = _repository.GetBlogentry( commentModel.BlogentryId );
             return _repository.SaveComment( comment, true );

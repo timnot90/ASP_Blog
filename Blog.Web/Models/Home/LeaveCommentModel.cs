@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.ModelValidators.Home;
@@ -6,15 +7,19 @@ using FluentValidation.Attributes;
 
 namespace Blog.Web.Models.Home
 {
-    [Validator(typeof(LeaveCommentModelValidator))]
+    //[Validator(typeof(LeaveCommentModelValidator))]
     public class LeaveCommentModel
     {
+        [Required(ErrorMessage = "There was an error while validating your input. Please reload the page and try again.")]
         public int BlogentryId { get; set; }
 
         [AllowHtml]
+        [StringLength(100, ErrorMessage = "Header cannot be longer than 100 characters.")]
         public string Header { get; set; }
 
         [AllowHtml]
+        [Required(ErrorMessage = "Please enter th Body of your coment.")]
+        [StringLength(1000, ErrorMessage = "Header cannot be longer than 1000 characters.")]
         public string Body { get; set; }
 
         public string CaptchaResult { get; set; }

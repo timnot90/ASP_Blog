@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Blog.Core.Annotations;
@@ -8,13 +10,17 @@ using FluentValidation.Attributes;
 
 namespace Blog.Web.Areas.Administration.Models.Home
 {
-    [Validator(typeof(EditBlogentryModelValidator))]
+    //[Validator(typeof(EditBlogentryModelValidator))]
     public class EditBlogentryModel
     {
         public int Id { get; set; }
         [AllowHtml]
+        [DisplayName("Header")]
+        [Required(ErrorMessage = "Please specify a header for your entry.")]
         public string Header { get; set; }
         [AllowHtml]
+        [DisplayName("Body")]
+        [Required(ErrorMessage = "Please specify a body for your entry.")]
         public string Body { get; set; }
         public List<CategorySelectedModel> Categories { get; set; }
 

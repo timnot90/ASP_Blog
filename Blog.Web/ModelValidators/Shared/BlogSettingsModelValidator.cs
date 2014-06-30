@@ -28,9 +28,9 @@ namespace Blog.Web.ModelValidators.Shared
             RuleFor(model => model.SmtpServerUrl).NotEmpty().WithMessage("You have to specify the URL of the SMTP server.").Must( BeAValidSmtpConnection ).WithMessage("The specified URL or port of the SMTP server is invalid.");
             RuleFor(model => model.SmtpServerPort).NotEmpty().WithMessage("You have to specify the port of the SMTP server");
             RuleFor(model => model.SmtpServerUsername)
-                .Must( BeAValidSmtpUsername ).WithMessage( "Your have to specify a username for the SMTP server." );
+                .Must( BeAValidSmtpUsername ).WithMessage( "You have to specify a username for the SMTP server." );
             RuleFor(model => model.SmtpServerPassword)
-                .Must(BeAValidSmtpPassword).WithMessage("Your have to specify a password for the SMTP server.");
+                .Must(BeAValidSmtpPassword).WithMessage("You have to specify a password for the SMTP server.");
         }
 
         private bool BeAValidSmtpUsername(BlogSettingsModel model, string username)

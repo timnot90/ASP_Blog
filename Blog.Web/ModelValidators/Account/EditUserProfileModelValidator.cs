@@ -10,8 +10,6 @@ namespace Blog.Web.ModelValidators.Account
             RuleFor(model => model.Id)
                 .NotEmpty().WithMessage("An error occured while validatiing your " +
                                          "model. Please Reload the page and try again.");
-            RuleFor(model => model.UserName)
-                .NotEmpty().WithMessage("A Username has to be declared.");
             RuleFor(model => model.DisplayName)
                 .NotEmpty().WithMessage("A Displayname has to be declared.");
             RuleFor(model => model.Email)

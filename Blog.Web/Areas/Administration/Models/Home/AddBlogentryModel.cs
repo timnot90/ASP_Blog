@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
@@ -7,15 +8,17 @@ using FluentValidation.Attributes;
 
 namespace Blog.Web.Areas.Administration.Models.Home
 {
-    [Validator(typeof(AddBlogentryModelValidator))]
+    //[Validator(typeof(AddBlogentryModelValidator))]
     public class AddBlogentryModel
     {
         private List<CategorySelectedModel> _categories = new List<CategorySelectedModel>();
 
         [AllowHtml]
+        [Required(ErrorMessage = "Please specify a header for your entry.")]
         public string Header { get; set; }
 
         [AllowHtml]
+        [Required(ErrorMessage = "Please specify a body for your entry.")]
         public string Body { get; set; }
 
         public List<CategorySelectedModel> Categories

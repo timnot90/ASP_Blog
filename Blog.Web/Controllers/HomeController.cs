@@ -2,9 +2,11 @@
 using System.IO;
 using System.Web.Mvc;
 using Blog.Core.Exceptions;
+using Blog.Core.Extensions;
 using Blog.Web.Models.Home;
 using Blog.Web.Services.Home;
 using Blog.Web.Services.Shared;
+using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {
@@ -51,10 +53,13 @@ namespace Blog.Web.Controllers
         {
             if (_sharedService.GetBlogSettings().CommentsActivated)
             {
+                if (!WebSecurity.IsAuthenticated & !CaptchaHelper.ValidateCaptchaResult(model.CaptchaResult))
+                {
+                    ModelState.AddModelError("InvalidCaptchaResult", "The entered value for the captcha is invalid.");
+                }
                 if (ModelState.IsValid)
                 {
                     int newCommentId = _service.CreateComment(model);
-                    //return PartialView("_Comment", _service.GetComment(newCommentId));
                     return Json( new {success=true, data = RenderPartialViewToString( "_Comment", _service.GetComment( newCommentId ) )} );
                 }
             }
@@ -62,7 +67,6 @@ namespace Blog.Web.Controllers
             {
                 ModelState.AddModelError("CommentsDeactivated", "The comments are disabled by the administrator.");
             }
-            //return PartialView(model);
             return Json(new { success = false, data = RenderPartialViewToString("_LeaveComment", model) });
         }
 

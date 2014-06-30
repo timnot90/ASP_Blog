@@ -1,4 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.IO;
+using System.Net.Sockets;
+using System.Web.Mvc;
 using Blog.Core.Exceptions;
 using Blog.Web.Areas.Administration.Models.Home;
 using Blog.Web.Areas.Administration.Services.Home;
@@ -76,6 +79,24 @@ namespace Blog.Web.Areas.Administration.Controllers
         [HttpPost]
         public ActionResult BlogSettings(BlogSettingsModel model)
         {
+            bool passwordIsValid = model.SmtpAreUsercredentialsMandatoryForLogin
+                && !String.IsNullOrEmpty(model.SmtpServerPassword)
+                || !model.SmtpAreUsercredentialsMandatoryForLogin;
+            bool usernameIsValid = model.SmtpAreUsercredentialsMandatoryForLogin &&
+                !String.IsNullOrEmpty(model.SmtpServerUsername) ||
+                !model.SmtpAreUsercredentialsMandatoryForLogin;
+            if (!passwordIsValid)
+            {
+                ModelState.AddModelError( "InvalidSmtpPassword", "You have to specify a password for the SMTP server." );
+            }
+            if (!usernameIsValid)
+            {
+                ModelState.AddModelError("InvalidSmtpUsername", "You have to specify a username for the SMTP server.");
+            }
+            if (!SmtpConnectionIsValid( model.SmtpServerUrl, model.SmtpServerPort ))
+            {
+                ModelState.AddModelError("InvalidSmtpUrlOrPort", "The SMTP could not be reached. Please check URL and port and try again.");
+            }
             if (ModelState.IsValid)
             {
                 _service.StoreSettings(model);
@@ -135,7 +156,52 @@ namespace Blog.Web.Areas.Administration.Controllers
         }
 
 
+        private static bool SmtpConnectionIsValid(string url, int port)
+        {
+            var valid = false;
+            try
+            {
 
+                using (var smtpTest = new TcpClient())
+                {
+                    smtpTest.ReceiveTimeout = 500;
+                    IAsyncResult ar = smtpTest.BeginConnect(url, port, null, null);
+                    System.Threading.WaitHandle wh = ar.AsyncWaitHandle;
+                    try
+                    {
+                        if (!ar.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(5), false))
+                        {
+                            smtpTest.Close();
+                            throw new TimeoutException();
+                        }
+
+                        smtpTest.EndConnect(ar);
+
+                        if (smtpTest.Connected)
+                        {
+                            NetworkStream ns = smtpTest.GetStream();
+                            var sr = new StreamReader(ns);
+                            if (sr.ReadLine().Contains("220"))
+                            {
+                                valid = true;
+                            }
+                            smtpTest.Close();
+                        }
+                    }
+                    finally
+                    {
+                        wh.Close();
+                    }
+                }
+            }
+            // ReSharper disable once EmptyGeneralCatchClause
+            catch (Exception)
+            {
+                // suppress any errors
+            }
+
+            return valid;
+        }
 
     }
 }
