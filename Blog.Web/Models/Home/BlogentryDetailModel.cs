@@ -37,7 +37,7 @@ namespace Blog.Web.Models.Home
         {
             Id = source.ID;
             Header = source.Header;
-            Body = source.Body;
+            Body = source.BodyWithBr;
             CreationDate = source.CreationDate;
             Creator = new UserProfileModel(source.UserProfile);
             Comments = source.Comments.Select(m => new CommentModel(m)).ToList();

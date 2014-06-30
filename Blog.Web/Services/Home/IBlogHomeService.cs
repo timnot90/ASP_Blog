@@ -7,11 +7,9 @@ namespace Blog.Web.Services.Home
     public interface IBlogHomeService
     {
         #region Blogentry
-        int SaveBlogentryChanges(EditBlogentryModel model);
         void DeleteBlogentry(int id);
         BlogentryListModel GetBlogentryListModel();
         BlogentryDetailModel GetBlogentry(int id);
-        EditBlogentryModel GetEditBlogentryModel( int id );
         BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear );
         #endregion
 

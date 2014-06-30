@@ -9,6 +9,7 @@ using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
 using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Models.Shared;
+using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
 
 namespace Blog.Web.Areas.Administration.Services
@@ -20,6 +21,19 @@ namespace Blog.Web.Areas.Administration.Services
         private readonly IBlogRepository _repository = new BlogRepository();
 
         #endregion
+
+        public EditBlogentryModel GetEditBlogentryModel(int id)
+        {
+            Blogentry entry = _repository.GetBlogentry(id);
+            EditBlogentryModel model = entry == null ? null : new EditBlogentryModel(entry);
+            if (model != null)
+            {
+                model.Categories = _repository.GetAllCategories().Select(c => new CategoryModel(c)).ToList();
+                model.Categories.Where(category => entry.Categories.Any(c => c.ID == category.Id))
+                    .ForEach(c => c.IsSelected = true);
+            }
+            return model;
+        }
 
         public AddBlogentryModel GetAddBlogentryModel()
         {
@@ -33,14 +47,28 @@ namespace Blog.Web.Areas.Administration.Services
         public int CreateNewBlogentry(AddBlogentryModel entryModel)
         {
             Blogentry entry = new Blogentry();
-            entry.Header = FilterHtmlTags(entryModel.Header);
-            entry.Body = FilterHtmlTags(entryModel.Body);
-
+            entryModel.UpdateSource( entry );
             entry.CreatorID = WebSecurity.CurrentUserId;
             entry.Categories = entryModel.Categories
                 .Where(categoryModel => categoryModel.IsSelected)
                 .Select(categoryModel => _repository.GetCategoryById(categoryModel.Id)).ToList();
             return _repository.SaveBlogentry(entry, true);
+        }
+
+        public int SaveBlogentryChanges(EditBlogentryModel model)
+        {
+            Blogentry entry = _repository.GetBlogentry(model.Id);
+            model.UpdateSource(entry);
+            if (model.Categories != null)
+            {
+                entry.Categories.Clear();
+                foreach (
+                    CategoryModel categoryModel in model.Categories.Where(categoryModel => categoryModel.IsSelected))
+                {
+                    entry.Categories.Add(_repository.GetCategoryById(categoryModel.Id));
+                }
+            }
+            return _repository.SaveBlogentry(entry);
         }
 
         #region Users
@@ -152,16 +180,5 @@ namespace Blog.Web.Areas.Administration.Services
         }
 
         #endregion
-        
-        private string FilterHtmlTags(string text)
-        {
-            if (text == null) return null;
-
-            Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
-            Regex removeHtml = new Regex(@"<[^>]*>");
-            Regex replaceNewlineWithBr = new Regex(@"(\r\n)|\r|\n");
-            return replaceNewlineWithBr.Replace(
-                removeHtml.Replace(replaceBrWithNewline.Replace(text, "\r\n"), ""), "<br/>");
-        }
     }
 }

@@ -34,7 +34,7 @@ namespace Blog.Web.Models.Home
         {
             Id = source.ID;
             Header = source.Header;
-            Body = source.Body;
+            Body = source.BodyWithBr;
             CreationDate = source.CreationDate;
             Categories = source.Categories.Select(c => new CategoryModel(c)).ToList();
             Creator = new BlogentryCreatorModel(source.UserProfile);

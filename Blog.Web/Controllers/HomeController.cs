@@ -70,27 +70,6 @@ namespace Blog.Web.Controllers
             return PartialView( _service.GetBlogSidebarModel() );
         }
 
-        [HttpGet]
-        [Authorize(Roles = CustomRoles.Administrator)]
-        public ActionResult _EditBlogentry(int blogentryId)
-        {
-            return PartialView(_service.GetEditBlogentryModel( blogentryId ));
-        }
-
-        [HttpPost]
-        [Authorize(Roles = CustomRoles.Administrator)]
-        public ActionResult _EditBlogentry(EditBlogentryModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                _service.SaveBlogentryChanges( model );
-//                return Json( new {html = Blogentry( model.Id ), statusCode = 200});
-                return RedirectToAction( "Blogentry", "Home", new {area = "", id = model.Id} );
-            }
-//            return Json(new { html = "", statusCode = 403 });
-            return PartialView( model );
-        }
-
         [Authorize( Roles = CustomRoles.Administrator )]
         public ActionResult DeleteComment( int commentId, int blogentryId )
         {

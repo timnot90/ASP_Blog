@@ -13,7 +13,8 @@
           <Property Name="CreationDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="Header" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Lead" Type="nvarchar(max)" />
-          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BodyWithBr" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BodyWithLinebreaks" Type="nvarchar(max)" Nullable="false" />
           <Property Name="CreatorID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
@@ -166,7 +167,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CategoriesToEntries_Blogentries">
-          <End Role="Blogentries" Type="Self.Blogentries" Multiplicity="1" />
+          <End Role="Blogentries" Type="Self.Blogentries" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CategoriesToEntries" Type="Self.CategoriesToEntries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Blogentries">
@@ -318,11 +321,12 @@
           <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="Header" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Lead" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreatorID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="UserProfile" Relationship="Blog.Core.DataAccess.Blog.FK_Blogentries_UserProfiles" FromRole="Blogentry" ToRole="UserProfile" />
           <NavigationProperty Name="Comments" Relationship="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries" FromRole="Blogentry" ToRole="Comment" />
           <NavigationProperty Name="Categories" Relationship="Blog.Core.DataAccess.Blog.CategoriesToEntries" FromRole="Blogentry" ToRole="Category" />
+          <Property Name="BodyWithBr" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BodyWithLinebreaks" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -523,8 +527,9 @@
           <EntitySetMapping Name="Blogentries">
             <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Blogentry">
               <MappingFragment StoreEntitySet="Blogentries">
+                <ScalarProperty Name="BodyWithLinebreaks" ColumnName="BodyWithLinebreaks" />
+                <ScalarProperty Name="BodyWithBr" ColumnName="BodyWithBr" />
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="Lead" ColumnName="Lead" />
                 <ScalarProperty Name="Header" ColumnName="Header" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />

@@ -1,4 +1,5 @@
-﻿using Blog.Web.Models.Home;
+﻿using Blog.Web.Areas.Administration.Models;
+using Blog.Web.Models.Home;
 using FluentValidation;
 
 namespace Blog.Web.ModelValidators.Home

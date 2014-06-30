@@ -2,24 +2,22 @@
 using Blog.Core.Exceptions;
 using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Areas.Administration.Services;
-using Blog.Web.Models.Home;
 using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Controllers
 {
+    [Authorize(Roles=CustomRoles.Administrator)]
     public class HomeController : Controller
     {
         readonly IBlogAdministrationHomeService _service = new BlogAdministrationHomeService();
 
         [HttpGet]
-        [Authorize(Roles = CustomRoles.Administrator)]
         public ActionResult AddBlogentry()
         {
             return View(_service.GetAddBlogentryModel());
         }
 
         [HttpPost]
-        [Authorize(Roles = CustomRoles.Administrator)]
         public ActionResult AddBlogentry(AddBlogentryModel blogentry)
         {
             if (ModelState.IsValid)
@@ -33,6 +31,25 @@ namespace Blog.Web.Areas.Administration.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult _EditBlogentry(int blogentryId)
+        {
+            return PartialView(_service.GetEditBlogentryModel(blogentryId));
+        }
+
+        [HttpPost]
+        public ActionResult _EditBlogentry(EditBlogentryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.SaveBlogentryChanges(model);
+                //                return Json( new {html = Blogentry( model.Id ), statusCode = 200});
+                return RedirectToAction("Blogentry", "Home", new { area = "", id = model.Id });
+            }
+            //            return Json(new { html = "", statusCode = 403 });
+            return PartialView(model);
         }
 
         public ActionResult Users()
@@ -79,7 +96,7 @@ namespace Blog.Web.Areas.Administration.Controllers
         {
             return View(_service.GetCategoryListModel());
         }
-        [Authorize(Roles = CustomRoles.Administrator)]
+
         public ActionResult DeleteCategory(int categoryid)
         {
             try
@@ -93,14 +110,14 @@ namespace Blog.Web.Areas.Administration.Controllers
             }
             return RedirectToAction("Categories");
         }
+
         [HttpGet]
-        [Authorize(Roles = CustomRoles.Administrator)]
         public PartialViewResult _AddCategory()
         {
             return PartialView();
         }
+
         [HttpPost]
-        [Authorize(Roles = CustomRoles.Administrator)]
         public ActionResult AddCategory(AddCategoryModel model)
         {
             if (ModelState.IsValid)

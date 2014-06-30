@@ -1,8 +1,8 @@
-﻿@model Blog.Web.Models.Home.EditBlogentryModel
+﻿@model Blog.Web.Areas.Administration.Models.EditBlogentryModel
 <div class="modal fade" id="editBlogentryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="editBlogentryModalDialog">
         <div class="modal-content" id="editBlogentryModalContent">
-            @using (Ajax.BeginForm( "_EditBlogentry", "Home", new {area = ""}, new AjaxOptions
+            @using (Ajax.BeginForm( "_EditBlogentry", "Home", new {area = "Administration"}, new AjaxOptions
             {
                 HttpMethod = "POST",
                 UpdateTargetId = "editBlogentryModal",

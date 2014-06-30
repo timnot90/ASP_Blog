@@ -4,11 +4,12 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Blog.Core.DataAccess.Blog;
-using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
+using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Models.Home;
 using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
+using CategoryModel = Blog.Web.Models.Home.CategoryModel;
 
 namespace Blog.Web.Services.Home
 {
@@ -54,25 +55,6 @@ namespace Blog.Web.Services.Home
         #endregion
 
         #region Blogentry
-
-        public int SaveBlogentryChanges(EditBlogentryModel model)
-        {
-            Blogentry entry = _repository.GetBlogentry(model.Id);
-            model.UpdateSource(entry);
-            if (model.Categories != null)
-            {
-                entry.Categories.Clear();
-                foreach (
-                    CategoryModel categoryModel in model.Categories.Where(categoryModel => categoryModel.IsSelected))
-                {
-                    entry.Categories.Add(_repository.GetCategoryById(categoryModel.Id));
-                }
-            }
-            entry.Header = FilterHtmlTags(entry.Header);
-            entry.Body = FilterHtmlTags(entry.Body);
-            return _repository.SaveBlogentry(entry);
-        }
-
         public void DeleteBlogentry(int id)
         {
             _repository.DeleteBlogentry(id);
@@ -136,7 +118,7 @@ namespace Blog.Web.Services.Home
             }).Select(e =>
             {
                 BlogentryListItemModel listItemModel = new BlogentryListItemModel(e);
-                listItemModel.Body = ShortenText(e.Body);
+                listItemModel.Body = ShortenText(e.BodyWithBr);
                 return listItemModel;
             }).ToList();
 
@@ -158,20 +140,6 @@ namespace Blog.Web.Services.Home
             };
             return model;
         }
-
-        public EditBlogentryModel GetEditBlogentryModel(int id)
-        {
-            Blogentry entry = _repository.GetBlogentry(id);
-            EditBlogentryModel model = entry == null ? null : new EditBlogentryModel(entry);
-            if (model != null)
-            {
-                model.Categories = _repository.GetAllCategories().Select(c => new CategoryModel(c)).ToList();
-                model.Categories.Where( category => entry.Categories.Any( c => c.ID == category.Id ) )
-                    .ForEach( c => c.IsSelected = true );
-                Regex.Replace( @"<br[\s]*/?>", model.Body, "\r\n" );
-            }
-            return model;
-        }
         #endregion
 
         #region Category
@@ -191,8 +159,6 @@ namespace Blog.Web.Services.Home
             commentModel.UpdateSource(comment);
             comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?) null : WebSecurity.CurrentUserId;
             comment.CreationDate = DateTime.Now;
-            comment.Header = FilterHtmlTags(comment.Header);
-            comment.Body = FilterHtmlTags(comment.Body);
             comment.Blogentry = _repository.GetBlogentry( commentModel.BlogentryId );
             return _repository.SaveComment(comment, true);
         }
@@ -216,17 +182,6 @@ namespace Blog.Web.Services.Home
         private static string ShortenText(string text)
         {
             return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
-        }
-
-        private static string FilterHtmlTags(string text)
-        {
-            if (text == null) return null;
-
-            Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
-            Regex removeHtml = new Regex(@"<[^>]*>");
-            Regex replaceNewlineWithBr = new Regex(@"(\r\n)|\r|\n");
-            return replaceNewlineWithBr.Replace(
-                removeHtml.Replace(replaceBrWithNewline.Replace(text, "\r\n"), ""), "<br/>");
         }
         #endregion
     }

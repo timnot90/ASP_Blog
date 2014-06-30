@@ -178,7 +178,7 @@
     <Compile Include="Models\Account\ResetPasswordSecondStepModel.cs" />
     <Compile Include="Models\Home\BlogentryListModel.cs" />
     <Compile Include="Models\Home\CommentCreatorModel.cs" />
-    <Compile Include="Models\Home\EditBlogentryModel.cs" />
+    <Compile Include="Areas\Administration\Models\EditBlogentryModel.cs" />
     <Compile Include="Areas\Administration\Models\AddBlogentryModel.cs" />
     <Compile Include="Models\Home\BlogentryDetailModel.cs" />
     <Compile Include="Models\Home\BlogEntryListItemModel.cs" />
@@ -390,7 +390,7 @@
     <Content Include="Views\Account\ResetPasswordSecondStep.cshtml" />
     <Content Include="Views\Account\ResetPasswordSecondStepCompleted.cshtml" />
     <Content Include="Views\Account\ResetPasswordFirstStepCompleted.cshtml" />
-    <Content Include="Views\Home\_EditBlogentry.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\_EditBlogentry.cshtml" />
     <Content Include="Views\Shared\_Keywords.cshtml" />
     <Content Include="Areas\Administration\Views\Home\_Category.cshtml" />
     <Content Include="Views\Account\ValidateRegistrationToken.cshtml" />

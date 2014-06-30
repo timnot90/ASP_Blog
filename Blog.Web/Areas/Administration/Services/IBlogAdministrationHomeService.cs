@@ -6,7 +6,9 @@ namespace Blog.Web.Areas.Administration.Services
     public interface IBlogAdministrationHomeService
     {
         AddBlogentryModel GetAddBlogentryModel();
-        int CreateNewBlogentry( AddBlogentryModel entryModel );
+        int CreateNewBlogentry(AddBlogentryModel entryModel);
+        EditBlogentryModel GetEditBlogentryModel(int id);
+        int SaveBlogentryChanges(EditBlogentryModel model);
         UserListModel GetUserListModel();
         void ChangeRole( int id, string newRole, bool added );
         void SetUserLockedState( int userId, bool state );

@@ -1,8 +1,4 @@
-﻿@using System.Web
-@using Blog.Web.Models
-@using Blog.Web.Models.Home
-@using Blog.Web.Models.Shared
-@using WebMatrix.WebData
+﻿@using Blog.Web.Models.Home
 @model BlogentryDetailModel
 
 @{
@@ -45,7 +41,7 @@
                     </tbody>
 
                 </table>   
-        @Html.Action("_EditBlogentry", "Home", new { area = "", blogentryId = Model.Id })
+        @Html.Action("_EditBlogentry", "Home", new { area = "Administration", blogentryId = Model.Id })
     </div>
     @Html.Action("_BlogSidebar")
 </div>
