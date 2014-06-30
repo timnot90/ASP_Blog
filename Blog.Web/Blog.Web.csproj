@@ -276,6 +276,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Errors\Error500.asp" />
     <Content Include="Errors\Error404.asp" />
     <Content Include="font-awesome\css\font-awesome.css" />
     <Content Include="font-awesome\css\font-awesome.min.css" />
@@ -381,7 +382,6 @@
     <Content Include="Views\Shared\_NavigationBar.cshtml" />
     <Content Include="Views\Shared\_PageHeader.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
-    <Content Include="Views\Errors\Error500.cshtml" />
     <Content Include="Views\Account\AccountActivated.cshtml" />
     <Content Include="Views\Account\ResetPasswordFirstStep.cshtml" />
     <Content Include="Views\Account\ResetPasswordSecondStep.cshtml" />

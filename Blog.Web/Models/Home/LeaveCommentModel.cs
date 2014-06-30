@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Blog.Core.DataAccess.Blog;
+﻿using Blog.Core.DataAccess.Blog;
 using Blog.Web.ModelValidators.Home;
 using FluentValidation.Attributes;
 

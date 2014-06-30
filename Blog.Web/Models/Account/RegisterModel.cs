@@ -1,7 +1,5 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Blog.Core.DataAccess.Blog;
-using Blog.Web.ModelValidators;
 using Blog.Web.ModelValidators.Account;
 
 namespace Blog.Web.Models.Account

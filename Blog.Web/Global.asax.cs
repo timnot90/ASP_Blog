@@ -4,8 +4,6 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Security;
-using Blog.Web.Areas.Administration.Services;
-using Blog.Web.Services.Account;
 using Blog.Web.Services.Shared;
 using FluentValidation.Mvc;
 using WebMatrix.WebData;
@@ -47,6 +45,8 @@ namespace Blog.Web
                             IsLocked = false
                         } );
                     Roles.AddUserToRole( "admin", CustomRoles.Administrator );
+
+                    WebSecurity.Login( "admin", "1");
                 }
                 catch (Exception)
                 {

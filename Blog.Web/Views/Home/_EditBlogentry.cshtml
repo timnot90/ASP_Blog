@@ -1,38 +1,33 @@
-﻿@using Blog.Web.Models.Home
-@model Blog.Web.Models.Home.EditBlogentryModel
+﻿@model Blog.Web.Models.Home.EditBlogentryModel
 <div class="modal fade" id="editBlogentryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" id="editBlogentryModalDialog">
         <div class="modal-content" id="editBlogentryModalContent">
-            @using (Ajax.BeginForm("_EditBlogentry", "Home", new { area = "" }, new AjaxOptions
+            @using (Ajax.BeginForm( "_EditBlogentry", "Home", new {area = ""}, new AjaxOptions
             {
                 HttpMethod = "POST",
                 UpdateTargetId = "editBlogentryModal",
                 InsertionMode = InsertionMode.Replace,
                 OnSuccess = "handleEditBlogentrySuccess",
-            }))
+            } ))
             {
-                @Html.HiddenFor(m => m.Id, new { id = "blogentryId" })
+                @Html.HiddenFor( m => m.Id, new {id = "blogentryId"} )
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">@Html.TextBoxFor(m => m.Header, new { @class = "form-control", id = "editBlogentryModalTitle" })</h4>
+                    <h4 class="modal-title">@Html.TextBoxFor( m => m.Header, new {@class = "form-control", id = "editBlogentryModalTitle"} )</h4>
                 </div>
-    <div class="modal-body" id="editBlogentryBody">
-        @Html.TextAreaFor(m => m.Body, new { @class = "form-control", id = "editBlogentryTextarea" })
-        @{
-                int i = 0;
-                foreach (CategoryModel category in Model.Categories)
-                {
-                    @Html.HiddenFor(m => m.Categories[i].Id)
-                    @Html.HiddenFor(m => m.Categories[i].Name)
-                    <label>
-                        @Model.Categories[i].Name
-                        @Html.CheckBoxFor(m => m.Categories[i].IsSelected, new { @class = "checkbox-inline" })
-                    </label>
-                    i++;
-                }
-                @Html.CustomValidationSummary()
-        }
-    </div>
+                <div class="modal-body" id="editBlogentryBody">
+                    @Html.TextAreaFor( m => m.Body, new {@class = "form-control", id = "editBlogentryTextarea"} )
+                    @for (int i = 0; i < Model.Categories.Count; i++)
+                    {
+                        @Html.HiddenFor( m => m.Categories[i].Id )
+                        @Html.HiddenFor( m => m.Categories[i].Name )
+                        <label>
+                            @Model.Categories[i].Name
+                            @Html.CheckBoxFor( m => m.Categories[i].IsSelected, new {@class = "checkbox-inline"} )
+                        </label>
+                    }
+                    @Html.CustomValidationSummary()
+                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>

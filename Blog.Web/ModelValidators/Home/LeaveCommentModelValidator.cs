@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Blog.Core.Extensions;
+﻿using Blog.Core.Extensions;
 using Blog.Web.Models.Home;
 using FluentValidation;
 using WebMatrix.WebData;
@@ -22,7 +18,7 @@ namespace Blog.Web.ModelValidators.Home
 
         private bool BeAValidCaptcha( string captcha )
         {
-            return !WebSecurity.IsAuthenticated && CaptchaHelper.ValidateCaptchaResult( captcha );
+            return WebSecurity.IsAuthenticated || !WebSecurity.IsAuthenticated && CaptchaHelper.ValidateCaptchaResult( captcha );
         }
     }
 }

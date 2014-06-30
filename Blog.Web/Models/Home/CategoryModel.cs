@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Blog.Core.DataAccess.Blog;
-using Blog.Web.Models.Account;
 
 namespace Blog.Web.Models.Home
 {

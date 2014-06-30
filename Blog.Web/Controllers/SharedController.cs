@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using Blog.Web.Models.Shared;
 using Blog.Web.Services.Shared;
 
 namespace Blog.Web.Controllers

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Blog.Core.DataAccess.Blog;
-using Blog.Web.Models.Account;
 
 namespace Blog.Web.Models.Home
 {

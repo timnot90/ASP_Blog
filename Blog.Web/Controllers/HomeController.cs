@@ -2,12 +2,9 @@
 using System.IO;
 using System.Web.Mvc;
 using Blog.Core.Exceptions;
-using Blog.Core.Extensions;
 using Blog.Web.Models.Home;
 using Blog.Web.Services.Home;
 using Blog.Web.Services.Shared;
-using Recaptcha;
-using WebMatrix.WebData;
 
 namespace Blog.Web.Controllers
 {
@@ -159,18 +156,33 @@ namespace Blog.Web.Controllers
             return PartialView( model );
         }
 
-        [HttpGet] // I would rather use POST, but I didn't find a nice way to make a POST-Request with a link (a href)
         [Authorize( Roles = CustomRoles.Administrator )]
         public ActionResult DeleteComment( int commentId, int blogentryId )
         {
-            _service.DeleteComment( commentId );
+            try
+            {
+                _service.DeleteComment( commentId );
+            }
+            catch (BlogDbException)
+            {
+                // BlogDbException is occuring here, when you try to delete a comment
+                // that is already deleted.
+            }
             return RedirectToAction( "Blogentry", new {id = blogentryId} );
         }
 
         [Authorize(Roles = CustomRoles.Administrator)]
         public ActionResult DeleteBlogentry(int id)
         {
-            _service.DeleteBlogentry(id);
+            try
+            {
+                _service.DeleteBlogentry( id );
+            }
+            catch (BlogDbException)
+            {
+                // BlogDbException is occuring here, when you try to delete a blogentry
+                // even though it is already deleted.
+            }
             return RedirectToAction("Index", "Home", new {area = ""});
         }
 

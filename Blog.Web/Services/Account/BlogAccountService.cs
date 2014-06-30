@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Mail;
 using System.Web.Security;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;

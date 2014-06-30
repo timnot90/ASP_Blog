@@ -35,11 +35,18 @@ namespace Blog.Core.Repositories
 
         public void DeleteBlogentry(int id)
         {
-            Blogentry entryToDelete = BlogDataContext.Current.Blogentries.FirstOrDefault(b => b.ID == id);
-            if (entryToDelete != null)
+            try
             {
-                BlogDataContext.Current.Blogentries.Remove(entryToDelete);
-                BlogDataContext.Current.SaveChanges();
+                Blogentry entryToDelete = BlogDataContext.Current.Blogentries.FirstOrDefault( b => b.ID == id );
+                if (entryToDelete != null)
+                {
+                    BlogDataContext.Current.Blogentries.Remove( entryToDelete );
+                    BlogDataContext.Current.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BlogDbException(ex.Message);
             }
         }
 
@@ -199,11 +206,18 @@ namespace Blog.Core.Repositories
 
         public void DeleteComment(int commentId)
         {
-            Comment commentToDelete = BlogDataContext.Current.Comments.FirstOrDefault(c => c.ID == commentId);
-            if (commentToDelete != null)
+            try
             {
-                BlogDataContext.Current.Comments.Remove(commentToDelete);
-                BlogDataContext.Current.SaveChanges();
+                Comment commentToDelete = BlogDataContext.Current.Comments.FirstOrDefault( c => c.ID == commentId );
+                if (commentToDelete != null)
+                {
+                    BlogDataContext.Current.Comments.Remove( commentToDelete );
+                    BlogDataContext.Current.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new BlogDbException( ex.Message );
             }
         }
 
@@ -226,7 +240,7 @@ namespace Blog.Core.Repositories
                                             "\r\n}" + 
                                             "\r\n</style>";
                 blogSetting.CommentsActivated = true;
-                blogSetting.NumberOfEntriesPerPage = 10;
+                blogSetting.NumberOfEntriesPerPage = 5;
 
                 blogSetting.RegistrationMailSubject = "Registration Confirmation";
                 blogSetting.RegistrationMailBody =

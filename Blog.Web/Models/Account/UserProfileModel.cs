@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Web.Models.Account

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Blog.Web.Models.Account;
+﻿using Blog.Web.Models.Account;
 using FluentValidation;
 
 namespace Blog.Web.ModelValidators.Account
