@@ -1,7 +1,7 @@
 ﻿using Blog.Web.Areas.Administration.Models.Home;
 using Blog.Web.Models.Shared;
 
-namespace Blog.Web.Areas.Administration.Services
+namespace Blog.Web.Areas.Administration.Services.Home
 {
     public interface IBlogAdministrationHomeService
     {

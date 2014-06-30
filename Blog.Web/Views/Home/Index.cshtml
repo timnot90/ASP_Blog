@@ -27,7 +27,7 @@
             <div class="text-center pagination-wrapper">
                 <ul class="pagination" id="blogentries-pagination" data-blogentries-per-page=@Model.NumberOfBlogentriesPerPage>
                     <li class="" id="blogentries-pagination-prev"><a href="#">«</a></li>
-                    @for (int i = 0; i < Model.Blogentries.Count/Model.NumberOfBlogentriesPerPage + 1; i++)
+                    @for (int i = 0; i < Math.Ceiling((double)Model.Blogentries.Count / (double)Model.NumberOfBlogentriesPerPage); i++)
                     {
                         <li class="pagination-item @(i == 0 ? "active" : "")"><a href="#">@(i + 1)</a></li>
                     }

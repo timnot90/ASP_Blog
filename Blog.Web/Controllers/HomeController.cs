@@ -17,6 +17,7 @@ namespace Blog.Web.Controllers
 
         #endregion
 
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Index( int? categoryId, string monthAndYear)
         {
@@ -31,6 +32,7 @@ namespace Blog.Web.Controllers
             return View( _service.GetBlogentryListModel( (int) categoryId, monthAndYear) );
         }
 
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Blogentry( int id )
         {

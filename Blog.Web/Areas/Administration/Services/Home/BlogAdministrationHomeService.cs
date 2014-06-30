@@ -10,7 +10,7 @@ using Blog.Web.Models.Shared;
 using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
 
-namespace Blog.Web.Areas.Administration.Services
+namespace Blog.Web.Areas.Administration.Services.Home
 {
     public class BlogAdministrationHomeService : IBlogAdministrationHomeService
     {

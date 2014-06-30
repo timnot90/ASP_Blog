@@ -162,8 +162,8 @@
     <Compile Include="Models\Home\CategorySidebarModel.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\Home\UserListItemModel.cs" />
-    <Compile Include="Areas\Administration\Services\BlogAdministrationHomeService.cs" />
-    <Compile Include="Areas\Administration\Services\IBlogAdministrationHomeService.cs" />
+    <Compile Include="Areas\Administration\Services\Home\BlogAdministrationHomeService.cs" />
+    <Compile Include="Areas\Administration\Services\Home\IBlogAdministrationHomeService.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

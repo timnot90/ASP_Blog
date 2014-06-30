@@ -41,7 +41,10 @@
                     </tbody>
 
                 </table>   
-        @Html.Action("_EditBlogentry", "Home", new { area = "Administration", blogentryId = Model.Id })
+        @if (WebSecurity.CurrentUserId == Model.Creator.Id)
+        {
+            @Html.Action( "_EditBlogentry", "Home", new {area = "Administration", blogentryId = Model.Id} )
+        }
     </div>
     @Html.Action("_BlogSidebar")
 </div>

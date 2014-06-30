@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using Blog.Core.Exceptions;
 using Blog.Web.Areas.Administration.Models.Home;
-using Blog.Web.Areas.Administration.Services;
+using Blog.Web.Areas.Administration.Services.Home;
 using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Controllers
