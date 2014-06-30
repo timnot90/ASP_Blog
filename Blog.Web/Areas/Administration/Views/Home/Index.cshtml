@@ -3,20 +3,28 @@
 }
 
 <div class="row">
-    <div class="col-lg-8">
-        <ul>
-            <li>
-                @Html.ActionLink("Users", "Users", "Home", new { area = "Administration" }, null)
-            </li>
-            <li>
-                @Html.ActionLink("Site Settings", "BlogSettings", "Home", new { area = "Administration" }, null)
-            </li>
-            <li>
-                @Html.ActionLink("Categories", "Categories", "Home", new { area = "Administration" }, null)
-            </li>
-            <li>
-                @Html.ActionLink("Add Blogentry", "AddBlogentry", "Home", new { area = "Administration" }, null)
-            </li>
-        </ul>
-    </div>
+    <a href="@Url.Action("Users", "Home", new { area = "Administration" })" class="col-lg-3 col-md-3">
+        <div>
+            <h3><i class="fa fa-users"></i> Users</h3>
+            <p>View all users of this blog. You can lock them or assign roles.</p>
+        </div>
+    </a>
+    <a href="@Url.Action("BlogSettings", "Home", new { area = "Administration" })" class="col-lg-3 col-md-3">
+        <div>
+            <h3><i class="fa fa-cog"></i> Blog Settings</h3>
+            <p>Manage the settings of this blog, e.g. the Site Name, the SMTP settings or the activation/deactivation of comments.</p>
+        </div>
+    </a>
+    <a href="@Url.Action("Categories", "Home", new { area = "Administration" })" class="col-lg-3 col-md-3">
+        <div>
+            <h3><i class="fa fa-inbox"></i> Categories</h3>
+            <p>View all categories of this blog. Also, you can add delete them or create new ones.</p>
+        </div>
+    </a>
+    <a href="@Url.Action("AddBlogentry", "Home", new { area = "Administration" })" class="col-lg-3 col-md-3">
+        <div>
+            <h3><i class="fa fa-plus-circle"></i> Create Blogentry</h3>
+            <p>Create a new Blogentry.</p>
+        </div>
+    </a>
 </div>

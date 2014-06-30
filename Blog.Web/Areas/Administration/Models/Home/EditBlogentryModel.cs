@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Web.Mvc;
 using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.Areas.Administration.ModelValidators;
@@ -11,7 +12,9 @@ namespace Blog.Web.Areas.Administration.Models.Home
     public class EditBlogentryModel
     {
         public int Id { get; set; }
+        [AllowHtml]
         public string Header { get; set; }
+        [AllowHtml]
         public string Body { get; set; }
         public List<CategorySelectedModel> Categories { get; set; }
 

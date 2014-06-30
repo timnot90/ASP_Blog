@@ -45,17 +45,6 @@
           <Property Name="BlogentryID" Type="int" Nullable="false" />
           <Property Name="CreatorID" Type="int" />
         </EntityType>
-        <EntityType Name="Oppinions">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CreationDate" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="Header" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Body" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="Likes" Type="int" Nullable="false" />
-          <Property Name="Dislikes" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="Settings">
           <Key>
             <PropertyRef Name="ID" />
@@ -237,7 +226,6 @@
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoriesToEntries" EntityType="Self.CategoriesToEntries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comments" EntityType="Self.Comments" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Oppinions" EntityType="Self.Oppinions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserProfiles" EntityType="Self.UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="webpages_Membership" EntityType="Self.webpages_Membership" Schema="dbo" store:Type="Tables" />
@@ -281,7 +269,6 @@
           <EntitySet Name="Blogentries" EntityType="Blog.Core.DataAccess.Blog.Blogentry" />
           <EntitySet Name="Categories" EntityType="Blog.Core.DataAccess.Blog.Category" />
           <EntitySet Name="Comments" EntityType="Blog.Core.DataAccess.Blog.Comment" />
-          <EntitySet Name="Oppinions" EntityType="Blog.Core.DataAccess.Blog.Oppinion" />
           <EntitySet Name="Settings" EntityType="Blog.Core.DataAccess.Blog.Setting" />
           <EntitySet Name="UserProfiles" EntityType="Blog.Core.DataAccess.Blog.UserProfile" />
           <EntitySet Name="webpages_Membership" EntityType="Blog.Core.DataAccess.Blog.webpages_Membership" />
@@ -351,17 +338,6 @@
           <Property Name="CreatorID" Type="Int32" />
           <NavigationProperty Name="Blogentry" Relationship="Blog.Core.DataAccess.Blog.FK_Comments_Blogentries" FromRole="Comment" ToRole="Blogentry" />
           <NavigationProperty Name="UserProfile" Relationship="Blog.Core.DataAccess.Blog.FK_Comments_UserProfiles" FromRole="Comment" ToRole="UserProfile" />
-        </EntityType>
-        <EntityType Name="Oppinion">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="Header" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Body" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Likes" Type="Int32" Nullable="false" />
-          <Property Name="Dislikes" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Setting">
           <Key>
@@ -552,18 +528,6 @@
               <MappingFragment StoreEntitySet="Comments">
                 <ScalarProperty Name="CreatorID" ColumnName="CreatorID" />
                 <ScalarProperty Name="BlogentryID" ColumnName="BlogentryID" />
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="Header" ColumnName="Header" />
-                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Oppinions">
-            <EntityTypeMapping TypeName="Blog.Core.DataAccess.Blog.Oppinion">
-              <MappingFragment StoreEntitySet="Oppinions">
-                <ScalarProperty Name="Dislikes" ColumnName="Dislikes" />
-                <ScalarProperty Name="Likes" ColumnName="Likes" />
                 <ScalarProperty Name="Body" ColumnName="Body" />
                 <ScalarProperty Name="Header" ColumnName="Header" />
                 <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />

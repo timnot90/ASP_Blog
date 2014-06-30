@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Web.Mvc;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.ModelValidators.Home;
 using FluentValidation.Attributes;
@@ -9,8 +10,11 @@ namespace Blog.Web.Models.Home
     public class LeaveCommentModel
     {
         public int BlogentryId { get; set; }
+
+        [AllowHtml]
         public string Header { get; set; }
 
+        [AllowHtml]
         public string Body { get; set; }
 
         public string CaptchaResult { get; set; }

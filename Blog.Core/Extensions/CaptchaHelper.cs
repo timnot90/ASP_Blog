@@ -20,8 +20,8 @@ namespace Blog.Core.Extensions
 
         private static string GenerateSimpleCaptcha()
         {
-            int number1 = Random.Next(-100, 100);
-            int number2 = Random.Next(-100, 100);
+            int number1 = Random.Next(0, 50);
+            int number2 = Random.Next(0, 50);
             HttpContext.Current.Session.Add(KeyCaptchaResult, number1 + number2);
             return string.Format(CaptchaBaseString, number1, number2);
         }

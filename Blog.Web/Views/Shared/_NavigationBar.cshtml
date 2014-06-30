@@ -15,7 +15,6 @@
             @Html.ActionLink(Model.SiteName, "Index", "Home", htmlAttributes: new { @class = "navbar-brand" }, routeValues: new { area = "" })
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -23,48 +22,22 @@
                         <i class="glyphicon glyphicon-list"></i> View Posts
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-user"></i>
-                        @if (WebSecurity.IsAuthenticated)
-                        {
-                            @:@WebSecurity.CurrentUserName
-                        }
-                        else
-                        {
-                            @:My Profile
-                        }<b class="caret"></b>
-
-                    </a>
-                    <ul class="dropdown-menu">
-                        @if (WebSecurity.IsAuthenticated)
-                        {
-                            <li>
-                                <a href="@Url.Action( "EditProfile", "Account", new {area = ""} )">
-                                    <i class="glyphicon glyphicon-cog"></i> Edit Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action( "Logout", "Account", new {area = "", returnUrl = HttpContext.Current.Request.Url.AbsolutePath} )">
-                                    <i class="glyphicon glyphicon-log-out"></i> Logout
-                                </a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li>
-                                <a href="@Url.Action( "Register", "Account", new {area = ""} )">
-                                    <i class="glyphicon glyphicon-edit"></i> Register
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action( "Login", "Account", new {area = ""} )">
-                                    <i class="glyphicon glyphicon-log-in"></i> Login
-                                </a>
-                            </li>
-                        }
-                    </ul>
-                </li>
+                @if (WebSecurity.IsAuthenticated)
+                {
+                    <li>
+                        <a href="@Url.Action( "EditProfile", "Account", new {area = ""} )">
+                            <i class="glyphicon glyphicon-user"></i> @WebSecurity.CurrentUserName
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a href="@Url.Action( "Register", "Account", new {area = ""} )">
+                            <i class="glyphicon glyphicon-edit"></i> Register
+                        </a>
+                    </li>
+                }
                 <li>
                     <a href="@Url.Action( "Index", "About", new {area = ""} )">
                         <i class="glyphicon glyphicon-info-sign"></i> About
@@ -77,22 +50,6 @@
                             <i class="glyphicon glyphicon-eye-open"></i> Administration
                         </a>
                     </li>
-                    @*<li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-signal"></i> Administration <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="@Url.Action( "Users", "Administration", new {area = "Administration"} )">
-                                    <i class="glyphicon glyphicon-eye-open"></i> Users
-                                </a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action( "BlogSettings", "Administration", new {area = "Administration"} )">
-                                    <i class="glyphicon glyphicon-eye-open"></i> Settings
-                                </a>
-                            </li>
-                            <li>
-                        </ul>
-                    </li>*@
                 }
                 <li>
                     @if (WebSecurity.IsAuthenticated)

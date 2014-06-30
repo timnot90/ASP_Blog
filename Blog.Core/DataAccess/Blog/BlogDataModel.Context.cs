@@ -9,6 +9,7 @@
 
 namespace Blog.Core.DataAccess.Blog
 {
+    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
@@ -27,7 +28,6 @@ namespace Blog.Core.DataAccess.Blog
         public virtual DbSet<Blogentry> Blogentries { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
-        public virtual DbSet<Oppinion> Oppinions { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<UserProfile> UserProfiles { get; set; }
         public virtual DbSet<webpages_Membership> webpages_Membership { get; set; }

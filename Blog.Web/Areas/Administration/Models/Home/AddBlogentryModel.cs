@@ -12,11 +12,10 @@ namespace Blog.Web.Areas.Administration.Models.Home
     {
         private List<CategorySelectedModel> _categories = new List<CategorySelectedModel>();
 
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
+        [AllowHtml]
         public string Header { get; set; }
 
         [AllowHtml]
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string Body { get; set; }
 
         public List<CategorySelectedModel> Categories

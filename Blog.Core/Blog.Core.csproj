@@ -104,9 +104,6 @@
     <Compile Include="DataAccess\Blog\Comment.cs">
       <DependentUpon>BlogDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\Blog\Oppinion.cs">
-      <DependentUpon>BlogDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="DataAccess\Blog\Setting.cs">
       <DependentUpon>BlogDataModel.tt</DependentUpon>
     </Compile>

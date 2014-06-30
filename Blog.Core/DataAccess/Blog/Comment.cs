@@ -10,7 +10,8 @@
 namespace Blog.Core.DataAccess.Blog
 {
     using System;
-
+    using System.Collections.Generic;
+    
     public partial class Comment
     {
         public int ID { get; set; }
