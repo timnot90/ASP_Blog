@@ -1,14 +1,13 @@
 ﻿@using Blog.Web
-@using Blog.Web.Models.Home
-@using Blog.Web.Models.Shared
-@model Blog.Web.Models.Home.CategoryListModel
+@using Blog.Web.Areas.Administration.Models
+@model CategoryListModel
 @{
     ViewBag.Title = "Categories";
 }
 @Scripts.Render("~/bundles/categories")
 @Scripts.Render("~/bundles/jqueryval")
 <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
         @if (Model.Categories.Count > 0)
         {
             <table class="table table-hover table-striped table-bordered">
@@ -40,9 +39,7 @@
         <br />
         @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
         {
-        Html.RenderPartial("AddCategory", new CategoryModel());
+        Html.RenderPartial("_AddCategory", new AddCategoryModel());
         }
     </div>
-
-    @Html.Action("_BlogSidebar")
 </div>

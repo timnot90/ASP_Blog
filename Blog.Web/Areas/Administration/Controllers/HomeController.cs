@@ -1,5 +1,8 @@
 ﻿using System.Web.Mvc;
+using Blog.Core.Exceptions;
+using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Areas.Administration.Services;
+using Blog.Web.Models.Home;
 using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Controllers
@@ -7,6 +10,25 @@ namespace Blog.Web.Areas.Administration.Controllers
     public class HomeController : Controller
     {
         readonly IBlogAdministrationHomeService _service = new BlogAdministrationHomeService();
+
+        [HttpGet]
+        [Authorize(Roles = CustomRoles.Administrator)]
+        public ActionResult AddBlogentry()
+        {
+            return View(_service.GetAddBlogentryModel());
+        }
+
+        [HttpPost]
+        [Authorize(Roles = CustomRoles.Administrator)]
+        public ActionResult AddBlogentry(AddBlogentryModel blogentry)
+        {
+            if (ModelState.IsValid)
+            {
+                int id = _service.CreateNewBlogentry(blogentry);
+                return RedirectToAction("Blogentry", new { area="", id });
+            }
+            return View(blogentry);
+        }
 
         public ActionResult Index()
         {
@@ -51,6 +73,52 @@ namespace Blog.Web.Areas.Administration.Controllers
         {
             _service.SetUserLockedState(id, state);
         }
+
+        [AllowAnonymous]
+        public ActionResult Categories()
+        {
+            return View(_service.GetCategoryListModel());
+        }
+        [Authorize(Roles = CustomRoles.Administrator)]
+        public ActionResult DeleteCategory(int categoryid)
+        {
+            try
+            {
+                _service.DeleteCategory(categoryid);
+            }
+            catch (BlogDbException)
+            {
+                // BlogDbException is occuring here, when you try to delete a category
+                // even though it is already deleted.
+            }
+            return RedirectToAction("Categories");
+        }
+        [HttpGet]
+        [Authorize(Roles = CustomRoles.Administrator)]
+        public PartialViewResult _AddCategory()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        [Authorize(Roles = CustomRoles.Administrator)]
+        public ActionResult AddCategory(AddCategoryModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _service.CreateCategory(model);
+                }
+                catch (CategoryAlreadyExistsException)
+                {
+                    ModelState.AddModelError("CategoryAlreadyExists", "A category with the entered name already exists.");
+                }
+            }
+            return View("Categories", _service.GetCategoryListModel());
+        }
+
+
+
 
     }
 }

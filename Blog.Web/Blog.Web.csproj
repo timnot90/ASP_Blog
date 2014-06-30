@@ -149,11 +149,15 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Administration\Models\AddCategoryModel.cs" />
+    <Compile Include="Areas\Administration\Models\CategoryCreatorModel.cs" />
+    <Compile Include="Areas\Administration\Models\CategoryListItemModel.cs" />
+    <Compile Include="Areas\Administration\Models\CategoryListModel.cs" />
+    <Compile Include="Areas\Administration\Models\CategoryModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListModel.cs" />
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
     <Compile Include="Models\Account\RegistrationValidationModel.cs" />
     <Compile Include="Models\Home\BlogentryCreatorModel.cs" />
-    <Compile Include="Models\Home\CategoryCreatorModel.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
     <Compile Include="Areas\Administration\Services\BlogAdministrationHomeService.cs" />
@@ -175,13 +179,11 @@
     <Compile Include="Models\Home\BlogentryListModel.cs" />
     <Compile Include="Models\Home\CommentCreatorModel.cs" />
     <Compile Include="Models\Home\EditBlogentryModel.cs" />
-    <Compile Include="Models\Home\AddBlogentryModel.cs" />
+    <Compile Include="Areas\Administration\Models\AddBlogentryModel.cs" />
     <Compile Include="Models\Home\BlogentryDetailModel.cs" />
     <Compile Include="Models\Home\BlogEntryListItemModel.cs" />
     <Compile Include="Models\Home\BlogSidebarModel.cs" />
-    <Compile Include="Models\Home\CategoryListItemModel.cs" />
     <Compile Include="Models\Account\UserProfileModel.cs" />
-    <Compile Include="Models\Home\CategoryListModel.cs" />
     <Compile Include="Models\Home\CategoryModel.cs" />
     <Compile Include="Models\Home\CommentModel.cs" />
     <Compile Include="Models\Account\RegisterModel.cs" />
@@ -369,11 +371,11 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\_BlogentryListItem.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\AddBlogentry.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\AddBlogentry.cshtml" />
     <Content Include="Views\Home\Blogentry.cshtml" />
     <Content Include="Views\Home\_BlogSidebar.cshtml" />
-    <Content Include="Views\Home\Categories.cshtml" />
-    <Content Include="Views\Home\AddCategory.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\Categories.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\_AddCategory.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Web.sitemap" />
     <Content Include="Views\Home\BlogentryNotFound.cshtml" />
@@ -390,7 +392,7 @@
     <Content Include="Views\Account\ResetPasswordFirstStepCompleted.cshtml" />
     <Content Include="Views\Home\_EditBlogentry.cshtml" />
     <Content Include="Views\Shared\_Keywords.cshtml" />
-    <Content Include="Views\Home\_Category.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\_Category.cshtml" />
     <Content Include="Views\Account\ValidateRegistrationToken.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@ using System.Web.Mvc;
 using Blog.Web.ModelValidators.Home;
 using FluentValidation.Attributes;
 
-namespace Blog.Web.Models.Home
+namespace Blog.Web.Areas.Administration.Models
 {
     [Validator(typeof(AddBlogentryModelValidator))]
     public class AddBlogentryModel

@@ -1,6 +1,6 @@
 ﻿using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Models.Home
+namespace Blog.Web.Areas.Administration.Models
 {
     public class CategoryListItemModel
     {

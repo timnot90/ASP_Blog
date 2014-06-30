@@ -127,7 +127,7 @@
         <div class="row">
             <div class="col-lg-12">
 
-                <h2>An error occurred while processing your request. The requested page wasn't found</h2>
+                <h2>An error occurred while processing your request.</h2>
             </div>
         </div>
     </div>

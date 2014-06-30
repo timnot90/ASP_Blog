@@ -32,12 +32,6 @@ namespace Blog.Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Categories()
-        {
-            return View( _service.GetCategoryListModel() );
-        }
-
-        [AllowAnonymous]
         public ActionResult Blogentry( int id )
         {
             BlogentryDetailModel model = _service.GetBlogentry( id );
@@ -46,40 +40,6 @@ namespace Blog.Web.Controllers
                 return View( model );
             }
             return View( "BlogentryNotFound", id );
-        }
-
-        [HttpGet]
-        [Authorize( Roles = CustomRoles.Administrator )]
-        public ActionResult AddBlogentry()
-        {
-            return View( _service.GetAddBlogentryModel() );
-        }
-
-        [HttpPost]
-        [Authorize( Roles = CustomRoles.Administrator )]
-        public ActionResult AddBlogentry( AddBlogentryModel blogentry )
-        {
-            if (ModelState.IsValid)
-            {
-                int id = _service.CreateNewBlogentry( blogentry );
-                return RedirectToAction( "Blogentry", new {id} );
-            }
-            return View( blogentry );
-        }
-
-        [Authorize( Roles = CustomRoles.Administrator )]
-        public ActionResult DeleteCategory( int categoryid )
-        {
-            try
-            {
-                _service.DeleteCategory( categoryid );
-            }
-            catch (BlogDbException)
-            {
-                // BlogDbException is occuring here, when you try to delete a category
-                // even though it is already deleted.
-            }
-            return RedirectToAction( "Categories" );
         }
 
         [HttpPost]
@@ -108,31 +68,6 @@ namespace Blog.Web.Controllers
         public PartialViewResult _BlogSidebar()
         {
             return PartialView( _service.GetBlogSidebarModel() );
-        }
-
-        [HttpGet]
-        [Authorize( Roles = CustomRoles.Administrator )]
-        public PartialViewResult AddCategory()
-        {
-            return PartialView();
-        }
-
-        [HttpPost]
-        [Authorize( Roles = CustomRoles.Administrator )]
-        public ActionResult AddCategory( CategoryModel model )
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _service.CreateCategory(model);
-                }
-                catch (CategoryAlreadyExistsException)
-                {
-                    ModelState.AddModelError("CategoryAlreadyExists", "A category with the entered name already exists.");
-                }
-            }
-            return View("Categories", _service.GetCategoryListModel());
         }
 
         [HttpGet]

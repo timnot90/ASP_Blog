@@ -1,8 +1,8 @@
 ﻿@using Blog.Web
-@model Blog.Web.Models.Home.CategoryModel
+@model Blog.Web.Areas.Administration.Models.CategoryModel
 <tr>
     <td>
-        @Html.ActionLink(Model.Name + " (" + Model.NumberOfPosts + ")", "Index", "Home", new { categoryId = Model.Id }, null)
+        @Html.ActionLink(Model.Name + " (" + Model.NumberOfPosts + ")", "Index", "Home", new { area="", categoryId = Model.Id }, null)
     </td>
     @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
     {

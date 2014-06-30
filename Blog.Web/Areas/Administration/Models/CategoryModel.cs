@@ -1,14 +1,12 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Blog.Core.DataAccess.Blog;
-using Blog.Web.Areas.Administration.Models;
 
-namespace Blog.Web.Models.Home
+namespace Blog.Web.Areas.Administration.Models
 {
     public class CategoryModel
     {
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public int NumberOfPosts { get; set; }
         public CategoryCreatorModel Creator { get; set; }

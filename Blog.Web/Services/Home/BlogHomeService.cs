@@ -55,19 +55,6 @@ namespace Blog.Web.Services.Home
 
         #region Blogentry
 
-        public int CreateNewBlogentry(AddBlogentryModel entryModel)
-        {
-            Blogentry entry = new Blogentry();
-            entry.Header = FilterHtmlTags(entryModel.Header);
-            entry.Body = FilterHtmlTags(entryModel.Body);
-
-            entry.CreatorID = WebSecurity.CurrentUserId;
-            entry.Categories = entryModel.Categories
-                .Where(categoryModel => categoryModel.IsSelected)
-                .Select( categoryModel => _repository.GetCategoryById(categoryModel.Id) ).ToList();
-            return _repository.SaveBlogentry(entry, true);
-        }
-
         public int SaveBlogentryChanges(EditBlogentryModel model)
         {
             Blogentry entry = _repository.GetBlogentry(model.Id);
@@ -172,15 +159,6 @@ namespace Blog.Web.Services.Home
             return model;
         }
 
-        public AddBlogentryModel GetAddBlogentryModel()
-        {
-            AddBlogentryModel model = new AddBlogentryModel
-            {
-                Categories = GetAllCategoryModels()
-            };
-            return model;
-        }
-
         public EditBlogentryModel GetEditBlogentryModel(int id)
         {
             Blogentry entry = _repository.GetBlogentry(id);
@@ -188,55 +166,15 @@ namespace Blog.Web.Services.Home
             if (model != null)
             {
                 model.Categories = _repository.GetAllCategories().Select(c => new CategoryModel(c)).ToList();
-                foreach (CategoryModel category in
-                    model.Categories.Where(category => entry.Categories.Any(c => c.ID == category.Id)))
-                {
-                    category.IsSelected = true;
-                }
-                model.Body = ReplaceBrWithNewlines(model.Body);
+                model.Categories.Where( category => entry.Categories.Any( c => c.ID == category.Id ) )
+                    .ForEach( c => c.IsSelected = true );
+                Regex.Replace( @"<br[\s]*/?>", model.Body, "\r\n" );
             }
             return model;
         }
-
         #endregion
 
         #region Category
-
-        public int CreateCategory(CategoryModel categoryModel)
-        {
-            if (_repository.GetCategoryByName(categoryModel.Name) != null)
-            {
-                throw new CategoryAlreadyExistsException();
-            }
-            Category category = new Category();
-            categoryModel.UpdateSource(category);
-            category.CreationDate = DateTime.Now;
-            category.CreatorID = WebSecurity.CurrentUserId;
-            category.UserProfile = _repository.GetUserProfileById( category.CreatorID );
-            return _repository.SaveCategory(category, true);
-        }
-
-        public void DeleteCategory(int categoryid)
-        {
-            _repository.DeleteCategory(categoryid);
-        }
-
-        public CategoryListModel GetCategoryListModel()
-        {
-            CategoryListModel model = new CategoryListModel
-            {
-                Categories = GetAllCategoryModels()
-            };
-            return model;
-        }
-
-        public CategoryModel GetCategory(int id)
-        {
-            Category category = _repository.GetCategoryById(id);
-            CategoryModel categoryModel = category == null ? null : new CategoryModel(category);
-            return categoryModel;
-        }
-
         private List<CategoryModel> GetAllCategoryModels()
         {
             return _repository.GetAllCategories().OrderBy(c => c.Name).Select(
@@ -280,20 +218,15 @@ namespace Blog.Web.Services.Home
             return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
         }
 
-        private static string ReplaceBrWithNewlines(string text)
-        {
-            Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
-            return replaceBrWithNewline.Replace(text, "\r\n");
-        }
-        private string FilterHtmlTags(string text)
+        private static string FilterHtmlTags(string text)
         {
             if (text == null) return null;
 
-            Regex replaceBrWithNewline = new Regex( @"<br[\s]*/?>" );
-            Regex removeHtml = new Regex( @"<[^>]*>" );
-            Regex replaceNewlineWithBr = new Regex( @"(\r\n)|\r|\n" );
+            Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
+            Regex removeHtml = new Regex(@"<[^>]*>");
+            Regex replaceNewlineWithBr = new Regex(@"(\r\n)|\r|\n");
             return replaceNewlineWithBr.Replace(
-                removeHtml.Replace( replaceBrWithNewline.Replace( text, "\r\n" ), "" ), "<br/>" );
+                removeHtml.Replace(replaceBrWithNewline.Replace(text, "\r\n"), ""), "<br/>");
         }
         #endregion
     }
