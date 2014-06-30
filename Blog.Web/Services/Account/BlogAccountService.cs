@@ -118,10 +118,10 @@ namespace Blog.Web.Services.Account
             }
         }
 
-        public UserProfileModel GetUserByName(string username)
+        public UserModel GetUserByName(string username)
         {
             UserProfile user = _repository.GetAllUserProfiles().FirstOrDefault( u => u.UserName == username );
-            return user == null ? null : new UserProfileModel( user );
+            return user == null ? null : new UserModel( user );
         }
         #endregion
     }

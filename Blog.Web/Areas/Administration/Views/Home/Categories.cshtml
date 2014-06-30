@@ -1,5 +1,5 @@
 ﻿@using Blog.Web
-@using Blog.Web.Areas.Administration.Models
+@using Blog.Web.Areas.Administration.Models.Home
 @model CategoryListModel
 @{
     ViewBag.Title = "Categories";
@@ -23,9 +23,9 @@
                     </tr>
                 </thead>
                 <tbody id="categoryList">
-                    @foreach (CategoryModel category in Model.Categories)
+                    @foreach (CategoryListItemModel category in Model.Categories)
                     {
-                        @Html.Partial("_Category", category)
+                        @Html.Partial("_CategoryListItem", category)
                     }
                 </tbody>
             </table>

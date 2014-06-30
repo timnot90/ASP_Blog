@@ -1,8 +1,7 @@
-﻿using Blog.Web.Areas.Administration.Models;
-using Blog.Web.Models.Home;
+﻿using Blog.Web.Areas.Administration.Models.Home;
 using FluentValidation;
 
-namespace Blog.Web.ModelValidators.Home
+namespace Blog.Web.Areas.Administration.ModelValidators
 {
     public class EditBlogentryModelValidator : AbstractValidator<EditBlogentryModel>
     {

@@ -1,6 +1,4 @@
-using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Models.Home;
-using CategoryModel = Blog.Web.Models.Home.CategoryModel;
 
 namespace Blog.Web.Services.Home
 {
@@ -9,7 +7,7 @@ namespace Blog.Web.Services.Home
         #region Blogentry
         void DeleteBlogentry(int id);
         BlogentryListModel GetBlogentryListModel();
-        BlogentryDetailModel GetBlogentry(int id);
+        BlogentryDetailModel GetBlogentryDetailModel(int id);
         BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear );
         #endregion
 

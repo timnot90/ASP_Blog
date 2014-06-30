@@ -102,7 +102,7 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login( LoginModel model, string returnUrl )
         {
-            UserProfileModel user = Service.GetUserByName( model.UserName );
+            UserModel user = Service.GetUserByName( model.UserName );
 
             if (ModelState.IsValid && WebSecurity.Login( model.UserName, model.Password, model.StaySignedIn ))
             {
@@ -199,7 +199,7 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordSecondStep( string token )
         {
-            ResetPasswordSecondStepModel model = new ResetPasswordSecondStepModel( token );
+            var model = new ResetPasswordSecondStepModel( token );
             return View( model );
         }
 

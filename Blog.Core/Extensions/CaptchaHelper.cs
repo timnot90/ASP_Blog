@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,6 +12,7 @@ namespace Blog.Core.Extensions
         private const string KeyCaptchaResult = "EXPECTED_CAPTCHA_RESULT";
 
 
+        // ReSharper disable once UnusedParameter.Global
         public static MvcHtmlString SimpleCaptcha(this HtmlHelper helper)
         {
             return new MvcHtmlString(GenerateSimpleCaptcha());

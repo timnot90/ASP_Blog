@@ -81,15 +81,11 @@ function PaginationScript() {
         this.goToNextPage = function() {
             if (currentPageIndex != lastPageIndex) {
                 this.goToPage(currentPageIndex + 1);
-            } else {
-                return false;
             }
         };
         this.goToPreviousPage = function() {
             if (currentPageIndex != 0) {
                 this.goToPage(currentPageIndex - 1);
-            } else {
-                return false;
             }
         };
     }

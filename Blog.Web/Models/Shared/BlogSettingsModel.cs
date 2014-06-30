@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Web.Mvc;
+using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.ModelValidators.Shared;
 using FluentValidation.Attributes;
@@ -72,6 +73,7 @@ namespace Blog.Web.Models.Shared
         [DisplayName("Activate Comments")]
         public bool CommentsActivated { get; set; }
 
+        [UsedImplicitly]
         public BlogSettingsModel()
         {
         }
@@ -104,6 +106,7 @@ namespace Blog.Web.Models.Shared
             source.CommentsActivated = CommentsActivated;
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void UpdateModel( Setting source )
         {
             SiteName = source.SiteName;

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Sockets;
-using System.Web;
 using Blog.Web.Models.Shared;
 using FluentValidation;
 
@@ -52,30 +49,30 @@ namespace Blog.Web.ModelValidators.Shared
         }
         private static bool BeAValidSmtpConnection(BlogSettingsModel model, string url)
         {
-            bool valid = false;
+            var valid = false;
             try
             {
 
-                using (TcpClient smtpTest = new TcpClient())
+                using (var smtpTest = new TcpClient())
                 {
                     smtpTest.ReceiveTimeout = 500;
-                    IAsyncResult ar = smtpTest.BeginConnect(url, model.SmtpServerPort, null, null);
+                    IAsyncResult ar = smtpTest.BeginConnect( url, model.SmtpServerPort, null, null );
                     System.Threading.WaitHandle wh = ar.AsyncWaitHandle;
                     try
                     {
-                        if (!ar.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(5), false))
+                        if (!ar.AsyncWaitHandle.WaitOne( TimeSpan.FromSeconds( 5 ), false ))
                         {
                             smtpTest.Close();
                             throw new TimeoutException();
                         }
 
-                        smtpTest.EndConnect(ar);
+                        smtpTest.EndConnect( ar );
 
                         if (smtpTest.Connected)
                         {
                             NetworkStream ns = smtpTest.GetStream();
-                            StreamReader sr = new StreamReader(ns);
-                            if (sr.ReadLine().Contains("220"))
+                            var sr = new StreamReader( ns );
+                            if (sr.ReadLine().Contains( "220" ))
                             {
                                 valid = true;
                             }
@@ -88,8 +85,11 @@ namespace Blog.Web.ModelValidators.Shared
                     }
                 }
             }
-            // suppress any errors
-            catch (Exception) { }
+            // ReSharper disable once EmptyGeneralCatchClause
+            catch (Exception)
+            {
+                // suppress any errors
+            }
 
             return valid;
         }

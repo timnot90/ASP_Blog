@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;
 
@@ -82,7 +81,7 @@ namespace Blog.Core.Repositories
             }
         }
 
-        public List<Category> GetAllCategories()
+        public IEnumerable<Category> GetAllCategories()
         {
             return BlogDataContext.Current.Categories.OrderBy(c => c.Name).ToList();
         }
@@ -117,7 +116,7 @@ namespace Blog.Core.Repositories
             }
         }
 
-        public List<UserProfile> GetAllUserProfiles()
+        public IEnumerable<UserProfile> GetAllUserProfiles()
         {
             return BlogDataContext.Current.UserProfiles.OrderBy(u => u.UserName).ToList();
         }
@@ -194,11 +193,6 @@ namespace Blog.Core.Repositories
             return comment.ID;
         }
 
-        public List<Comment> GetAllComments()
-        {
-            return BlogDataContext.Current.Comments.OrderBy(c => c.CreationDate).ToList();
-        }
-
         public Comment GetComment(int id)
         {
             return BlogDataContext.Current.Comments.FirstOrDefault(c => c.ID == id);
@@ -230,37 +224,39 @@ namespace Blog.Core.Repositories
             Setting blogSetting = BlogDataContext.Current.Settings.FirstOrDefault(s => s.UNIQUE_ID == Guid.Empty);
             if (blogSetting == null)
             {
-                blogSetting = new Setting();
-                blogSetting.UNIQUE_ID = Guid.Empty;
-                blogSetting.SiteName = "Blog";
-                blogSetting.FooterText = "<h3 id='footer'>Your HTML Footer Text. Go to the settings to change it.</h1>" + 
-                                            "\r\n<style>" + 
-                                            "#footer {" +
-                                            "\r\ncolor: grey" + 
-                                            "\r\n}" + 
-                                            "\r\n</style>";
-                blogSetting.CommentsActivated = true;
-                blogSetting.NumberOfEntriesPerPage = 5;
-
-                blogSetting.RegistrationMailSubject = "Registration Confirmation";
-                blogSetting.RegistrationMailBody =
-                    "Hello " + EmailPlaceholders.RegistrationMailPlaceholderUsername + ",<br/>You are successfully registered for Blog. Please click on the link below in order to activate your account.<br/>" + EmailPlaceholders.RegistrationMailPlaceholderActivationLink;
-                blogSetting.RegistrationMailSender = "default_registration@blog.com";
-
-                blogSetting.WelcomeMailSubject = "Welcome to Blog.";
-                blogSetting.WelcomeMailBody =
-                    "Hello " + EmailPlaceholders.WelcomeMailPlaceholderUsername + "Welcome to Blog. Have Fun!";
-                blogSetting.WelcomeMailSender = "default_welcome@blog.com";
-
-                blogSetting.PasswordChangeMailSubject = "Password Change Confirmation";
-                blogSetting.PasswordChangeMailBody =
-                    "Hello " + EmailPlaceholders.PasswordChangeMailPlaceholderUsername + ",<br/>To complete your password change, click on the link below.<br/>" + EmailPlaceholders.PasswordChangeMailPlaceholderSecondStepLink;
-                blogSetting.PasswordChangeMailSender = "default_password_change@blog.com";
-
-                blogSetting.SmtpServerAddress = "smtp.blog.com";
-                blogSetting.SmtpServerUsername = "admin";
-                blogSetting.SmtpServerPassword = "password";
-                blogSetting.SmtpIsPasswordMandatoryForLogin = true;
+                blogSetting = new Setting
+                {
+                    UNIQUE_ID = Guid.Empty,
+                    SiteName = "Blog",
+                    FooterText = "<h3 id='footer'>Your HTML Footer Text. Go to the settings to change it.</h1>" +
+                                 "\r\n<style>" +
+                                 "#footer {" +
+                                 "\r\ncolor: grey" +
+                                 "\r\n}" +
+                                 "\r\n</style>",
+                    CommentsActivated = true,
+                    NumberOfEntriesPerPage = 5,
+                    RegistrationMailSubject = "Registration Confirmation",
+                    RegistrationMailBody =
+                        "Hello " + EmailPlaceholders.RegistrationMailPlaceholderUsername +
+                        ",<br/>You are successfully registered for Blog. Please click on the link below in order to activate your account.<br/>" +
+                        EmailPlaceholders.RegistrationMailPlaceholderActivationLink,
+                    RegistrationMailSender = "default_registration@blog.com",
+                    WelcomeMailSubject = "Welcome to Blog.",
+                    WelcomeMailBody =
+                        "Hello " + EmailPlaceholders.WelcomeMailPlaceholderUsername + "Welcome to Blog. Have Fun!",
+                    WelcomeMailSender = "default_welcome@blog.com",
+                    PasswordChangeMailSubject = "Password Change Confirmation",
+                    PasswordChangeMailBody =
+                        "Hello " + EmailPlaceholders.PasswordChangeMailPlaceholderUsername +
+                        ",<br/>To complete your password change, click on the link below.<br/>" +
+                        EmailPlaceholders.PasswordChangeMailPlaceholderSecondStepLink,
+                    PasswordChangeMailSender = "default_password_change@blog.com",
+                    SmtpServerAddress = "smtp.blog.com",
+                    SmtpServerUsername = "admin",
+                    SmtpServerPassword = "password",
+                    SmtpIsPasswordMandatoryForLogin = true
+                };
 
                 BlogDataContext.Current.Settings.Add(blogSetting);
                 BlogDataContext.Current.SaveChanges();

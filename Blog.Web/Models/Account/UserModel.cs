@@ -2,38 +2,39 @@
 using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Models.Home
+namespace Blog.Web.Models.Account
 {
-    public class CommentCreatorModel
+    public class UserModel
     {
         public int Id { get; set; }
 
         [DisplayName("Display Name")]
         public string DisplayName { get; set; }
 
+        public bool IsLocked { get; set; }
+
         [UsedImplicitly]
-        public CommentCreatorModel()
+        public UserModel()
         {
         }
 
-        public CommentCreatorModel(UserProfile userProfile)
+        public UserModel(UserProfile userProfile)
         {
             UpdateModel(userProfile);
+        }
+
+        public void UpdateSource(UserProfile source)
+        {
+            source.DisplayName = DisplayName;
         }
 
         // ReSharper disable once MemberCanBePrivate.Global
         public void UpdateModel(UserProfile source)
         {
-            if (source != null)
-            {
-                Id = source.ID;
-                DisplayName = source.DisplayName;
-            }
-            else
-            {
-                Id = 0;
-                DisplayName = "Anonymous";
-            }
+            Id = source.ID;
+            DisplayName = source.DisplayName;
+            IsLocked = source.IsLocked;
         }
+
     }
 }

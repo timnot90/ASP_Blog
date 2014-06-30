@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Blog.Core.Annotations;
 
 namespace Blog.Web.Models.Account
 {
@@ -12,6 +13,7 @@ namespace Blog.Web.Models.Account
         [DisplayName("Password Confirmed")]
         public string NewPasswordConfirmed { get; set; }
 
+        [UsedImplicitly]
         public ResetPasswordSecondStepModel()
         {
         }

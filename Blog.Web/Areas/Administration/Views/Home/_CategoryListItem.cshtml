@@ -1,5 +1,5 @@
 ﻿@using Blog.Web
-@model Blog.Web.Areas.Administration.Models.CategoryModel
+@model Blog.Web.Areas.Administration.Models.Home.CategoryListItemModel
 <tr>
     <td>
         @Html.ActionLink(Model.Name + " (" + Model.NumberOfPosts + ")", "Index", "Home", new { area="", categoryId = Model.Id }, null)

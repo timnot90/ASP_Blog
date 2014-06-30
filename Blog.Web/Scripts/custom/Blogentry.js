@@ -1,4 +1,4 @@
-﻿function handleLeaveCommentSuccess(data, status, xhr) {
+﻿function handleLeaveCommentSuccess(data) {
     if (data.success) {
         $("#comments").append(data.data);
         $("#leave-comment-header").val("");
@@ -9,8 +9,6 @@
     }
 }
 
-function handleEditBlogentrySuccess(ajaxContext) {
-    console.log("context: ");
-    console.log(ajaxContext);
+function handleEditBlogentrySuccess() {
     window.location.href = "/Home/Blogentry?id=" + $("#blogentryId").val();
 }

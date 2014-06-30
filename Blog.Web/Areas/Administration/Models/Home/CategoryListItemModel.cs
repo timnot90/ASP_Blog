@@ -1,10 +1,9 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Areas.Administration.Models
+namespace Blog.Web.Areas.Administration.Models.Home
 {
-    public class CategoryModel
+    public class CategoryListItemModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,13 +17,8 @@ namespace Blog.Web.Areas.Administration.Models
                 return string.Format("{0:D}, um {0:t} Uhr", CreationDate);
             }
         }
-        public bool IsSelected { get; set; }
 
-        public CategoryModel()
-        {
-        }
-
-        public CategoryModel(Category source)
+        public CategoryListItemModel(Category source)
         {
             UpdateModel(source);
         }
@@ -36,11 +30,6 @@ namespace Blog.Web.Areas.Administration.Models
             NumberOfPosts = source.Blogentries.Count;
             CreationDate = source.CreationDate;
             Creator = new CategoryCreatorModel(source.UserProfile);
-        }
-
-        public void UpdateSource(Category source)
-        {
-            source.Name = Name;
         }
     }
 }

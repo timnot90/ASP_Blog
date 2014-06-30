@@ -7,12 +7,15 @@ namespace Blog.Web.Models.Account
     public class ChangePasswordModel
     {
         [DisplayName("Current Password")]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string CurrentPassword { get; set; }
 
         [DisplayName("New Password")]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string NewPassword { get; set; }
 
         [DisplayName("Confirm Password")]
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         public string NewPasswordConfirmed { get; set; }
     }
 }

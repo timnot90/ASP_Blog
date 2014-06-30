@@ -10,6 +10,6 @@ namespace Blog.Web.Services.Account
         bool ValidateRegistrationToken(string token);
         void SendPasswordResetToken(ResetPasswordModel model);
         void ResetPasswordSecondStep(ResetPasswordSecondStepModel model);
-        UserProfileModel GetUserByName(string username);
+        UserModel GetUserByName(string username);
     }
 }

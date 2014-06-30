@@ -48,6 +48,7 @@ namespace Blog.Web
 
                     WebSecurity.Login( "admin", "1");
                 }
+                // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception)
                 {
                     // ignore all exceptions

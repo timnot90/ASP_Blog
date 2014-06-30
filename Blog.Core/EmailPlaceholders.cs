@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Blog.Core
+﻿namespace Blog.Core
 {
-    public class EmailPlaceholders
+    public static class EmailPlaceholders
     {
         public const string RegistrationMailPlaceholderUsername = "#UserName#";
         public const string RegistrationMailPlaceholderActivationLink = "#ActivationLink#";

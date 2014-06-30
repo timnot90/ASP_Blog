@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
-using Blog.Web.ModelValidators.Home;
+using Blog.Web.Areas.Administration.ModelValidators;
 using FluentValidation.Attributes;
 
-namespace Blog.Web.Areas.Administration.Models
+namespace Blog.Web.Areas.Administration.Models.Home
 {
     [Validator(typeof(EditBlogentryModelValidator))]
     public class EditBlogentryModel
@@ -12,8 +13,10 @@ namespace Blog.Web.Areas.Administration.Models
         public int Id { get; set; }
         public string Header { get; set; }
         public string Body { get; set; }
-        public List<CategoryModel> Categories { get; set; }
+        public List<CategorySelectedModel> Categories { get; set; }
 
+
+        [UsedImplicitly]
         public EditBlogentryModel()
         {
         }
@@ -23,6 +26,7 @@ namespace Blog.Web.Areas.Administration.Models
             UpdateModel(blogentry);
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void UpdateModel(Blogentry source)
         {
             Id = source.ID;
@@ -41,9 +45,9 @@ namespace Blog.Web.Areas.Administration.Models
         {
             if (text == null) return null;
 
-            Regex replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
-            Regex removeHtml = new Regex(@"<[^>]*>");
-            Regex replaceNewlineWithBr = new Regex(@"(\r\n)|\r|\n");
+            var replaceBrWithNewline = new Regex(@"<br[\s]*/?>");
+            var removeHtml = new Regex(@"<[^>]*>");
+            var replaceNewlineWithBr = new Regex(@"(\r\n)|\r|\n");
             return replaceNewlineWithBr.Replace(
                 removeHtml.Replace(replaceBrWithNewline.Replace(text, "\r\n"), ""), "<br/>");
         }

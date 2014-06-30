@@ -1,5 +1,5 @@
 ﻿@using Blog.Web.Models.Home
-@model Blog.Web.Models.Home.BlogSidebarModel
+@model BlogSidebarModel
 @{
     Layout = null;
 }
@@ -38,7 +38,7 @@
             <div class="form-group">
                 <h4>Categories</h4>
                 @{ int i = 0; }
-                @foreach (CategoryModel category in Model.Categories)
+                @foreach (CategorySidebarModel category in Model.Categories)
                 {
                     <span>@Html.ActionLink( category.Name + " (" + @category.NumberOfPosts + ")", "Index", "Home", new {categoryId = category.Id}, null )  </span>
                     if (i != Model.Categories.Count - 1)

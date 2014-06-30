@@ -4,7 +4,7 @@ namespace Blog.Web.Models.Home
 {
     public class BlogSidebarModel
     {
-        public List<CategoryModel> Categories { get; set; }
+        public List<CategorySidebarModel> Categories { get; set; }
         public Dictionary<string, string> AvailableMonths { get; set; }
         public List<string> AvailableYears { get; set; }
 //        public string SearchText { get; set; }
@@ -13,6 +13,7 @@ namespace Blog.Web.Models.Home
         {
             AvailableMonths = new Dictionary<string, string>();
             AvailableYears = new List<string>();
+            Categories = new List<CategorySidebarModel>();
         }
     }
 }

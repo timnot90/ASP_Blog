@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Core.Repositories
@@ -15,7 +14,7 @@ namespace Blog.Core.Repositories
 
         #region Category
         int SaveCategory(Category category, bool isNewEntry = false);
-        List<Category> GetAllCategories();
+        IEnumerable<Category> GetAllCategories();
         Category GetCategoryById(int id);
         void DeleteCategory(int categoryid);
         Category GetCategoryByName(string name);
@@ -24,7 +23,7 @@ namespace Blog.Core.Repositories
         #region UserProfile
         int SaveUserProfile(UserProfile userProfile, bool isNewProfile = false);
 
-        List<UserProfile> GetAllUserProfiles();
+        IEnumerable<UserProfile> GetAllUserProfiles();
 
         UserProfile GetUserProfileById(int id);
 
@@ -43,8 +42,6 @@ namespace Blog.Core.Repositories
         int SaveComment(Comment comment, bool isNewComment = false);
 
         void DeleteComment(int commentId);
-
-        List<Comment> GetAllComments();
 
         Comment GetComment(int id);
         #endregion

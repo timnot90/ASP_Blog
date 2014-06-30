@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Areas.Administration.Models
+namespace Blog.Web.Areas.Administration.Models.Home
 {
     public class UserListItemModel
     {
@@ -21,6 +22,7 @@ namespace Blog.Web.Areas.Administration.Models
 
         public bool IsLocked { get; set; }
 
+        [UsedImplicitly]
         public UserListItemModel()
         {
         }

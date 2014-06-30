@@ -1,19 +1,19 @@
-﻿using Blog.Core.Annotations;
-using Blog.Core.DataAccess.Blog;
+﻿using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Models.Home
+namespace Blog.Web.Areas.Administration.Models.Home
 {
-    public class CategoryModel
+    public class CategorySelectedModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool IsSelected { get; set; }
 
-        [UsedImplicitly]
-        public CategoryModel()
+        // ReSharper disable once UnusedMember.Global
+        public CategorySelectedModel()
         {
         }
 
-        public CategoryModel(Category source)
+        public CategorySelectedModel(Category source)
         {
             UpdateModel(source);
         }

@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using Blog.Core.Exceptions;
-using Blog.Web.Areas.Administration.Models;
+using Blog.Web.Areas.Administration.Models.Home;
 using Blog.Web.Areas.Administration.Services;
 using Blog.Web.Models.Shared;
 

@@ -10,8 +10,8 @@ function UserSettingsScript() {
     this.initialize = function() {
         // Initialize all lock-switches and their click-events
         $(".lock-switch").each(function () {
-            var state2 = $(this).data("is-locked");
-            if (state2 == "False") {
+            var state = $(this).data("is-locked");
+            if (state == "False") {
                 $(this).bootstrapSwitch("state", false, false);
             } else {
                 $(this).bootstrapSwitch("state", true, true);
@@ -34,10 +34,9 @@ function UserSettingsScript() {
     }
 
     function roleChanged(id, newRole, added) {
-        $.ajax("/Administration/Administration/ChangeRole?id=" + id + "&newRole=" + newRole + "&added=" + added);
+        $.ajax("/Administration/Home/ChangeRole?id=" + id + "&newRole=" + newRole + "&added=" + added);
     }
     function setUserLockedState(id, state) {
-        console.log("set" + id + " to " + state);
-        $.ajax("/Administration/Administration/SetUserLockedState?id=" + id + "&state=" + state);
+        $.ajax("/Administration/Home/SetUserLockedState?id=" + id + "&state=" + state);
     }
 }

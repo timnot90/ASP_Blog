@@ -34,7 +34,7 @@ namespace Blog.Web.Controllers
         [AllowAnonymous]
         public ActionResult Blogentry( int id )
         {
-            BlogentryDetailModel model = _service.GetBlogentry( id );
+            BlogentryDetailModel model = _service.GetBlogentryDetailModel( id );
             if (model != null)
             {
                 return View( model );
@@ -105,10 +105,10 @@ namespace Blog.Web.Controllers
             ViewData.Model = model;
             try
             {
-                using (StringWriter sw = new StringWriter())
+                using (var sw = new StringWriter())
                 {
                     ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                    ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                    var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
                     viewResult.View.Render(viewContext, sw);
 
                     return sw.GetStringBuilder().ToString();

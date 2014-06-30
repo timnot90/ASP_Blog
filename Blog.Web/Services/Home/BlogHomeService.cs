@@ -2,14 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Repositories;
-using Blog.Web.Areas.Administration.Models;
 using Blog.Web.Models.Home;
-using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
-using CategoryModel = Blog.Web.Models.Home.CategoryModel;
 
 namespace Blog.Web.Services.Home
 {
@@ -55,52 +51,53 @@ namespace Blog.Web.Services.Home
         #endregion
 
         #region Blogentry
-        public void DeleteBlogentry(int id)
+
+        public void DeleteBlogentry( int id )
         {
-            _repository.DeleteBlogentry(id);
+            _repository.DeleteBlogentry( id );
         }
 
         public BlogentryListModel GetBlogentryListModel()
         {
-            bool isFirst = true;
-            BlogentryListModel model = new BlogentryListModel
+            var isFirst = true;
+            var model = new BlogentryListModel
             {
-                Blogentries = _repository.GetAllBlogentries().OrderByDescending(b => b.CreationDate).Select(
+                Blogentries = _repository.GetAllBlogentries().OrderByDescending( b => b.CreationDate ).Select(
                     b =>
                     {
-                        BlogentryListItemModel entryModel = new BlogentryListItemModel(b);
+                        var entryModel = new BlogentryListItemModel( b );
                         if (!isFirst)
                         {
-                            entryModel.Body = ShortenText(entryModel.Body);
+                            entryModel.Body = ShortenText( entryModel.Body );
                         }
                         isFirst = false;
                         return entryModel;
-                    }).ToList(),
+                    } ).ToList(),
                 NumberOfBlogentriesPerPage = _repository.GetBlogSettings().NumberOfEntriesPerPage
             };
             return model;
         }
 
-        public BlogentryDetailModel GetBlogentry(int id)
+        public BlogentryDetailModel GetBlogentryDetailModel( int id )
         {
-            Blogentry entry = _repository.GetBlogentry(id);
-            BlogentryDetailModel entryModel = entry == null ? null : new BlogentryDetailModel(entry);
-            if (entryModel != null)
+            Blogentry entry = _repository.GetBlogentry( id );
+            BlogentryDetailModel model = entry == null ? null : new BlogentryDetailModel( entry );
+            if (model != null)
             {
-                entryModel.CommentsActivated = _repository.GetBlogSettings().CommentsActivated;
+                model.CommentsActivated = _repository.GetBlogSettings().CommentsActivated;
             }
-            return entryModel;
+            return model;
         }
 
-        public BlogentryListModel GetBlogentryListModel(int categoryId, string monthAndYear)
+        public BlogentryListModel GetBlogentryListModel( int categoryId, string monthAndYear )
         {
             int month = 0;
             int year = 0;
             bool monthAndYearIsValid;
             try
             {
-                month = Convert.ToInt32(monthAndYear.Substring(0, 2));
-                year = Convert.ToInt32(monthAndYear.Substring(2, 4));
+                month = Convert.ToInt32( monthAndYear.Substring( 0, 2 ) );
+                year = Convert.ToInt32( monthAndYear.Substring( 2, 4 ) );
                 monthAndYearIsValid = monthAndYear.Length == 6;
             }
             catch (Exception)
@@ -109,18 +106,17 @@ namespace Blog.Web.Services.Home
             }
             BlogentryListModel model = GetBlogentryListModel();
 
-            model.Blogentries = _repository.GetAllBlogentries().Where(e =>
+            model.Blogentries = _repository.GetAllBlogentries().Where( e =>
             {
-                bool categoryFits = categoryId == 0 || e.Categories.Any(c => c.ID == categoryId);
+                bool categoryFits = categoryId == 0 || e.Categories.Any( c => c.ID == categoryId );
                 bool monthAndYearFits = !monthAndYearIsValid ||
                                         (e.CreationDate.Month == month && e.CreationDate.Year == year);
                 return categoryFits && monthAndYearFits;
-            }).Select(e =>
+            } ).Select( e =>
             {
-                BlogentryListItemModel listItemModel = new BlogentryListItemModel(e);
-                listItemModel.Body = ShortenText(e.BodyWithBr);
+                var listItemModel = new BlogentryListItemModel( e ) {Body = ShortenText( e.BodyWithBr )};
                 return listItemModel;
-            }).ToList();
+            } ).ToList();
 
             return model;
         }
@@ -128,50 +124,44 @@ namespace Blog.Web.Services.Home
         public BlogSidebarModel GetBlogSidebarModel()
         {
             List<Blogentry> allBlogentries = _repository.GetAllBlogentries();
-            BlogSidebarModel model = new BlogSidebarModel
+            var model = new BlogSidebarModel
             {
                 AvailableYears = allBlogentries
-                    .GroupBy(m => m.CreationDate.Year)
-                    .Select(m => m.Key.ToString(CultureInfo.InvariantCulture))
+                    .GroupBy( m => m.CreationDate.Year )
+                    .Select( m => m.Key.ToString( CultureInfo.InvariantCulture ) )
                     .ToList(),
                 AvailableMonths = allBlogentries
-                    .GroupBy(m => m.CreationDate.Month).ToDictionary( m => m.Key.ToString("d2"), m => Months[m.Key]),
-                Categories = GetAllCategoryModels()
+                    .GroupBy( m => m.CreationDate.Month )
+                    .ToDictionary( m => m.Key.ToString( "d2" ), m => Months[m.Key] ),
+                Categories = _repository.GetAllCategories().OrderBy( c => c.Name )
+                    .Select( c => new CategorySidebarModel( c ) ).ToList()
             };
             return model;
-        }
-        #endregion
-
-        #region Category
-        private List<CategoryModel> GetAllCategoryModels()
-        {
-            return _repository.GetAllCategories().OrderBy(c => c.Name).Select(
-                c => new CategoryModel(c)).ToList();
         }
 
         #endregion
 
         #region Comment
 
-        public int CreateComment(LeaveCommentModel commentModel)
+        public int CreateComment( LeaveCommentModel commentModel )
         {
-            Comment comment = new Comment();
-            commentModel.UpdateSource(comment);
+            var comment = new Comment();
+            commentModel.UpdateSource( comment );
             comment.CreatorID = WebSecurity.CurrentUserId == -1 ? (int?) null : WebSecurity.CurrentUserId;
             comment.CreationDate = DateTime.Now;
             comment.Blogentry = _repository.GetBlogentry( commentModel.BlogentryId );
-            return _repository.SaveComment(comment, true);
+            return _repository.SaveComment( comment, true );
         }
 
-        public void DeleteComment(int commentId)
+        public void DeleteComment( int commentId )
         {
-            _repository.DeleteComment(commentId);
+            _repository.DeleteComment( commentId );
         }
 
-        public CommentModel GetComment(int id)
+        public CommentModel GetComment( int id )
         {
-            Comment comment = _repository.GetComment(id);
-            CommentModel commentModel = comment == null ? null : new CommentModel(comment);
+            Comment comment = _repository.GetComment( id );
+            CommentModel commentModel = comment == null ? null : new CommentModel( comment );
             return commentModel;
         }
 
@@ -179,10 +169,11 @@ namespace Blog.Web.Services.Home
 
         #region private methods
 
-        private static string ShortenText(string text)
+        private static string ShortenText( string text )
         {
-            return text.Length <= 500 ? text : text.Substring(0, 500) + " ..";
+            return text.Length <= 500 ? text : text.Substring( 0, 500 ) + " ..";
         }
+
         #endregion
     }
 }

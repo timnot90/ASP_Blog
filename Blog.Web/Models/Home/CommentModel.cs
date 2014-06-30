@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Web.Models.Home
@@ -22,6 +23,7 @@ namespace Blog.Web.Models.Home
             }
         }
 
+        [UsedImplicitly]
         public CommentModel()
         {
         }
@@ -31,6 +33,7 @@ namespace Blog.Web.Models.Home
             UpdateModel(source);
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void UpdateModel(Comment source)
         {
             Id = source.ID;

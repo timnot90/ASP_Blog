@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Blog.Core.Annotations;
 
 namespace Blog.Core.Exceptions
 {
     public class BlogDbException : Exception
     {
+        [UsedImplicitly]
         public BlogDbException()
         {
         }

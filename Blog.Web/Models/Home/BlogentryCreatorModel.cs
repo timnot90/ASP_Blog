@@ -11,6 +11,7 @@ namespace Blog.Web.Models.Home
             UpdateModel( profile );
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void UpdateModel(UserProfile model)
         {
             DisplayName = model.DisplayName;

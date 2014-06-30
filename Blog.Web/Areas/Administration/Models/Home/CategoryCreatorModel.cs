@@ -1,6 +1,6 @@
 ﻿using Blog.Core.DataAccess.Blog;
 
-namespace Blog.Web.Areas.Administration.Models
+namespace Blog.Web.Areas.Administration.Models.Home
 {
     public class CategoryCreatorModel
     {
@@ -8,6 +8,7 @@ namespace Blog.Web.Areas.Administration.Models
 
         public string DisplayName { get; set; }
 
+        // ReSharper disable once UnusedMember.Global
         public CategoryCreatorModel()
         {
         }

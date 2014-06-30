@@ -50,6 +50,7 @@ namespace Blog.Core.Extensions
             return returnValue;
         }
 
+        // ReSharper disable once UnusedParameter.Global
         public static MvcHtmlString Panel(this HtmlHelper helper, string panelClass, string heading, string body)
         {
             var returnValue = new MvcHtmlString(string.Format(PanelBaseString, panelClass, heading, body));

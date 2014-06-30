@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
 using Blog.Web.ModelValidators.Account;
 
@@ -39,6 +40,7 @@ namespace Blog.Web.Models.Account
         [DisplayName("Last Name")]
         public string LastName { get; set; }
 
+        [UsedImplicitly]
         public EditUserProfileModel()
         {
         }
@@ -62,6 +64,7 @@ namespace Blog.Web.Models.Account
             source.LastName = LastName;
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void UpdateModel(UserProfile source)
         {
             Id = source.ID;

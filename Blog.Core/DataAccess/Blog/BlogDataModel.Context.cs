@@ -9,7 +9,6 @@
 
 namespace Blog.Core.DataAccess.Blog
 {
-    using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     

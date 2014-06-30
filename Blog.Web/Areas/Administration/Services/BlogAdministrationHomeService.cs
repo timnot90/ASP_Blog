@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration.Provider;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web.Security;
 using Blog.Core.DataAccess.Blog;
 using Blog.Core.Exceptions;
 using Blog.Core.Repositories;
-using Blog.Web.Areas.Administration.Models;
+using Blog.Web.Areas.Administration.Models.Home;
 using Blog.Web.Models.Shared;
 using WebGrease.Css.Extensions;
 using WebMatrix.WebData;
@@ -22,60 +20,58 @@ namespace Blog.Web.Areas.Administration.Services
 
         #endregion
 
-        public EditBlogentryModel GetEditBlogentryModel(int id)
+        public EditBlogentryModel GetEditBlogentryModel( int id )
         {
-            Blogentry entry = _repository.GetBlogentry(id);
-            EditBlogentryModel model = entry == null ? null : new EditBlogentryModel(entry);
+            Blogentry entry = _repository.GetBlogentry( id );
+            EditBlogentryModel model = entry == null ? null : new EditBlogentryModel( entry );
             if (model != null)
             {
-                model.Categories = _repository.GetAllCategories().Select(c => new CategoryModel(c)).ToList();
-                model.Categories.Where(category => entry.Categories.Any(c => c.ID == category.Id))
-                    .ForEach(c => c.IsSelected = true);
+                model.Categories = _repository.GetAllCategories().Select( c => new CategorySelectedModel( c ) ).ToList();
+                model.Categories.Where( category => entry.Categories.Any( c => c.ID == category.Id ) )
+                    .ForEach( c => c.IsSelected = true );
             }
             return model;
         }
 
         public AddBlogentryModel GetAddBlogentryModel()
         {
-            AddBlogentryModel model = new AddBlogentryModel
+            var model = new AddBlogentryModel
             {
-                Categories = GetAllCategoryModels()
+                Categories = _repository.GetAllCategories().OrderBy( c => c.Name ).Select(
+                c => new CategorySelectedModel( c ) ).ToList()
             };
             return model;
         }
 
-        public int CreateNewBlogentry(AddBlogentryModel entryModel)
+        public int CreateNewBlogentry( AddBlogentryModel entryModel )
         {
-            Blogentry entry = new Blogentry();
+            var entry = new Blogentry();
             entryModel.UpdateSource( entry );
             entry.CreatorID = WebSecurity.CurrentUserId;
             entry.Categories = entryModel.Categories
-                .Where(categoryModel => categoryModel.IsSelected)
-                .Select(categoryModel => _repository.GetCategoryById(categoryModel.Id)).ToList();
-            return _repository.SaveBlogentry(entry, true);
+                .Where( categoryModel => categoryModel.IsSelected )
+                .Select( categoryModel => _repository.GetCategoryById( categoryModel.Id ) ).ToList();
+            return _repository.SaveBlogentry( entry, true );
         }
 
-        public int SaveBlogentryChanges(EditBlogentryModel model)
+        public int SaveBlogentryChanges( EditBlogentryModel model )
         {
-            Blogentry entry = _repository.GetBlogentry(model.Id);
-            model.UpdateSource(entry);
+            Blogentry entry = _repository.GetBlogentry( model.Id );
+            model.UpdateSource( entry );
             if (model.Categories != null)
             {
                 entry.Categories.Clear();
-                foreach (
-                    CategoryModel categoryModel in model.Categories.Where(categoryModel => categoryModel.IsSelected))
-                {
-                    entry.Categories.Add(_repository.GetCategoryById(categoryModel.Id));
-                }
+                model.Categories.Where( c => c.IsSelected )
+                    .ForEach( c => entry.Categories.Add( _repository.GetCategoryById( c.Id ) ) );
             }
-            return _repository.SaveBlogentry(entry);
+            return _repository.SaveBlogentry( entry );
         }
 
         #region Users
 
         public UserListModel GetUserListModel()
         {
-            UserListModel model = new UserListModel
+            var model = new UserListModel
             {
                 Users = _repository.GetAllUserProfiles().Select( e => new UserListItemModel( e ) ).ToList()
             };
@@ -131,52 +127,42 @@ namespace Blog.Web.Areas.Administration.Services
 
         public void StoreSettings( BlogSettingsModel model )
         {
-                Setting setting = _repository.GetBlogSettings();
-                model.UpdateSource( setting );
-                _repository.StoreSettings( setting );
+            Setting setting = _repository.GetBlogSettings();
+            model.UpdateSource( setting );
+            _repository.StoreSettings( setting );
         }
+
         #endregion
 
         #region Categories
-        public int CreateCategory(AddCategoryModel categoryModel)
+
+        public int CreateCategory( AddCategoryModel categoryModel )
         {
-            if (_repository.GetCategoryByName(categoryModel.Name) != null)
+            if (_repository.GetCategoryByName( categoryModel.Name ) != null)
             {
                 throw new CategoryAlreadyExistsException();
             }
-            Category category = new Category();
-            categoryModel.UpdateSource(category);
+            var category = new Category();
+            categoryModel.UpdateSource( category );
             category.CreationDate = DateTime.Now;
             category.CreatorID = WebSecurity.CurrentUserId;
-            category.UserProfile = _repository.GetUserProfileById(category.CreatorID);
-            return _repository.SaveCategory(category, true);
+            category.UserProfile = _repository.GetUserProfileById( category.CreatorID );
+            return _repository.SaveCategory( category, true );
         }
 
-        public void DeleteCategory(int categoryid)
+        public void DeleteCategory( int categoryid )
         {
-            _repository.DeleteCategory(categoryid);
+            _repository.DeleteCategory( categoryid );
         }
 
         public CategoryListModel GetCategoryListModel()
         {
-            CategoryListModel model = new CategoryListModel
+            var model = new CategoryListModel
             {
-                Categories = GetAllCategoryModels()
+                Categories = _repository.GetAllCategories().OrderBy( c => c.Name ).Select(
+                c => new CategoryListItemModel( c ) ).ToList()
             };
             return model;
-        }
-
-        public CategoryModel GetCategory(int id)
-        {
-            Category category = _repository.GetCategoryById(id);
-            CategoryModel categoryModel = category == null ? null : new CategoryModel(category);
-            return categoryModel;
-        }
-
-        private List<CategoryModel> GetAllCategoryModels()
-        {
-            return _repository.GetAllCategories().OrderBy(c => c.Name).Select(
-                c => new CategoryModel(c)).ToList();
         }
 
         #endregion

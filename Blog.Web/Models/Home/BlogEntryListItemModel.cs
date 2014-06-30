@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Blog.Core.Annotations;
 using Blog.Core.DataAccess.Blog;
 
 namespace Blog.Web.Models.Home
@@ -21,6 +22,7 @@ namespace Blog.Web.Models.Home
         }
         public BlogentryCreatorModel Creator { get; set; }
 
+        [UsedImplicitly]
         public BlogentryListItemModel()
         {
         }
@@ -30,6 +32,7 @@ namespace Blog.Web.Models.Home
             UpdateModel(blogentry);
         }
 
+        // ReSharper disable once MemberCanBePrivate.Global
         public void UpdateModel(Blogentry source)
         {
             Id = source.ID;

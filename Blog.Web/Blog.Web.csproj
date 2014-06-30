@@ -149,17 +149,19 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Administration\Models\AddCategoryModel.cs" />
-    <Compile Include="Areas\Administration\Models\CategoryCreatorModel.cs" />
-    <Compile Include="Areas\Administration\Models\CategoryListItemModel.cs" />
-    <Compile Include="Areas\Administration\Models\CategoryListModel.cs" />
-    <Compile Include="Areas\Administration\Models\CategoryModel.cs" />
-    <Compile Include="Areas\Administration\Models\UserListModel.cs" />
-    <Compile Include="Areas\Administration\Models\RoleModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\AddCategoryModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\CategoryCreatorModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\CategoryListItemModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\CategoryListModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\CategorySelectedModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\UserListModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\RoleModel.cs" />
+    <Compile Include="Areas\Administration\ModelValidators\AddCategoryModelValidator.cs" />
     <Compile Include="Models\Account\RegistrationValidationModel.cs" />
     <Compile Include="Models\Home\BlogentryCreatorModel.cs" />
+    <Compile Include="Models\Home\CategorySidebarModel.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
-    <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\UserListItemModel.cs" />
     <Compile Include="Areas\Administration\Services\BlogAdministrationHomeService.cs" />
     <Compile Include="Areas\Administration\Services\IBlogAdministrationHomeService.cs" />
     <Compile Include="Controllers\AboutController.cs" />
@@ -178,12 +180,12 @@
     <Compile Include="Models\Account\ResetPasswordSecondStepModel.cs" />
     <Compile Include="Models\Home\BlogentryListModel.cs" />
     <Compile Include="Models\Home\CommentCreatorModel.cs" />
-    <Compile Include="Areas\Administration\Models\EditBlogentryModel.cs" />
-    <Compile Include="Areas\Administration\Models\AddBlogentryModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\EditBlogentryModel.cs" />
+    <Compile Include="Areas\Administration\Models\Home\AddBlogentryModel.cs" />
     <Compile Include="Models\Home\BlogentryDetailModel.cs" />
     <Compile Include="Models\Home\BlogEntryListItemModel.cs" />
     <Compile Include="Models\Home\BlogSidebarModel.cs" />
-    <Compile Include="Models\Account\UserProfileModel.cs" />
+    <Compile Include="Models\Account\UserModel.cs" />
     <Compile Include="Models\Home\CategoryModel.cs" />
     <Compile Include="Models\Home\CommentModel.cs" />
     <Compile Include="Models\Account\RegisterModel.cs" />
@@ -196,8 +198,8 @@
     <Compile Include="ModelValidators\Account\LoginModelValidator.cs" />
     <Compile Include="ModelValidators\Account\RegisterModelValidator.cs" />
     <Compile Include="ModelValidators\Account\ResetPasswordModelValidator.cs" />
-    <Compile Include="ModelValidators\Home\AddBlogentryModelValidator.cs" />
-    <Compile Include="ModelValidators\Home\EditBlogentryModelValidator.cs" />
+    <Compile Include="Areas\Administration\ModelValidators\AddBlogentryModelValidator.cs" />
+    <Compile Include="Areas\Administration\ModelValidators\EditBlogentryModelValidator.cs" />
     <Compile Include="ModelValidators\Home\LeaveCommentModelValidator.cs" />
     <Compile Include="ModelValidators\Shared\BlogSettingsModelValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -392,7 +394,7 @@
     <Content Include="Views\Account\ResetPasswordFirstStepCompleted.cshtml" />
     <Content Include="Areas\Administration\Views\Home\_EditBlogentry.cshtml" />
     <Content Include="Views\Shared\_Keywords.cshtml" />
-    <Content Include="Areas\Administration\Views\Home\_Category.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\_CategoryListItem.cshtml" />
     <Content Include="Views\Account\ValidateRegistrationToken.cshtml" />
   </ItemGroup>
   <ItemGroup>
