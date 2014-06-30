@@ -4,10 +4,14 @@ using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Controllers
 {
-    [Authorize(Roles = CustomRoles.Administrator)]
-    public class AdministrationController : Controller
+    public class HomeController : Controller
     {
-        readonly IBlogAdministrationService _service = new BlogAdministrationService();
+        readonly IBlogAdministrationHomeService _service = new BlogAdministrationHomeService();
+
+        public ActionResult Index()
+        {
+            return View();
+        }
 
         public ActionResult Users()
         {
@@ -16,7 +20,7 @@ namespace Blog.Web.Areas.Administration.Controllers
 
         public void ChangeRole(int id, string newRole, bool added)
         {
-            _service.ChangeRole( id, newRole, added );
+            _service.ChangeRole(id, newRole, added);
         }
 
         public ActionResult _UserListItem()
@@ -35,9 +39,9 @@ namespace Blog.Web.Areas.Administration.Controllers
         {
             if (ModelState.IsValid)
             {
-                _service.StoreSettings( model );
+                _service.StoreSettings(model);
                 model.SuccessfullySaved = true;
-                return View( model );
+                return View(model);
             }
             model.SuccessfullySaved = false;
             return View(model);
@@ -45,7 +49,8 @@ namespace Blog.Web.Areas.Administration.Controllers
 
         public void SetUserLockedState(int id, bool state)
         {
-            _service.SetUserLockedState( id, state );
+            _service.SetUserLockedState(id, state);
         }
+
     }
 }

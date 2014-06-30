@@ -3,7 +3,7 @@ using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Services
 {
-    public interface IBlogAdministrationService
+    public interface IBlogAdministrationHomeService
     {
         UserListModel GetUserListModel();
         void ChangeRole( int id, string newRole, bool added );

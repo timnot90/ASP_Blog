@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "Administration";
+}
+
+<div class="row">
+    <div class="col-lg-8">
+        <ul>
+            <li>
+                @Html.ActionLink("Users", "Users", "Home", new { area = "Administration" }, null)
+            </li>
+            <li>
+                @Html.ActionLink("Site Settings", "BlogSettings", "Home", new { area = "Administration" }, null)
+            </li>
+            <li>
+                @Html.ActionLink("Categories", "Categories", "Home", new { area = "Administration" }, null)
+            </li>
+        </ul>
+    </div>
+</div>

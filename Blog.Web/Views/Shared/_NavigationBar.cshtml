@@ -90,7 +90,12 @@
                 </li>
                 @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                 {
-                    <li class="dropdown">
+                    <li>
+                        <a href="@Url.Action( "Index", "Home", new {area = "Administration"} )">
+                            <i class="glyphicon glyphicon-eye-open"></i> Administration
+                        </a>
+                    </li>
+                    @*<li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-signal"></i> Administration <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
@@ -105,7 +110,7 @@
                             </li>
                             <li>
                         </ul>
-                    </li>
+                    </li>*@
                 }
                 <li>
                     @if (WebSecurity.IsAuthenticated)
@@ -185,6 +190,11 @@
                 @if (CustomRoles.IsUserInRole(CustomRoles.Administrator))
                 {
                     <li>
+                        <a href="@Url.Action( "Index", "Home", new {area = "Administration"} )">
+                            <i class="glyphicon glyphicon-eye-open"></i> Administration
+                        </a>
+                    </li>
+                    @*<li>
                         <a href="@Url.Action( "Users", "Administration", new {area = "Administration"} )">
                             <i class="glyphicon glyphicon-eye-open"></i> Users
                         </a>
@@ -193,7 +203,7 @@
                         <a href="@Url.Action( "BlogSettings", "Administration", new {area = "Administration"} )">
                             <i class="glyphicon glyphicon-eye-open"></i> Settings
                         </a>
-                    </li>
+                    </li>*@
                 }
                 <li>
                     @if (WebSecurity.IsAuthenticated)

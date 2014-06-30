@@ -9,7 +9,7 @@ using Blog.Web.Models.Shared;
 
 namespace Blog.Web.Areas.Administration.Services
 {
-    public class BlogAdministrationService : IBlogAdministrationService
+    public class BlogAdministrationHomeService : IBlogAdministrationHomeService
     {
         #region variables
 

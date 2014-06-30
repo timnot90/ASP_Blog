@@ -148,7 +148,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
-    <Compile Include="Areas\Administration\Controllers\AdministrationController.cs" />
+    <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
     <Compile Include="Areas\Administration\Models\UserListModel.cs" />
     <Compile Include="Areas\Administration\Models\RoleModel.cs" />
     <Compile Include="Models\Account\RegistrationValidationModel.cs" />
@@ -156,8 +156,8 @@
     <Compile Include="Models\Home\CategoryCreatorModel.cs" />
     <Compile Include="Models\Shared\BlogSettingsModel.cs" />
     <Compile Include="Areas\Administration\Models\UserListItemModel.cs" />
-    <Compile Include="Areas\Administration\Services\BlogAdministrationService.cs" />
-    <Compile Include="Areas\Administration\Services\IBlogAdministrationService.cs" />
+    <Compile Include="Areas\Administration\Services\BlogAdministrationHomeService.cs" />
+    <Compile Include="Areas\Administration\Services\IBlogAdministrationHomeService.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -323,9 +323,10 @@
     <Content Include="font-awesome\scss\_variables.scss" />
     <Content Include="Areas\Administration\Views\Web.config" />
     <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Administration\Views\Administration\Users.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\_UserListItem.cshtml" />
-    <Content Include="Areas\Administration\Views\Administration\BlogSettings.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\BlogSettings.cshtml" />
+    <Content Include="Areas\Administration\Views\Home\Users.cshtml" />
     <None Include="Scripts\jquery\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\custom\blog-settings.js" />
     <Content Include="Scripts\custom\blogentry.js" />
